@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestObjectRunner", "TestObjectRunner\TestObjectRunner.csproj", "{5AA4131B-1567-4315-9BEB-BBB3F51E2417}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestObjectlib", "TestObjectlib\TestObjectlib.csproj", "{F6EE5B5A-99B5-4BBA-BADD-608B13376F8D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5AA4131B-1567-4315-9BEB-BBB3F51E2417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AA4131B-1567-4315-9BEB-BBB3F51E2417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AA4131B-1567-4315-9BEB-BBB3F51E2417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AA4131B-1567-4315-9BEB-BBB3F51E2417}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6EE5B5A-99B5-4BBA-BADD-608B13376F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6EE5B5A-99B5-4BBA-BADD-608B13376F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6EE5B5A-99B5-4BBA-BADD-608B13376F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6EE5B5A-99B5-4BBA-BADD-608B13376F8D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
