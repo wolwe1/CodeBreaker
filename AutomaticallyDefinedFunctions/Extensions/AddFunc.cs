@@ -1,19 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using AutomaticallyDefinedFunctions.Nodes;
-using AutomaticallyDefinedFunctions.source.Nodes;
+using AutomaticallyDefinedFunctions.source.nodes;
 
 namespace AutomaticallyDefinedFunctions.Extensions
 {
-    public class AddFunc : FunctionNode<int>
+    public class AddFunc : FunctionNode<double> 
     {
-        public AddFunc(List<INode<int>> children) : base(children)
+        public AddFunc(IEnumerable<INode<double>> nodes) : base()
         {
+            
+            Children.AddRange(nodes);
         }
 
-        public override int GetValue()
+        public override double GetValue()
         {
-            return Children.Sum(child => child.GetValue());
+            return Children.Sum( (child) => child.GetValue());
+        }
+
+        public override bool IsValid()
+        {
+            return Children.Count == 2;
         }
     }
 }

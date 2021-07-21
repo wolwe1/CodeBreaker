@@ -1,6 +1,8 @@
-﻿namespace AutomaticallyDefinedFunctions.Nodes
+﻿using System;
+
+namespace AutomaticallyDefinedFunctions.source.nodes
 {
-    public class NodeTree<T>
+    public class NodeTree<T> where T : IComparable
     {
         private readonly INode<T> _root;
 

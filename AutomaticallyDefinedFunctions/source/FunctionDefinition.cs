@@ -1,8 +1,9 @@
-﻿using AutomaticallyDefinedFunctions.Nodes;
+﻿using System;
+using AutomaticallyDefinedFunctions.source.nodes;
 
-namespace AutomaticallyDefinedFunctions
+namespace AutomaticallyDefinedFunctions.source
 {
-    public class FunctionDefinition<T>
+    public class FunctionDefinition<T> where T : IComparable
     {
         private readonly NodeTree<T> _nodeTree;
 
