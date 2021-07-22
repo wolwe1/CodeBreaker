@@ -5,17 +5,23 @@ using AutomaticallyDefinedFunctions.source.nodes;
 
 namespace AutomaticallyDefinedFunctions.Extensions
 {
-    public class AddFunc : FunctionNode<double> 
+    public abstract class AddFunc<T> : FunctionNode<T> where T : IComparable
     {
-        public AddFunc(IEnumerable<INode<double>> nodes) : base()
+        protected AddFunc(IEnumerable<INode<T>> nodes) : base(nodes){}
+
+        protected AddFunc() : base() { }
+        
+        protected AddFunc(INode<T> firstNode,INode<T> secondNode): this()
         {
-            
-            Children.AddRange(nodes);
+            Children.Add(firstNode);
+            Children.Add(secondNode);
         }
 
-        public override double GetValue()
+        public void Refresh(INode<T> firstNode, INode<T> secondNode)
         {
-            return Children.Sum( (child) => child.GetValue());
+            Children.Clear();
+            Children.Add(firstNode);
+            Children.Add(secondNode);
         }
 
         public override bool IsValid()

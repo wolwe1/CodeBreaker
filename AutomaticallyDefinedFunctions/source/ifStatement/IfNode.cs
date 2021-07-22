@@ -16,27 +16,27 @@ namespace AutomaticallyDefinedFunctions.source.ifStatement
             
         }
 
-        public void AddLeftPredicate(INode<T> predicateRoot)
+        public void SetLeftPredicate(INode<T> predicateRoot)
         {
             _leftPredicate = predicateRoot;
         }
         
-        public void AddRightPredicate(INode<T> predicateRoot)
+        public void SetRightPredicate(INode<T> predicateRoot)
         {
             _rightPredicate = predicateRoot;
         }
         
-        public void AddComparisonOperator(NodeComparator<T> comparator)
+        public void SetComparisonOperator(NodeComparator<T> comparator)
         {
             _comparator = comparator;
         }
         
-        public void AddTrueCodeBlock(INode<U> root)
+        public void SetTrueCodeBlock(INode<U> root)
         {
             _trueBlock = root;
         }
         
-        public void AddFalseCodeBlock(INode<U> root)
+        public void SetFalseCodeBlock(INode<U> root)
         {
             _falseBlock = root;
         }
