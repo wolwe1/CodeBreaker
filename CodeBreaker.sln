@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBreaker", "CodeBreaker\CodeBreaker.csproj", "{0CD97DBF-ABDD-4FF1-8725-479EE2172FAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBreakerLib", "CodeBreakerLib\CodeBreakerLib.csproj", "{8C0EE9C0-FB4B-418D-9538-512F8B1B5F7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CD97DBF-ABDD-4FF1-8725-479EE2172FAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CD97DBF-ABDD-4FF1-8725-479EE2172FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CD97DBF-ABDD-4FF1-8725-479EE2172FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CD97DBF-ABDD-4FF1-8725-479EE2172FAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C0EE9C0-FB4B-418D-9538-512F8B1B5F7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C0EE9C0-FB4B-418D-9538-512F8B1B5F7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C0EE9C0-FB4B-418D-9538-512F8B1B5F7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C0EE9C0-FB4B-418D-9538-512F8B1B5F7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
