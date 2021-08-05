@@ -4,11 +4,11 @@ using GeneticAlgorithmLib.statistics;
 
 namespace GeneticAlgorithmLib.controlModel
 {
-    public interface IControlModel
+    public interface IControlModel<T>
     {
-        bool TerminationCriteriaNotMet(int generationCount, EvaluationResults evaluationResults);
-        List<string> SelectParents(EvaluationResults results);
-        List<IPopulationMember> ApplyOperators(List<string> parents);
+        bool TerminationCriteriaNotMet(int generationCount, EvaluationResults<T> evaluationResults);
+        List<string> SelectParents(EvaluationResults<T> results);
+        List<IPopulationMember<T>> ApplyOperators(List<string> parents);
         int GetInitialPopulationSize();
     }
 }

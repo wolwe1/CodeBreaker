@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
 using GeneticAlgorithmLib.controlModel;
 using GeneticAlgorithmLib.core.population;
+using GeneticAlgorithmLib.fitnessFunctions;
 using GeneticAlgorithmLib.statistics;
 
 namespace GeneticAlgorithmLib.core
 {
-    public class GeneticAlgorithm : IGeneticAlgorithm
+    public class GeneticAlgorithm<T> : IGeneticAlgorithm<T>
     {
-        private readonly IPopulationGenerator _populationGenerator;
-        private readonly IControlModel _controlModel;
+        private readonly IPopulationGenerator<T> _populationGenerator;
+        private readonly IControlModel<T> _controlModel;
         private readonly IFitnessFunction _fitnessFunction;
-        private readonly IExecutionHistory _history;
+        private readonly IExecutionHistory<T> _history;
 
-        protected GeneticAlgorithm(IPopulationGenerator populationGenerator, IControlModel controlModel, IFitnessFunction fitnessFunction, IExecutionHistory history)
+        protected GeneticAlgorithm(IPopulationGenerator<T> populationGenerator, IControlModel<T> controlModel, IFitnessFunction fitnessFunction, IExecutionHistory<T> history)
         {
             _populationGenerator = populationGenerator;
             _controlModel = controlModel;
@@ -20,28 +21,28 @@ namespace GeneticAlgorithmLib.core
             _history = history;
         }
 
-        public List<IPopulationMember> CreateInitialPopulation()
+        public List<IPopulationMember<T>> CreateInitialPopulation()
         {
-            var populationMembers = new List<IPopulationMember>();
+            var populationMembers = new List<IPopulationMember<T>>();
             
             var initialPopulationSize = _controlModel.GetInitialPopulationSize();
 
             for (var i = 0; i < initialPopulationSize; i++)
             {
-                IPopulationMember newMember = _populationGenerator.GenerateNewMember();
+                IPopulationMember<T> newMember = _populationGenerator.GenerateNewMember();
                 populationMembers.Add(newMember);
             }
             return populationMembers;
         }
 
-        public IExecutionHistory Run()
+        public IExecutionHistory<T> Run()
         {
             _history.NewRun();
             
             var generationCount = 0;
             var population = CreateInitialPopulation();
 
-            EvaluationResults results = null;
+            EvaluationResults<T> results = null;
             while (_controlModel.TerminationCriteriaNotMet(generationCount,results))
             {
                 results = Evaluate(population);
@@ -56,9 +57,9 @@ namespace GeneticAlgorithmLib.core
             return _history;
         }
 
-        private EvaluationResults Evaluate(List<IPopulationMember> population)
+        private EvaluationResults<T> Evaluate(List<IPopulationMember<T>> population)
         {
-            var results = new EvaluationResults();
+            var results = new EvaluationResults<T>();
             
             foreach (var member in population)
             {

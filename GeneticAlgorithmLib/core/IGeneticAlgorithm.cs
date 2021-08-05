@@ -4,10 +4,10 @@ using GeneticAlgorithmLib.statistics;
 
 namespace GeneticAlgorithmLib.core
 {
-    public interface IGeneticAlgorithm
+    public interface IGeneticAlgorithm<T>
     {
-        public List<IPopulationMember> CreateInitialPopulation();
+        public List<IPopulationMember<T>> CreateInitialPopulation();
 
-        public IExecutionHistory Run();
+        public IExecutionHistory<T> Run();
     }
 }

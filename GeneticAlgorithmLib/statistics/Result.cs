@@ -2,14 +2,14 @@
 
 namespace GeneticAlgorithmLib.statistics
 {
-    public class Result
+    public class Result<T>
     {
-        private readonly IPopulationMember _member;
+        private readonly IPopulationMember<T> _member;
         private readonly double _fitness;
         private bool _isDuplicate;
         private int _numOfDuplicates;
 
-        public Result(IPopulationMember member, double fitness)
+        public Result(IPopulationMember<T> member, double fitness)
         {
             _member = member;
             _fitness = fitness;
@@ -18,7 +18,7 @@ namespace GeneticAlgorithmLib.statistics
             _numOfDuplicates = 0;
         }
 
-        public Result AddDuplicate()
+        public Result<T> AddDuplicate()
         {
             _isDuplicate = false;
             _numOfDuplicates++;

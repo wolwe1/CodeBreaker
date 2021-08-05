@@ -14,6 +14,6 @@ namespace GeneticAlgorithmLib.controlModel.selectionMethods
         /// </summary>
         /// <param name="results">The result set produced by evaluating the population</param>
         /// <returns>List of member ID's selected for the next population</returns>
-        List<string> Select(EvaluationResults results);
+        List<string> Select<T>(EvaluationResults<T> results);
     }
 }

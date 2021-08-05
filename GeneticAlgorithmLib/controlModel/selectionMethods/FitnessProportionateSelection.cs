@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GeneticAlgorithmLib.fitnessFunctions;
 using GeneticAlgorithmLib.statistics;
 using GeneticAlgorithmLib.statistics.calculatedResults;
 
 namespace GeneticAlgorithmLib.controlModel.selectionMethods
 {
-    public class FitnessProportionateSelection : ISelectionMethod
+    public class FitnessProportionateSelection : SelectionMethod
     {
-        public List<string> Select(EvaluationResults results)
+        public FitnessProportionateSelection(IFitnessFunction fitnessFunction) : base(fitnessFunction)
+        {
+            
+        }
+
+        public override List<string> Select<T>(EvaluationResults<T> results)
         {
             var numOccurrencesInNextPop = GetNumOccurrencesInNextPop(results);
 
@@ -38,10 +44,10 @@ namespace GeneticAlgorithmLib.controlModel.selectionMethods
             return selectedMembers;
         }
         
-        private static List<CalculationResult> GetNumOccurrencesInNextPop(EvaluationResults results)
+        private List<CalculationResult> GetNumOccurrencesInNextPop<T>(EvaluationResults<T> results)
         {
             var popSize = results.Size();
-            var normalisedFitnessValues = results.GetNormalisedFitnessValues();
+            var normalisedFitnessValues = FitnessFunction.GetNormalisedFitnessValues(results);
 
             var numOccurrencesInNextPop = normalisedFitnessValues
                 .Map(x => Convert.ToInt32(x * popSize))

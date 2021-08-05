@@ -7,7 +7,7 @@ using GeneticAlgorithmLib.statistics;
 
 namespace GeneticAlgorithmLib.controlModel
 {
-    public class SteadyStateControlModel : IControlModel
+    public class SteadyStateControlModel<T> : IControlModel<T>
     {
         private readonly List<ITerminationCriteria> _terminationCriteria;
         private ISelectionMethod _selectionMethod;
@@ -15,10 +15,10 @@ namespace GeneticAlgorithmLib.controlModel
         public SteadyStateControlModel()
         {
             _terminationCriteria = new List<ITerminationCriteria>();
-            _selectionMethod = new FitnessProportionateSelection();
+            _selectionMethod = new FitnessProportionateSelection(new );
         }
 
-        public bool TerminationCriteriaNotMet(int generationCount, EvaluationResults evaluationResults)
+        public bool TerminationCriteriaNotMet(int generationCount, EvaluationResults<T> evaluationResults)
         {
             foreach (var criterion in _terminationCriteria)
             {
@@ -29,12 +29,12 @@ namespace GeneticAlgorithmLib.controlModel
             return false;
         }
 
-        public List<string> SelectParents(EvaluationResults results)
+        public List<string> SelectParents(EvaluationResults<T> results)
         {
             return _selectionMethod.Select(results);
         }
 
-        public List<IPopulationMember> ApplyOperators(List<string> parents)
+        public List<IPopulationMember<T>> ApplyOperators(List<string> parents)
         {
             throw new NotImplementedException();
         }
@@ -44,19 +44,19 @@ namespace GeneticAlgorithmLib.controlModel
             throw new NotImplementedException();
         }
 
-        public List<IPopulationMember> ApplyOperators(List<IPopulationMember> parents)
+        public List<IPopulationMember<T>> ApplyOperators(List<IPopulationMember<T>> parents)
         {
             throw new System.NotImplementedException();
         }
 
-        public SteadyStateControlModel UseSelection(ISelectionMethod newMethod)
+        public SteadyStateControlModel<T> UseSelection(ISelectionMethod newMethod)
         {
             _selectionMethod = newMethod;
 
             return this;
         }
         
-        public SteadyStateControlModel UseTerminationCriteria(ITerminationCriteria newCriteria)
+        public SteadyStateControlModel<T> UseTerminationCriteria(ITerminationCriteria newCriteria)
         {
             _terminationCriteria.Add(newCriteria);
 

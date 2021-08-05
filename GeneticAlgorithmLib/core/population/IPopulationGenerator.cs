@@ -1,7 +1,7 @@
 ﻿namespace GeneticAlgorithmLib.core.population
 {
-    public interface IPopulationGenerator
+    public interface IPopulationGenerator<T>
     {
-        IPopulationMember GenerateNewMember();
+        IPopulationMember<T> GenerateNewMember();
     }
 }

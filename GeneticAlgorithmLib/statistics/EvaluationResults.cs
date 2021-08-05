@@ -9,19 +9,19 @@ namespace GeneticAlgorithmLib.statistics
     /// <summary>
     /// Holds a set of IPopulationMember ID and Result pairs
     /// </summary>
-    public class EvaluationResults
+    public class EvaluationResults<T>
     {
-        private readonly Dictionary<string,Result> _record;
+        private readonly Dictionary<string,Result<T>> _record;
 
         public EvaluationResults()
         {
-            _record = new Dictionary<string, Result>();
+            _record = new Dictionary<string, Result<T>>();
         }
 
-        public void Add(IPopulationMember member, double fitness)
+        public void Add(IPopulationMember<T> member, double fitness)
         {
             var memberId = member.GetId();
-            var newResult = new Result(member,fitness);
+            var newResult = new Result<T>(member,fitness);
 
             if (!_record.ContainsKey(memberId))
                 _record.Add(memberId,newResult);
@@ -34,16 +34,7 @@ namespace GeneticAlgorithmLib.statistics
         {
             var values = _record.Values.ToList();
             
-            return new CalculationResultSet(values);
-        }
-        
-        public CalculationResultSet GetNormalisedFitnessValues()
-        {
-            var popSize = Size();
-            var fitnessValues = GetFitnessValues();
-            var totalFitness = GetTotalFitness();
-            
-            return fitnessValues.Map(x => x / totalFitness);
+            return CalculationResultSet.Create(values);
         }
 
         public double GetTotalFitness()

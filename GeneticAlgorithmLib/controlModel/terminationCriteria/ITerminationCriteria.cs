@@ -4,6 +4,6 @@ namespace GeneticAlgorithmLib.controlModel.terminationCriteria
 {
     public interface ITerminationCriteria
     {
-        bool Met(int generationCount, EvaluationResults evaluationResults);
+        bool Met<T>(int generationCount, EvaluationResults<T> evaluationResults);
     }
 }

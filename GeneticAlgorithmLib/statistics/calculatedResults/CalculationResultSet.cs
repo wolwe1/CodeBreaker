@@ -11,17 +11,19 @@ namespace GeneticAlgorithmLib.statistics.calculatedResults
     {
         private readonly IEnumerable<CalculationResult> _calculatedResults;
         
+       
+        public CalculationResultSet(IEnumerable<CalculationResult> results)
+        {
+            _calculatedResults = results;
+        }
+
         /// <summary>
         /// Create a calculated result set from a list of <see cref="Result"/>
         /// </summary>
-        public CalculationResultSet(IEnumerable<Result> results)
+        public static CalculationResultSet Create<T>(IEnumerable<Result<T>> results)
         {
-            _calculatedResults = results.Select( x => new CalculationResult(x.GetFitness(),x.GetMemberId()));
-        }
-        
-        public CalculationResultSet(IEnumerable<CalculationResult> calculatedResults)
-        {
-            _calculatedResults = calculatedResults;
+            var calculationResults = results.Select( x => new CalculationResult(x.GetFitness(),x.GetMemberId()));
+            return new CalculationResultSet(calculationResults);
         }
 
         /// <summary>

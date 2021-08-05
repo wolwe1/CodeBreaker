@@ -2,6 +2,7 @@
 using GeneticAlgorithmLib.controlModel;
 using GeneticAlgorithmLib.controlModel.selectionMethods;
 using GeneticAlgorithmLib.controlModel.terminationCriteria;
+using GeneticAlgorithmLib.fitnessFunctions;
 using GeneticAlgorithmLib.statistics;
 
 namespace GeneticAlgorithm
@@ -11,11 +12,15 @@ namespace GeneticAlgorithm
         static void Main(string[] args)
         {
             //IPopulationGenerator populationGenerator = new IPopulationGenerator(); 
-            IControlModel controlModel = new SteadyStateControlModel()
-                .UseSelection(new FitnessProportionateSelection())
+
+            CompositeFitnessFunction fitnessFunction =
+                new CompositeFitnessFunction().AddEvaluation(new OurSimpleFitnessFunction(), 1);
+            
+            IControlModel<double> controlModel = new SteadyStateControlModel<double>()
+                .UseSelection(new FitnessProportionateSelection(fitnessFunction))
                 .UseTerminationCriteria(new GenerationCountCriteria(1));
-            //IFitnessFunction fitnessFunction, 
-            IExecutionHistory history = new BasicExecutionHistory();
+            
+            IExecutionHistory<double> history = new BasicExecutionHistory<double>();
             //var geneticAlgorithm = new GeneticAlgorithm();
         }
     }
