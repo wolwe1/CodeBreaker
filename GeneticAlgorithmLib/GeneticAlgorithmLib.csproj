@@ -4,4 +4,17 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="source" />
+      <Folder Include="test\controlModelTests" />
+      <Folder Include="test\coreTests" />
+      <Folder Include="test\fitnessFunctionTests" />
+      <Folder Include="test\operatorTests" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
+      <PackageReference Include="xunit" Version="2.4.1" />
+    </ItemGroup>
+
 </Project>
