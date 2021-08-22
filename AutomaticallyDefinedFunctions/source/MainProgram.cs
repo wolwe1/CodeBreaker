@@ -16,5 +16,10 @@ namespace AutomaticallyDefinedFunctions.source
         {
             return _nodeTree.GetValue();
         }
+
+        public bool IsValid()
+        {
+            return _nodeTree != null && _nodeTree.IsValid();
+        }
     }
 }

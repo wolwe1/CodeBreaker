@@ -17,16 +17,23 @@ namespace AutomaticallyDefinedFunctions.Extensions
             Children.Add(secondNode);
         }
 
-        public void Refresh(INode<T> firstNode, INode<T> secondNode)
+        public AddFunc<T> Refresh(INode<T> firstNode, INode<T> secondNode)
         {
             Children.Clear();
             Children.Add(firstNode);
             Children.Add(secondNode);
+
+            return this;
         }
 
         public override bool IsValid()
         {
-            return Children.Count == 2;
+            return Children.All(child => child.IsValid());
+        }
+
+        public override int GetNullNodeCount()
+        {
+            return Children.Sum(x => x.GetNullNodeCount());
         }
     }
 }

@@ -4,6 +4,7 @@ using AutomaticallyDefinedFunctions.builders;
 using AutomaticallyDefinedFunctions.Extensions;
 using AutomaticallyDefinedFunctions.source.ifStatement;
 using AutomaticallyDefinedFunctions.source.nodes;
+using AutomaticallyDefinedFunctions.source.nodes.valueNodes;
 using Xunit;
 
 namespace AutomaticallyDefinedFunctions.Tests
@@ -17,14 +18,14 @@ namespace AutomaticallyDefinedFunctions.Tests
 
         [Theory]
         [MemberData(nameof(ValueFunctionCombinations))]
-        public void IfFunctionsTriggerCorrectBranch<T, U>(IfNode<T,U> ifStatement, U expectedResult ) where T : IComparable where U : IComparable
+        public void IfFunctionsTriggerCorrectBranch<T, U>(IfNode<T,U> ifStatement, T expectedResult ) where T : IComparable where U : IComparable
         {
             Assert.Equal(expectedResult, ifStatement.GetValue());
         }
 
         [Theory]
         [MemberData(nameof(EqualityCombinations))]
-        public void ComparatorsChainUsingOr(string expectedValue,IfNode<double,string> ifStatement,NodeComparator<double> comparator)
+        public void ComparatorsChainUsingOr(string expectedValue,IfNode<string,double> ifStatement,NodeComparator<double> comparator)
         {
             ifStatement.SetComparisonOperator(comparator);
             Assert.True(expectedValue == ifStatement.GetValue());
@@ -125,20 +126,24 @@ namespace AutomaticallyDefinedFunctions.Tests
 
             var equals = new EqualsComparator<double>();
 
-            var func = NodeBuilder.CreateIfStatement<double,string>(null, null, null, null, null);
+            var func = NodeBuilder.CreateIfStatement<string,double>(null, null, null, null, null);
+            var func2 = NodeBuilder.CreateIfStatement<string,double>(smaller, null, null, null, null);
+            var func3 = NodeBuilder.CreateIfStatement<string,double>(smaller, bigger, null, null, null);
+            var func4 = NodeBuilder.CreateIfStatement<string,double>(smaller, bigger, trueStatement, null, null);
+            var func5 = NodeBuilder.CreateIfStatement<string,double>(smaller, bigger, trueStatement, null, null);
+            var func6 = NodeBuilder.CreateIfStatement<string,double>(smaller, bigger, trueStatement, falseStatement, equals);
+
+            yield return new object[] {func,false};
             
-            yield return new object[] {func,false};
-            func.SetLeftPredicate(smaller);
-            yield return new object[] {func,false};
-            func.SetRightPredicate(bigger);
-            yield return new object[] {func,false};
-            func.SetComparisonOperator(equals);
-            yield return new object[] {func,false};
-            func.SetFalseCodeBlock(falseStatement);
-            yield return new object[] {func,false};
-            func.SetTrueCodeBlock(trueStatement);
-            yield return new object[] {func,true};
+            yield return new object[] {func2,false};
             
+            yield return new object[] {func3,false};
+            
+            yield return new object[] {func4,false};
+            
+            yield return new object[] {func5,false};
+            
+            yield return new object[] {func6,true};
         }
 
     }

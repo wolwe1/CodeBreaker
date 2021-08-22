@@ -7,5 +7,7 @@ namespace AutomaticallyDefinedFunctions.source.nodes
         public T GetValue();
 
         public bool IsValid();
+
+        public int GetNullNodeCount();
     }
 }
