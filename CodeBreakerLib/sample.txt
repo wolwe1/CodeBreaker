@@ -1,4 +1,6 @@
-﻿TestFunctions
-Add
-TestFunctions
-AddString
+﻿D:\\Honours\\second year\\COS700\\Research project\\code\\test objects\\TestObjects\\TestObjectRunner\\bin\\Debug\\net5.0\\TestObjectRunner.dll
+Palindrome
+Get
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+Palindrome
+GetRecursive

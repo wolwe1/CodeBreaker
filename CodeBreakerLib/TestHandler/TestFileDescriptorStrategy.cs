@@ -7,28 +7,30 @@ namespace CodeBreakerLib.TestHandler
 {
     public class TestFileDescriptorStrategy : ITestStrategy
     {
-        private TestLookupStrategy _helperStrategy;
-        private string projectDirectory;
+        private readonly TestLookupStrategy _helperStrategy;
+        private readonly string _projectDirectory;
         public TestFileDescriptorStrategy()
         {
             _helperStrategy = new TestLookupStrategy();
-            string workingDirectory = Environment.CurrentDirectory;
+            // string workingDirectory = Environment.CurrentDirectory;
+            //
+            // var parentDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+            // var pathSegments = parentDirectory.Split("\\");
+            // pathSegments = pathSegments.Take(pathSegments.Length - 1).ToArray();
+            // projectDirectory = string.Join("\\", pathSegments) + "\\CodeBreakerLib\\";
+            _projectDirectory =
+                "D:\\Honours\\second year\\COS700\\Research project\\code\\Implementation\\CodeBreaker\\CodeBreakerLib\\";
 
-            var parentDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
-            var pathSegments = parentDirectory.Split("\\");
-            pathSegments = pathSegments.Take(pathSegments.Length - 1).ToArray();
-            projectDirectory = string.Join("\\", pathSegments) + "\\CodeBreakerLib\\";
-            
         }
 
         public List<Test<object>> Setup()
         {
-            var fileName = "sample.txt";
-            var target = projectDirectory + fileName;
+            const string fileName = "sample.txt";
+            var target = _projectDirectory + fileName;
 
-            if (!File.Exists(target)) throw new Exception("Test sample file does not exist");
+            if (!File.Exists(target)) throw new Exception($"Test sample file: {target} does not exist");
             
-            string[] lines = File.ReadAllLines(target);
+            var lines = File.ReadAllLines(target);
 
             return GetTestsFromHelper(lines);
 
@@ -36,19 +38,20 @@ namespace CodeBreakerLib.TestHandler
 
         public Test<object> AddTest()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public List<Test<object>> GetTestsFromHelper(string[] lines)
+        private List<Test<object>> GetTestsFromHelper(string[] lines)
         {
-            List<Test<object>> tests = new List<Test<object>>();
+            var tests = new List<Test<object>>();
             
-            for (int i = 0; i < lines.Length; i+= 2)
+            for (var i = 0; i < lines.Length; i+= 3)
             {
-                var className = lines[i];
-                var functionName = lines[i+1];
+                var pathToDll = lines[i];
+                var className = lines[i+1];
+                var functionName = lines[i+2];
 
-                var test = _helperStrategy.AddTest(className, functionName);
+                var test = _helperStrategy.AddTest(pathToDll,className, functionName);
 
                 tests.Add(test);
             }

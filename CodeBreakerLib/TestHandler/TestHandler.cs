@@ -9,26 +9,26 @@ namespace CodeBreakerLib.TestHandler
 
     public class TestHandler
     {
-        public ITestStrategy TestStrategy;
+        private readonly ITestStrategy _testStrategy;
         private List<Test<object>> _tests;
         private int _currentTest = 0;
 
         public TestHandler(ITestStrategy testStrategy)
         {
-            TestStrategy = testStrategy;
+            _testStrategy = testStrategy;
             _tests = new List<Test<object>>();
         }
 
         public void Setup()
         {
-            _tests = TestStrategy.Setup();
+            _tests = _testStrategy.Setup();
         }
 
         public List<object> RunAllTests(List<List<object>> arguments)
         {
-            List<object> results = new List<object>();
+            var results = new List<object>();
 
-            for (int i = 0; i < _tests.Count; i++)
+            for (var i = 0; i < _tests.Count; i++)
             {
                 var currentTest = _tests.ElementAt(i);
                 var argumentsForTest = arguments.ElementAt(i);
@@ -42,6 +42,7 @@ namespace CodeBreakerLib.TestHandler
         {
             return _currentTest >= _tests.Count ? null : _tests.ElementAt(_currentTest++);
         }
+        
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeBreakerLib;
+using CodeBreakerLib.dynamicLoading;
 using CodeBreakerLib.TestHandler;
 
 namespace CodeBreaker
@@ -11,16 +12,15 @@ namespace CodeBreaker
         {
             var testHandler = new TestHandler(new TestFileDescriptorStrategy());
             testHandler.Setup();
-
-            //var test = testHandler.GetNextTest();
-            //var result = test.Run(new List<object>(){1,3});
+            
             List<List<object>> parameters = new List<List<object>>();
-            parameters.Add(new List<object>(){1,4});
-            parameters.Add(new List<object>(){"Hello","World"});
+            parameters.Add(new List<object>(){"racecar"});
+            parameters.Add(new List<object>(){"Hello, World"});
             
             var results = testHandler.RunAllTests(parameters);
-            Console.WriteLine(results);
-
+            Console.WriteLine(results[0]);
+            Console.WriteLine(results[1]);
+            
         }
     }
 }

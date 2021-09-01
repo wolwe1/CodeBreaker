@@ -2,60 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using CodeBreakerLib.dynamicLoading;
+using CodeBreakerLib.exceptions;
 
 namespace CodeBreakerLib
 {
     public class Test<T>
     {
-        public object ClassName;
-        public MethodInfo FunctionName;
-        public List<Type> ArgumentTypes;
-        private Type ReturnType;
-        private Delegate Function;
+        private readonly DynamicMethod _method;
 
-        public Test(object className, MethodInfo functionName, List<Type> argumentTypes)
+        public Test(DynamicMethod method)
         {
-            ClassName = className;
-            FunctionName = functionName;
-            ArgumentTypes = argumentTypes;
-        }
-
-        public Test(object className, MethodInfo functionName, List<Type> argumentTypes, Type returnType, Delegate function)
-        {
-            ClassName = className;
-            FunctionName = functionName;
-            ArgumentTypes = argumentTypes;
-            ReturnType = returnType;
-            Function = function;
-        }
-
-        public Test(object className, MethodInfo functionName, List<Type> argumentTypes, Type returnType)
-        {
-            ClassName = className;
-            FunctionName = functionName;
-            ArgumentTypes = argumentTypes;
-            ReturnType = returnType;
+            _method = method;
         }
 
         public T Run(List<object> parameters)
         {
-            if (ValidParameters(parameters))
-            {
-                object[] parms = parameters.Cast<object>().ToArray();
-                return (T) FunctionName.Invoke(ClassName, parms);
-            }
-            else
-                throw new Exception($"Provided parameters for method {ClassName}.{FunctionName} do not match.\n" +
-                                    $"Provided[{string.Join(",", parameters)}]\n" +
-                                    $"Expected[{string.Join(",", ArgumentTypes)}]\n"
-                );
+            if (!ValidParameters(parameters))
+                throw ParameterMismatchException.Create(_method,parameters);
+            
+            var parms = parameters.Cast<object>().ToArray();
+            
+            return (T) _method.InvokeMethod(parms);
         }
 
         private bool ValidParameters(List<object> parameters)
         {
-            for (var i = 0; i < ArgumentTypes.Count(); i++)
+            for (var i = 0; i < _method.GetArguments().Count; i++)
             {
-                var expectedArgument = ArgumentTypes[i];
+                var expectedArgument = _method.GetArguments()[i];
                 var givenParameter = parameters[i];
 
                 if (!givenParameter.GetType().Equals(expectedArgument))

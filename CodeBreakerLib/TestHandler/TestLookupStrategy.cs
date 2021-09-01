@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using CodeBreakerLib.dynamicLoading;
 
 namespace CodeBreakerLib.TestHandler
 {
@@ -21,22 +22,18 @@ namespace CodeBreakerLib.TestHandler
 
         public Test<object> AddTest()
         {
+            var pathToDll = UserExperience.Get("Full path to .dll");
             var className = UserExperience.Get("Class name");
             var functionName = UserExperience.Get("Function name");
 
-            return AddTest(className, functionName);
+            return AddTest(pathToDll,className, functionName);
         }
         
-        public Test<object> AddTest(string className, string functionName)
+        public Test<object> AddTest(string assemblyLocation,string className, string functionName)
         {
-            var type = GetClassByName(className);
-            var method = type.GetMethod(functionName);
-            
-            var objectOfClass = Activator.CreateInstance(type,null);
-            var argumentTypes = method.GetParameters().Select(x => x.ParameterType).ToList();
-            var returnType = method.ReturnType;
+            var methodToTest = AssemblyLoader.GetMethodFromAssembly(assemblyLocation, className, functionName);
 
-            return new Test<object>(objectOfClass,method,argumentTypes,returnType);
+            return new Test<object>(methodToTest);
         }
         
         public Type GetClassByName(string name)
@@ -67,23 +64,6 @@ namespace CodeBreakerLib.TestHandler
                 _ => null
             };
         }
-        
-        private Delegate CreateDelegate(MethodInfo method)
-        {
-            if (method == null)
-                throw new ArgumentNullException("method");
-            
-            if (!method.IsStatic)
-                throw new ArgumentException("The provided method must be static.", "method");
 
-            if (method.IsGenericMethod)
-                throw new ArgumentException("The provided method must not be generic.", "method");
-            
-            return method.CreateDelegate(Expression.GetDelegateType(
-                (from parameter in method.GetParameters() select parameter.ParameterType)
-                .Concat(new[] { method.ReturnType })
-                .ToArray()));
-        }
-        
     }
 }
