@@ -13,7 +13,7 @@ namespace AutomaticallyDefinedFunctions.generators
 
         public ADFGenerator(int seed, int terminalChance) : base(new Random(seed), terminalChance)
         {
-            _definitionHolder = new FunctionDefinitionHolder<T>(new Random(seed));
+            _definitionHolder = new FunctionDefinitionHolder<T>(NumberGenerator);
             UseFunctionGenerator(_definitionHolder);
         }
         

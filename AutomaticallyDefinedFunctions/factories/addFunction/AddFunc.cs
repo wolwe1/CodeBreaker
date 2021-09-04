@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutomaticallyDefinedFunctions.source.nodes;
 
-namespace AutomaticallyDefinedFunctions.Extensions
+namespace AutomaticallyDefinedFunctions.factories.addFunction
 {
     public abstract class AddFunc<T> : FunctionNode<T> where T : IComparable
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using AutomaticallyDefinedFunctions.Extensions;
+using AutomaticallyDefinedFunctions.factories.addFunction;
 using AutomaticallyDefinedFunctions.source.forLoop;
 using AutomaticallyDefinedFunctions.source.ifStatement;
 using AutomaticallyDefinedFunctions.source.nodes;
 using AutomaticallyDefinedFunctions.source.nodes.valueNodes;
 
-namespace AutomaticallyDefinedFunctions.builders
+namespace AutomaticallyDefinedFunctions.factories
 {
     public class NodeBuilder
     {

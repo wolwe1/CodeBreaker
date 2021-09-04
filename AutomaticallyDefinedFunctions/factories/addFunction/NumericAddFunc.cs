@@ -2,7 +2,7 @@
 using System.Linq;
 using AutomaticallyDefinedFunctions.source.nodes;
 
-namespace AutomaticallyDefinedFunctions.Extensions
+namespace AutomaticallyDefinedFunctions.factories.addFunction
 {
     public class NumericAddFunc : AddFunc<double>
     {

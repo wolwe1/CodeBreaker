@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutomaticallyDefinedFunctions.source.ifStatement;
 using AutomaticallyDefinedFunctions.source.nodes;
 
 namespace AutomaticallyDefinedFunctions.generators.functionGenerators

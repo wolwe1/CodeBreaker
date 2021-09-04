@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AutomaticallyDefinedFunctions.Extensions
+namespace AutomaticallyDefinedFunctions.factories.addFunction
 {
     public static class AddFunctionFactory
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using AutomaticallyDefinedFunctions.Extensions;
+using AutomaticallyDefinedFunctions.factories.addFunction;
 using AutomaticallyDefinedFunctions.source.nodes;
 
 namespace AutomaticallyDefinedFunctions.generators.functionGenerators

@@ -34,7 +34,7 @@ namespace AutomaticallyDefinedFunctions.generators.functionGenerators
             .SetRightPredicate(rightPredicate)
             .SetComparisonOperator(comparator)
             .SetFalseCodeBlock(falseBlock)
-            .SetTrueCodeBlock(falseBlock);
+            .SetTrueCodeBlock(trueBlock);
         }
 
         private NodeComparator<U> ChooseComparator()

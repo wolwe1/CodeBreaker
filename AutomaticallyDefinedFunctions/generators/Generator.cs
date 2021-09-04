@@ -7,7 +7,7 @@ using AutomaticallyDefinedFunctions.source.nodes.valueNodes;
 
 namespace AutomaticallyDefinedFunctions.generators
 {
-    public abstract class Generator<T,U> where T : IComparable where U : Generator<T,U>
+    public abstract class Generator<T,TGenerator> where T : IComparable where TGenerator : Generator<T,TGenerator>
     {
         protected readonly Random NumberGenerator;
         protected int TerminalChance;
@@ -24,34 +24,34 @@ namespace AutomaticallyDefinedFunctions.generators
             FunctionGenerators = new List<FunctionGenerator<T>>();
         }
         
-        public U SetTerminalChance(int chance)
+        public TGenerator SetTerminalChance(int chance)
         {
             TerminalChance = chance;
-            return (U)this;
+            return (TGenerator)this;
         }
 
-        public U UseTerminalNodes(List<ValueNode<T>> terminalNodes)
+        public TGenerator UseTerminalNodes(IEnumerable<ValueNode<T>> terminalNodes)
         {
-            ValueNodes = terminalNodes;
-            return (U)this;
+            ValueNodes = terminalNodes.ToList();
+            return (TGenerator)this;
         }
         
-        public U UseTerminalNode(ValueNode<T> terminalNode)
+        public TGenerator UseTerminalNode(ValueNode<T> terminalNode)
         {
             ValueNodes.Add(terminalNode);
-            return (U)this;
+            return (TGenerator)this;
         }
         
-        public U UseFunctionGenerators(List<FunctionGenerator<T>> functionGenerators)
+        public TGenerator UseFunctionGenerators(List<FunctionGenerator<T>> functionGenerators)
         {
             FunctionGenerators = functionGenerators;
-            return (U)this;
+            return (TGenerator)this;
         }
         
-        public U UseFunctionGenerator(FunctionGenerator<T> functionGenerator)
+        public TGenerator UseFunctionGenerator(FunctionGenerator<T> functionGenerator)
         {
             FunctionGenerators.Add(functionGenerator);
-            return (U)this;
+            return (TGenerator)this;
         }
 
         protected INode<T> Choose()
@@ -59,14 +59,14 @@ namespace AutomaticallyDefinedFunctions.generators
             return Choose(ValueNodes, FunctionGenerators);
         }
         
-        protected INode<U> Choose<U>(List<ValueNode<U>> terminalNodes,List<FunctionGenerator<U>> generators) where U : IComparable
+        protected INode<TX> Choose<TX>(List<ValueNode<TX>> terminalNodes,List<FunctionGenerator<TX>> generators) where TX : IComparable
         {
             var choice = NumberGenerator.Next(100);
 
             return choice < TerminalChance ? ChooseTerminalNode(terminalNodes) : GetFunctionNode(generators);
         }
 
-        private INode<U> GetFunctionNode<U>(List<FunctionGenerator<U>> generators) where U : IComparable
+        private INode<X> GetFunctionNode<X>(List<FunctionGenerator<X>> generators) where X : IComparable
         {
             var choice = NumberGenerator.Next(generators.Count);
 
@@ -75,7 +75,7 @@ namespace AutomaticallyDefinedFunctions.generators
             return generator.Generate();
         }
 
-        protected INode<U> ChooseTerminalNode<U>(List<ValueNode<U>> terminalNodes) where U : IComparable
+        protected INode<X> ChooseTerminalNode<X>(List<ValueNode<X>> terminalNodes) where X : IComparable
         {
             var choice = NumberGenerator.Next(terminalNodes.Count);
 

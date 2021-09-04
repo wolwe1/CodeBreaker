@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace AutomaticallyDefinedFunctions.Extensions
+namespace AutomaticallyDefinedFunctions.factories.addFunction
 {
     public class BooleanAddFunc: AddFunc<bool>
     {

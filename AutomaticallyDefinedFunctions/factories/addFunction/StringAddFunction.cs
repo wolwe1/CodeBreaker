@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace AutomaticallyDefinedFunctions.Extensions
+namespace AutomaticallyDefinedFunctions.factories.addFunction
 {
     public class StringAddFunction : AddFunc<string>
     {

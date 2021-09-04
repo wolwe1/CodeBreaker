@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using AutomaticallyDefinedFunctions.source.nodes.valueNodes;
+
+namespace AutomaticallyDefinedFunctions.factories.valueNodes
+{
+    public static class BooleanValueNodeFactory
+    {
+        public static IEnumerable<ValueNode<bool>> GetAll()
+        {
+            return new List<ValueNode<bool>>() {new(true), new(false)};
+        }
+
+        public static ValueNode<bool> Get()
+        {
+            var choice = RandomNumberFactory.Next(2);
+
+            return choice == 0 ? new ValueNode<bool>(true) : new ValueNode<bool>(false);
+        }
+    }
+}

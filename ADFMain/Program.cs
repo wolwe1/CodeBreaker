@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutomaticallyDefinedFunctions;
-using AutomaticallyDefinedFunctions.Extensions;
+using AutomaticallyDefinedFunctions.factories;
+using AutomaticallyDefinedFunctions.factories.addFunction;
+using AutomaticallyDefinedFunctions.factories.valueNodes;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.generators.functionGenerators;
 using AutomaticallyDefinedFunctions.source;
@@ -90,6 +92,22 @@ namespace ADFMain
             Console.Write($"ADF value : {adf.GetValue()}");
         }
 
+        public static ADFGenerator<T> GeneratorGenerator()
+        {
+            var comparators = ComparatorFactory.GetAllComparators<double>();
+
+            var auxTerminals = ValueNodeFactory.GetAll<double>();
+            
+            var auxFuncs = new List<FunctionGenerator<double>>()
+                {new AddFunctionGenerator<double>(new Random(1),30)};
+            
+            var generator = new ADFGenerator<string>(1, 30)
+                .UseTerminalNodes(auxTerminals)
+                .UseFunctionGenerator(new AddFunctionGenerator<string>(new Random(1),30))
+                .UseFunctionGenerator(
+                    new IfGenerator<string,double>(new Random(1),30, comparators, auxTerminals,auxFuncs
+                    ));
+        }
         private static ForLoopNode<string,double> CreateForLoop()
         {
             var forLoop = new ForLoopNode<string, double>();

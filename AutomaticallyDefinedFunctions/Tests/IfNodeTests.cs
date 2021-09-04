@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using AutomaticallyDefinedFunctions.builders;
-using AutomaticallyDefinedFunctions.Extensions;
+using AutomaticallyDefinedFunctions.factories;
+using AutomaticallyDefinedFunctions.factories.addFunction;
 using AutomaticallyDefinedFunctions.source.ifStatement;
 using AutomaticallyDefinedFunctions.source.nodes;
 using AutomaticallyDefinedFunctions.source.nodes.valueNodes;
