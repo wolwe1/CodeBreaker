@@ -7,7 +7,7 @@ namespace GeneticAlgorithmLib.source.fitnessFunctions
 {
     public interface IFitnessFunction
     {
-        public double Evaluate<T>(IPopulationMember<T> member) where T : IComparable;
+        public Fitness Evaluate<T>(IPopulationMember<T> member) where T : IComparable;
         CalculationResultSet GetNormalisedFitnessValues<T>(GenerationRecord<T> results);
     }
 }

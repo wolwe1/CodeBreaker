@@ -1,13 +1,15 @@
-﻿using GeneticAlgorithmLib.source.core.population;
+﻿using System;
+using GeneticAlgorithmLib.source.core.population;
+using GeneticAlgorithmLib.source.fitnessFunctions;
 
 namespace GeneticAlgorithmLib.source.statistics
 {
     public class MemberRecord<T>
     {
-        private readonly double _fitness;
+        private readonly Fitness _fitness;
         private readonly IPopulationMember<T> _member;
 
-        public MemberRecord(IPopulationMember<T> member, double fitness)
+        public MemberRecord(IPopulationMember<T> member, Fitness fitness)
         {
             _member = member;
             _fitness = fitness;
@@ -28,14 +30,19 @@ namespace GeneticAlgorithmLib.source.statistics
             return this;
         }
 
-        public double GetFitness()
+        public double GetFitnessValue()
         {
-            return _fitness;
+            return _fitness.GetFitness();
         }
 
         public string GetMemberId()
         {
             return _member.GetId();
+        }
+
+        public Fitness GetFitness()
+        {
+            return _fitness;
         }
     }
 }

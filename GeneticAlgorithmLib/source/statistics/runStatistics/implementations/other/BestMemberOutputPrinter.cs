@@ -22,9 +22,9 @@ namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations.ot
             var bestMemberPerGeneration = generationRecords
                 .Select(g => g.GetMemberWithMaxFitness());
 
-            var bestFitnessValue = bestMemberPerGeneration.Max(m => m.GetFitness());
+            var bestFitnessValue = bestMemberPerGeneration.Max(m => m.GetFitnessValue());
 
-            var bestMemberInRun = bestMemberPerGeneration.FirstOrDefault(x => x.GetFitness() == bestFitnessValue);
+            var bestMemberInRun = bestMemberPerGeneration.FirstOrDefault(x => x.GetFitnessValue() == bestFitnessValue);
 
             return new StatisticOutput()
                 .SetHeading("Best member ID")

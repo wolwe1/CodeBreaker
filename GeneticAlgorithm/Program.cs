@@ -18,12 +18,14 @@ namespace GeneticAlgorithm
             IPopulationMutator<double> populationMutator = new NoOpMutator<double>(populationGenerator);
 
             var fitnessFunction =
-                new CompositeFitnessFunction().AddEvaluation(new ValueDistanceFitnessFunction().SetGoal(10), 1);
+                new CompositeFitnessFunction()
+                    .AddEvaluation(new ValueDistanceFitnessFunction().SetGoal(10), 1);
 
             IControlModel<double> controlModel = new SteadyStateControlModel<double>(populationMutator)
                 .UseSelection(new FitnessProportionateSelection(fitnessFunction))
                 .UseTerminationCriteria(new GenerationCountCriteria(20))
                 .UseTerminationCriteria(new NoAverageImprovementCriteria(5))
+                .UseTerminationCriteria(new DesiredFitnessForFitnessFunctionCriteria(typeof(ValueDistanceFitnessFunction), 10))
                 .SetPopulationSize(10);
 
             IExecutionHistory<double> history = new BasicExecutionHistory<double>();

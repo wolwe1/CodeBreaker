@@ -40,7 +40,7 @@ namespace GeneticAlgorithmLib.source.statistics.output
             //For each generation
             for (var index = 0; index < numberOfGenerations; index++)
             {
-                builder.Append($"Generation {index} : ");
+                builder.AppendLine($"Generation {index} : ");
                 foreach (var runStatistic in runStatistics)
                 {
                     var generationValuesForStatistic = runStatistic.GetGenerationValues();
@@ -52,8 +52,7 @@ namespace GeneticAlgorithmLib.source.statistics.output
                         builder.Append(runOutput);
                     }
                 }
-
-                builder.AppendLine();
+                
             }
 
             return builder.ToString();

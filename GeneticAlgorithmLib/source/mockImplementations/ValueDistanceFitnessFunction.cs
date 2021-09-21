@@ -8,13 +8,13 @@ namespace GeneticAlgorithmLib.source.mockImplementations
     {
         private double _goal;
 
-        public override double Evaluate<T>(IPopulationMember<T> member)
+        public override Fitness Evaluate<T>(IPopulationMember<T> member)
         {
             var memberResult = (double) (object) member.GetResult();
 
             var distanceToTarget = Math.Abs(_goal - memberResult);
 
-            return Math.Abs(_goal - distanceToTarget);
+            return new Fitness(typeof(ValueDistanceFitnessFunction),Math.Abs(_goal - distanceToTarget));
         }
 
         public ValueDistanceFitnessFunction SetGoal(double goal)

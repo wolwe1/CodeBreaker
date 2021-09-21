@@ -26,7 +26,7 @@ namespace GeneticAlgorithmLib.source.statistics.calculatedResults
         /// </summary>
         public static CalculationResultSet Create<T>(IEnumerable<MemberRecord<T>> results)
         {
-            var calculationResults = results.Select(x => new CalculationResult(x.GetFitness(), x.GetMemberId()));
+            var calculationResults = results.Select(x => new CalculationResult(x.GetFitnessValue(), x.GetMemberId()));
             return new CalculationResultSet(calculationResults);
         }
 

@@ -13,19 +13,19 @@ namespace GeneticAlgorithmLib.source.fitnessFunctions
             _fitnessCriteria = new List<Tuple<IFitnessFunction, double>>();
         }
 
-        public override double Evaluate<T>(IPopulationMember<T> member)
+        public override Fitness Evaluate<T>(IPopulationMember<T> member)
         {
-            double evaluation = 0;
+            var totalFitness = new Fitness();
 
             foreach (var criterion in _fitnessCriteria)
             {
                 var multiplier = criterion.Item2;
                 var rawFitness = criterion.Item1.Evaluate(member);
 
-                evaluation += rawFitness * multiplier;
+                totalFitness.AddEvaluation(rawFitness, multiplier); // += rawFitness * multiplier;
             }
 
-            return evaluation;
+            return totalFitness;
         }
 
         public CompositeFitnessFunction AddEvaluation(IFitnessFunction function, double multiplyer)

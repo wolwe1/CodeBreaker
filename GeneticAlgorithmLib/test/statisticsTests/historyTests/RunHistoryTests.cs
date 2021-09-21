@@ -1,4 +1,5 @@
 ﻿using System;
+using GeneticAlgorithmLib.source.fitnessFunctions;
 using GeneticAlgorithmLib.source.mockImplementations;
 using GeneticAlgorithmLib.source.statistics;
 using GeneticAlgorithmLib.source.statistics.history;
@@ -44,9 +45,9 @@ namespace GeneticAlgorithmLib.test.statisticsTests.historyTests
 
             for (var i = 0; i < 10; i++)
             {
-                var number = generation * 10 + i;
-                var member = new RandomNumberMember(number);
-                eval.Add(member, number);
+                var fitnessValue = generation * 10 + i;
+                var member = new RandomNumberMember(fitnessValue);
+                eval.Add(member, new Fitness(null,fitnessValue));
             }
 
             return eval;

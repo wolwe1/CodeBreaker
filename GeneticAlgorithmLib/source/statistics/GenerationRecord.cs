@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GeneticAlgorithmLib.source.core.population;
+using GeneticAlgorithmLib.source.fitnessFunctions;
 using GeneticAlgorithmLib.source.statistics.calculatedResults;
 
 namespace GeneticAlgorithmLib.source.statistics
@@ -20,7 +21,7 @@ namespace GeneticAlgorithmLib.source.statistics
 
         public TimeSpan RunTime { get; set; }
 
-        public void Add(IPopulationMember<T> member, double fitness)
+        public void Add(IPopulationMember<T> member, Fitness fitness)
         {
             var newResult = new MemberRecord<T>(member, fitness);
 
@@ -44,9 +45,14 @@ namespace GeneticAlgorithmLib.source.statistics
 
         public MemberRecord<T> GetMemberWithMaxFitness()
         {
-            var highestFitness = _records.Select(r => r.GetFitness()).Max();
+            var highestFitness = _records.Select(r => r.GetFitnessValue()).Max();
 
-            return _records.FirstOrDefault(r => r.GetFitness() == highestFitness);
+            return _records.FirstOrDefault(r => r.GetFitnessValue() == highestFitness);
+        }
+
+        public List<MemberRecord<T>> GetMemberRecords()
+        {
+            return _records;
         }
     }
 }

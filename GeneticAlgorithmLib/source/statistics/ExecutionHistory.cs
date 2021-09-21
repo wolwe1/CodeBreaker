@@ -57,7 +57,7 @@ namespace GeneticAlgorithmLib.source.statistics
                 Console.WriteLine("*****************");
                 Console.WriteLine($"Run {run.GetRunNumber()}");
                 _outputPrinter.Print(runOutput);
-                Console.Write("*****************");
+                Console.WriteLine("*****************");
             }
         }
 

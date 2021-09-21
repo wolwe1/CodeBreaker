@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using GeneticAlgorithmLib.source.fitnessFunctions;
 using GeneticAlgorithmLib.source.mockImplementations;
 using GeneticAlgorithmLib.source.statistics;
 using Xunit;
@@ -47,7 +48,7 @@ namespace GeneticAlgorithmLib.test.statisticsTests
             for (var i = 0; i < 10; i++)
             {
                 var member = new RandomNumberMember(i);
-                eval.Add(member, i);
+                eval.Add(member, new Fitness(null,i));
             }
 
             return eval;

@@ -1,4 +1,5 @@
-﻿using GeneticAlgorithmLib.source.mockImplementations;
+﻿using GeneticAlgorithmLib.source.fitnessFunctions;
+using GeneticAlgorithmLib.source.mockImplementations;
 using GeneticAlgorithmLib.source.statistics;
 using Xunit;
 
@@ -12,9 +13,9 @@ namespace GeneticAlgorithmLib.test.statisticsTests
             var member = new RandomNumberMember();
             var fitness = 10;
 
-            var result = new MemberRecord<double>(member, fitness);
+            var result = new MemberRecord<double>(member, new Fitness(null,fitness));
 
-            Assert.Equal(fitness, result.GetFitness());
+            Assert.Equal(fitness, result.GetFitnessValue());
         }
 
         [Fact]
@@ -23,7 +24,7 @@ namespace GeneticAlgorithmLib.test.statisticsTests
             var member = new RandomNumberMember();
             var fitness = 10;
 
-            var result = new MemberRecord<double>(member, fitness);
+            var result = new MemberRecord<double>(member, new Fitness(null,fitness));
 
             Assert.False(result.IsDuplicate);
             Assert.Equal(1, result.NumberOfDuplicates);
@@ -45,7 +46,7 @@ namespace GeneticAlgorithmLib.test.statisticsTests
             var member = new RandomNumberMember();
             var fitness = 10;
 
-            var result = new MemberRecord<double>(member, fitness);
+            var result = new MemberRecord<double>(member, new Fitness(null,fitness));
             Assert.Equal(member.GetId(), result.GetMemberId());
         }
     }
