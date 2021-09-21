@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
 
 namespace CodeBreakerLib.dynamicLoading
 {
@@ -27,6 +26,11 @@ namespace CodeBreakerLib.dynamicLoading
         public void Print()
         {
             Console.WriteLine($"Type:{_type} , Object:{_classObject}");
+        }
+
+        public string GetName()
+        {
+            return _type?.FullName?.Split(".").Last() ?? "Undefined";
         }
     }
 }

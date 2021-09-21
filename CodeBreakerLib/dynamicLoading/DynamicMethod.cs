@@ -61,5 +61,10 @@ namespace CodeBreakerLib.dynamicLoading
         {
             return _argumentTypes;
         }
+
+        public string GetFullName()
+        {
+            return $"{_class.GetName()} - {GetName()}";
+        }
     }
 }

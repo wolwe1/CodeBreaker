@@ -9,4 +9,13 @@
       <ProjectReference Include="..\CodeBreakerLib\CodeBreakerLib.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="AutomaticallyDefinedFunctions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\ADFMain\AutomaticallyDefinedFunctions\bin\Debug\net5.0\AutomaticallyDefinedFunctions.dll</HintPath>
+      </Reference>
+      <Reference Include="GeneticAlgorithmLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\GeneticAlgorithm\GeneticAlgorithmLib\bin\Debug\net5.0\GeneticAlgorithmLib.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

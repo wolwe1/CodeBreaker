@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CodeBreakerLib.TestHandler
+namespace CodeBreakerLib.testHandler.setup
 {
     public class ManualTestConnectionStrategy : ITestStrategy
     {

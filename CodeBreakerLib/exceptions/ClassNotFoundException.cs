@@ -1,21 +1,21 @@
 ﻿using System;
+using System.Linq;
 
 namespace CodeBreakerLib.exceptions
 {
     public class ClassNotFoundException : Exception
     {
-        public ClassNotFoundException()
+        
+        public ClassNotFoundException(string className, Type[] types) : base(CreateMessage(className,types))
         {
         }
 
-        public ClassNotFoundException(string message)
-            : base(message)
+        private static string CreateMessage(string classname,Type[] availableTypes)
         {
-        }
-
-        public ClassNotFoundException(string message, Exception inner)
-            : base(message, inner)
-        {
+            var types = string.Join(",", availableTypes.Select(t => t.Name));
+            
+            return $"Could not load class {classname} in assembly, " +
+                   $"available types are: {types}\n";
         }
     }
 }

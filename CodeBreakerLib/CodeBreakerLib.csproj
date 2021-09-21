@@ -4,4 +4,21 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Reference Include="AutomaticallyDefinedFunctions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\ADFMain\AutomaticallyDefinedFunctions\bin\Debug\net5.0\AutomaticallyDefinedFunctions.dll</HintPath>
+      </Reference>
+      <Reference Include="GeneticAlgorithmLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\GeneticAlgorithm\GeneticAlgorithmLib\bin\Debug\net5.0\GeneticAlgorithmLib.dll</HintPath>
+      </Reference>
+      <Reference Include="TestObjectRunner, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\..\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Flurl" Version="3.0.2" />
+      <PackageReference Include="Flurl.Http" Version="3.2.0" />
+    </ItemGroup>
+
 </Project>

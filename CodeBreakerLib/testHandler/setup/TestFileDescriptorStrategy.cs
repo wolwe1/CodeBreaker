@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
-namespace CodeBreakerLib.TestHandler
+namespace CodeBreakerLib.testHandler.setup
 {
     public class TestFileDescriptorStrategy : ITestStrategy
     {
