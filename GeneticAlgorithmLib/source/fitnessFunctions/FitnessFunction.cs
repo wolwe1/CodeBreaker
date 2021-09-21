@@ -7,13 +7,14 @@ namespace GeneticAlgorithmLib.source.fitnessFunctions
 {
     public abstract class FitnessFunction : IFitnessFunction
     {
-        protected bool _isMaximising;
+        protected bool IsMaximising;
 
         protected FitnessFunction()
         {
-            _isMaximising = true;
+            IsMaximising = true;
         }
-        public abstract double Evaluate<T>(IPopulationMember<T> member);
+
+        public abstract double Evaluate<T>(IPopulationMember<T> member) where T : IComparable;
 
         public CalculationResultSet GetNormalisedFitnessValues<T>(GenerationRecord<T> results)
         {
@@ -26,14 +27,14 @@ namespace GeneticAlgorithmLib.source.fitnessFunctions
         public FitnessFunction UseMinimisation()
         {
             throw new NotImplementedException();
-            _isMaximising = false;
+            IsMaximising = false;
 
             return this;
         }
-        
+
         public FitnessFunction UseMaximisation()
         {
-            _isMaximising = true;
+            IsMaximising = true;
 
             return this;
         }

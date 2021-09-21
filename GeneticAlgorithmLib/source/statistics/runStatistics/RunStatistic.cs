@@ -1,26 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using GeneticAlgorithmLib.source.statistics.calculatedResults;
+using GeneticAlgorithmLib.source.statistics.output;
 
 namespace GeneticAlgorithmLib.source.statistics.runStatistics
 {
     public abstract class RunStatistic : IRunStatistic
     {
-        protected readonly string Heading;
-        protected readonly bool IncludeGenerationOutput;
+        private readonly string _heading;
         protected string Scale;
 
         protected RunStatistic(string heading)
         {
-            Heading = heading;
-            IncludeGenerationOutput = true;
+            _heading = heading;
             Scale = "";
         }
-        public abstract string GetStatistic<T>(List<GenerationRecord<T>> generationResults);
 
-        protected static List<CalculationResultSet> CreateGenerationResultSets<T>(List<GenerationRecord<T>> generationResults)
+        public abstract StatisticOutput GetStatistic<T>(List<GenerationRecord<T>> generationResults);
+
+        protected static List<CalculationResultSet> CreateGenerationResultSets<T>(
+            List<GenerationRecord<T>> generationResults)
         {
             var convertedGenerationResults = new List<CalculationResultSet>();
 
@@ -32,33 +30,16 @@ namespace GeneticAlgorithmLib.source.statistics.runStatistics
 
             return convertedGenerationResults;
         }
-        
-        protected string GetGenerationOutput(CalculationResultSet generationStats)
+
+        protected StatisticOutput GetOutput(CalculationResultSet generationStats, double runStatistic)
         {
-            var builder = new StringBuilder();
-            var generationValues = generationStats.ToList();
+            var output = new StatisticOutput()
+                .SetHeading(_heading)
+                .SetGenerationValues(generationStats)
+                .SetRunValue(runStatistic)
+                .SetScale(Scale);
 
-            for (var generation = 0; generation < generationValues.Count(); generation++)
-            {
-                var value = generationValues[generation].GetResult();
-                builder.AppendLine($"\tGeneration {generation} - {Heading}: {value} {Scale}");
-            }
-            
-            return builder.ToString();
-        }
-
-        protected string GetOutput(CalculationResultSet generationStats, double runStatistic)
-        {
-            var builder = new StringBuilder();
-
-            builder.AppendLine($"{Heading} : \t{runStatistic} {Scale}");
-            
-            if (IncludeGenerationOutput)
-            {
-                builder.AppendLine(GetGenerationOutput(generationStats));
-            }
-
-            return builder.ToString();
+            return output;
         }
     }
 }

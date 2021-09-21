@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using GeneticAlgorithmLib.source.statistics.history;
+using GeneticAlgorithmLib.source.statistics.output;
 using GeneticAlgorithmLib.source.statistics.runStatistics;
 using GeneticAlgorithmLib.source.statistics.runStatistics.implementations;
 using GeneticAlgorithmLib.source.statistics.runStatistics.implementations.measure;
@@ -11,27 +12,27 @@ namespace GeneticAlgorithmLib.source.statistics
 {
     public abstract class ExecutionHistory<T> : IExecutionHistory<T>
     {
-        protected readonly List<RunRecord<T>> RunHistory;
-        protected int CurrentRunCount;
-        protected readonly List<IRunStatistic> RunStatistics;
-        
-        private Stopwatch _generationStopwatch;
+        private readonly Stopwatch _generationStopwatch;
+        private readonly IOutputPrinter _outputPrinter;
+        private readonly List<RunRecord<T>> _runHistory;
+        private readonly List<IRunStatistic> _runStatistics;
+        private int _currentRunCount;
 
         protected ExecutionHistory()
         {
-            RunStatistics = new List<IRunStatistic>();
-            RunHistory = new List<RunRecord<T>>();
-            CurrentRunCount = -1;
-            
+            _runStatistics = new List<IRunStatistic>();
+            _runHistory = new List<RunRecord<T>>();
+            _currentRunCount = -1;
+
             _generationStopwatch = new Stopwatch();
+            _outputPrinter = new DefaultOutputPrinter();
         }
 
         public void NewRun()
         {
-            var newRun = new RunRecord<T>(++CurrentRunCount);
-            
-            RunHistory.Add(newRun);
-            
+            var newRun = new RunRecord<T>(++_currentRunCount);
+
+            _runHistory.Add(newRun);
         }
 
         public void NewGeneration()
@@ -42,29 +43,33 @@ namespace GeneticAlgorithmLib.source.statistics
         public void CloseGeneration(GenerationRecord<T> generationRecord)
         {
             generationRecord.RunTime = StopGenerationTimer();
-            
-            var targetRun = RunHistory.ElementAt(CurrentRunCount);
+
+            var targetRun = _runHistory.ElementAt(_currentRunCount);
 
             targetRun.AddGeneration(generationRecord);
         }
 
         public void Summarise()
         {
-            foreach (var run in RunHistory)
+            foreach (var run in _runHistory)
             {
-                run.Summarise(RunStatistics);
+                var runOutput = run.Summarise(_runStatistics);
+                Console.WriteLine("*****************");
+                Console.WriteLine($"Run {run.GetRunNumber()}");
+                _outputPrinter.Print(runOutput);
+                Console.Write("*****************");
             }
         }
 
         public ExecutionHistory<T> UseStatistic(IRunStatistic statistic)
         {
-            RunStatistics.Add(statistic);
+            _runStatistics.Add(statistic);
             return this;
         }
-        
+
         public ExecutionHistory<T> UseFitnessMeasure(IStatisticMeasure measure)
         {
-            RunStatistics.Add(new FitnessStatistic(measure));
+            _runStatistics.Add(new FitnessStatistic(measure));
             return this;
         }
 

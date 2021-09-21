@@ -12,7 +12,7 @@ namespace GeneticAlgorithmLib.source.controlModel.selectionMethods
         {
             FitnessFunction = function;
         }
-        
+
         public abstract List<string> Select<T>(GenerationRecord<T> results);
     }
 }

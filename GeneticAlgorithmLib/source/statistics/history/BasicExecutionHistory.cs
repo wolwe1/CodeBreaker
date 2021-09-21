@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GeneticAlgorithmLib.source.statistics.runStatistics;
-using GeneticAlgorithmLib.source.statistics.runStatistics.implementations;
+﻿using GeneticAlgorithmLib.source.statistics.runStatistics.implementations;
 using GeneticAlgorithmLib.source.statistics.runStatistics.implementations.measure;
-using GeneticAlgorithmLib.test.statisticsTests;
+using GeneticAlgorithmLib.source.statistics.runStatistics.implementations.other;
 
 namespace GeneticAlgorithmLib.source.statistics.history
 {
@@ -13,7 +9,9 @@ namespace GeneticAlgorithmLib.source.statistics.history
         public BasicExecutionHistory()
         {
             UseFitnessMeasure(new AverageMeasure());
+            UseFitnessMeasure(new BestPerformerMeasure());
             UseStatistic(new RunTimeStatistic(new AverageMeasure()));
+            UseStatistic(new BestMemberOutputPrinter());
         }
     }
 }

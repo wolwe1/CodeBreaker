@@ -29,5 +29,12 @@ namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations.me
 
             return total / calculationResultSet.Size();
         }
+
+        public double Get<T>(GenerationRecord<T> generationRecord)
+        {
+            var fitnessValues = generationRecord.GetFitnessValues();
+
+            return GetAverageOfSet(fitnessValues);
+        }
     }
 }

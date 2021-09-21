@@ -13,6 +13,7 @@ namespace GeneticAlgorithmLib.source.mockImplementations
         {
             _generator = generator;
         }
+
         public List<IPopulationMember<T>> ApplyOperators(List<string> parents)
         {
             var newMembers = new List<IPopulationMember<T>>();

@@ -11,7 +11,6 @@ namespace GeneticAlgorithmLib.source.controlModel.selectionMethods
     {
         public FitnessProportionateSelection(IFitnessFunction fitnessFunction) : base(fitnessFunction)
         {
-            
         }
 
         public override List<string> Select<T>(GenerationRecord<T> results)
@@ -21,11 +20,8 @@ namespace GeneticAlgorithmLib.source.controlModel.selectionMethods
             var selectedMembers = new List<string>();
 
             var candidates = numOccurrencesInNextPop.Where(x => x.GetResult() >= 1).ToList();
-            
-            foreach (var candidate in candidates)
-            {
-                selectedMembers.AddRange(RepeatMemberIdBasedOnOccurence(candidate));
-            }
+
+            foreach (var candidate in candidates) selectedMembers.AddRange(RepeatMemberIdBasedOnOccurence(candidate));
 
             return selectedMembers;
         }
@@ -33,17 +29,14 @@ namespace GeneticAlgorithmLib.source.controlModel.selectionMethods
         private IEnumerable<string> RepeatMemberIdBasedOnOccurence(CalculationResult candidate)
         {
             var selectedMembers = new List<string>();
-            
+
             var numOccurencesInNextPop = candidate.GetResult();
 
-            for (var i = 0; i < numOccurencesInNextPop; i++)
-            {
-                selectedMembers.Add(candidate.GetMemberId());
-            }
+            for (var i = 0; i < numOccurencesInNextPop; i++) selectedMembers.Add(candidate.GetMemberId());
 
             return selectedMembers;
         }
-        
+
         private List<CalculationResult> GetNumOccurrencesInNextPop<T>(GenerationRecord<T> results)
         {
             var popSize = results.Size();

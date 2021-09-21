@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using GeneticAlgorithmLib.source.mockImplementations;
 using GeneticAlgorithmLib.source.statistics.calculatedResults;
 using Xunit;
@@ -21,9 +20,8 @@ namespace GeneticAlgorithmLib.test.statisticsTests.calculatedResults
             var modifiedBySet = set.Map(func);
 
             Assert.True(manualSet.Matches(modifiedBySet));
-            
         }
-        
+
         [Fact]
         public static void SetsOfDifferingSizesDoNotMatch()
         {
@@ -33,30 +31,27 @@ namespace GeneticAlgorithmLib.test.statisticsTests.calculatedResults
             var manualSet = new CalculationResultSet(list);
 
             Assert.False(manualSet.Matches(set));
-            
         }
-        
+
         [Fact]
         public static void SetsWithDifferentResultDoNotMatch()
         {
             var originalSet = GetResultSet();
             var modifiedSet = originalSet.Map(x => x - 1);
-            
-            Assert.False(originalSet.Matches(modifiedSet));
 
+            Assert.False(originalSet.Matches(modifiedSet));
         }
-        
+
         [Fact]
         public static void MaxReturnsLargestResult()
         {
             var originalSet = GetResultSet();
             var modifiedSet = originalSet.Map(x => x == 5 ? 50 : x);
-            
-            Assert.Equal(9,originalSet.Max());
-            Assert.Equal(50,modifiedSet.Max());
 
+            Assert.Equal(9, originalSet.Max());
+            Assert.Equal(50, modifiedSet.Max());
         }
-        
+
         [Fact]
         public static void GetThrowsOnInvalidAccess()
         {
@@ -64,7 +59,6 @@ namespace GeneticAlgorithmLib.test.statisticsTests.calculatedResults
 
             Assert.Throws<IndexOutOfRangeException>(() => set.Get(-1));
             Assert.Throws<IndexOutOfRangeException>(() => set.Get(10));
-
         }
 
         public static IEnumerable<object[]> TestMapSet()
@@ -73,18 +67,18 @@ namespace GeneticAlgorithmLib.test.statisticsTests.calculatedResults
             yield return new object[] {(CalculationResultExtensions.MapFunc) (x => x + 3)};
             yield return new object[] {(CalculationResultExtensions.MapFunc) (x => x - 1)};
             yield return new object[] {(CalculationResultExtensions.MapFunc) (x => x * 20)};
-            yield return new object[] {(CalculationResultExtensions.MapFunc) (Math.Cos)};
+            yield return new object[] {(CalculationResultExtensions.MapFunc) Math.Cos};
         }
-        
+
         private static List<CalculationResult> GetResultList()
         {
             var resultList = new List<CalculationResult>();
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 var num = i;
                 var member = new RandomNumberMember(i);
 
-                var newResult = new CalculationResult(num,member.GetId());
+                var newResult = new CalculationResult(num, member.GetId());
                 resultList.Add(newResult);
             }
 

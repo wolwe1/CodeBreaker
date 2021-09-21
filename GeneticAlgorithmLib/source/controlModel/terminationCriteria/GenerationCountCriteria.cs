@@ -15,5 +15,10 @@ namespace GeneticAlgorithmLib.source.controlModel.terminationCriteria
         {
             return generationCount >= _maxGenerations;
         }
+
+        public string GetReason()
+        {
+            return "Reached desired generation count";
+        }
     }
 }

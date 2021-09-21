@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\GeneticAlgorithmLib\GeneticAlgorithmLib.csproj" />
+        <ProjectReference Include="..\GeneticAlgorithmLib\GeneticAlgorithmLib.csproj"/>
     </ItemGroup>
 
 </Project>

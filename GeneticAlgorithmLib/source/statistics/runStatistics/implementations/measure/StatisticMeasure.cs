@@ -12,18 +12,19 @@ namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations.me
         public abstract string GetHeading();
 
         /// <summary>
-        /// Creates a <see cref="CalculationResultSet"/> from a list of calculated values, by attaching a generation number to the value
+        ///     Creates a <see cref="CalculationResultSet" /> from a list of calculated values, by attaching a generation number to
+        ///     the value
         /// </summary>
         /// <param name="generationCalculations">The calculated statistical values for the generations</param>
-        /// <returns>A <see cref="CalculationResultSet"/> representing the generations and their statistic</returns>
+        /// <returns>A <see cref="CalculationResultSet" /> representing the generations and their statistic</returns>
         protected CalculationResultSet CreateResultSetForGenerations(IEnumerable<double> generationCalculations)
         {
             var generationResults = new List<CalculationResult>();
-            
-            for (int i = 0; i < generationCalculations.Count(); i++)
+
+            for (var i = 0; i < generationCalculations.Count(); i++)
             {
                 var calculatedResult = generationCalculations.ElementAt(i);
-                generationResults.Add( new CalculationResult(calculatedResult,$"Generation {i}"));
+                generationResults.Add(new CalculationResult(calculatedResult, $"Generation {i}"));
             }
 
             return new CalculationResultSet(generationResults);

@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GeneticAlgorithmLib.source.statistics.calculatedResults;
+using GeneticAlgorithmLib.source.statistics.output;
 using GeneticAlgorithmLib.source.statistics.runStatistics.implementations.measure;
 
 namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations
 {
     public class RunTimeStatistic : RunStatistic
     {
-        private IStatisticMeasure _measure;
+        private readonly IStatisticMeasure _measure;
         private IRuntimeMeasurement _runtimeMeasurement;
 
         public RunTimeStatistic(IStatisticMeasure measure) : base($"{measure.GetHeading()} Execution time")
@@ -15,13 +16,14 @@ namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations
             _measure = measure;
             _runtimeMeasurement = new SecondsMeasurement();
         }
-        public override string GetStatistic<T>(List<GenerationRecord<T>> generationResults)
+
+        public override StatisticOutput GetStatistic<T>(List<GenerationRecord<T>> generationResults)
         {
             AdjustTimeScale(generationResults);
             var generationRunTimes = GetCalculationResultSet(generationResults);
-            
+
             var averageRunTime = _measure.GetRunStatistic(generationRunTimes);
-            
+
             return GetOutput(generationRunTimes, averageRunTime);
         }
 
@@ -40,13 +42,13 @@ namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations
 
             Scale = _runtimeMeasurement.GetScale();
         }
-        
+
 
         private CalculationResultSet GetCalculationResultSet<T>(List<GenerationRecord<T>> generationResults)
         {
             var generationRunTimes = new List<CalculationResult>();
 
-            for (int i = 0; i < generationResults.Count(); i++)
+            for (var i = 0; i < generationResults.Count(); i++)
             {
                 var generationResult = generationResults.ElementAt(i);
 
@@ -58,6 +60,5 @@ namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations
 
             return new CalculationResultSet(generationRunTimes);
         }
-        
     }
 }

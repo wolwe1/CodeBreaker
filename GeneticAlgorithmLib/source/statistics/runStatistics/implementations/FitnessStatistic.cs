@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GeneticAlgorithmLib.source.statistics.output;
 using GeneticAlgorithmLib.source.statistics.runStatistics.implementations.measure;
 
 namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations
@@ -11,8 +12,8 @@ namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations
         {
             _measure = measure;
         }
-        
-        public override string GetStatistic<T>(List<GenerationRecord<T>> generationResults)
+
+        public override StatisticOutput GetStatistic<T>(List<GenerationRecord<T>> generationResults)
         {
             var generationResultSets = CreateGenerationResultSets(generationResults);
 

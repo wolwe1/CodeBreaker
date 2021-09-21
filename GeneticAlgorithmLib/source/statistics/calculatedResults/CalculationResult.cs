@@ -1,7 +1,7 @@
 ﻿namespace GeneticAlgorithmLib.source.statistics.calculatedResults
 {
     /// <summary>
-    /// Represents an IPopulationMember and a calculated value pair
+    ///     Represents an IPopulationMember and a calculated value pair
     /// </summary>
     public class CalculationResult
     {
@@ -15,7 +15,7 @@
         }
 
         /// <summary>
-        /// Returns the ID of the represented IPopulationMember
+        ///     Returns the ID of the represented IPopulationMember
         /// </summary>
         /// <returns>The member ID</returns>
         public string GetMemberId()
@@ -24,13 +24,12 @@
         }
 
         /// <summary>
-        /// Returns the stored calculation
+        ///     Returns the stored calculation
         /// </summary>
         /// <returns>The calculated result</returns>
         public double GetResult()
         {
             return _result;
         }
-        
     }
 }

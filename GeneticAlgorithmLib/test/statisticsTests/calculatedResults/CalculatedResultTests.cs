@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GeneticAlgorithmLib.source.mockImplementations;
@@ -15,15 +14,14 @@ namespace GeneticAlgorithmLib.test.statisticsTests.calculatedResults
         {
             var num = 0;
             var member = new RandomNumberMember(0);
-            
+
             var result = new CalculationResult(num, member.GetId());
 
             num = 1;
             member = new RandomNumberMember(1);
-            
-            Assert.Equal(0,result.GetResult());
-            Assert.Equal("0",result.GetMemberId());
 
+            Assert.Equal(0, result.GetResult());
+            Assert.Equal("0", result.GetMemberId());
         }
 
         [Fact]
@@ -32,38 +30,35 @@ namespace GeneticAlgorithmLib.test.statisticsTests.calculatedResults
             var origin = GetResultList();
 
             var newList = origin.Map(x => x + 1);
-            var acc = origin.Accumulator((x,n) => x + n);
+            var acc = origin.Accumulator((x, n) => x + n);
 
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 var calc = origin.ElementAt(i).GetResult();
 
                 Assert.Equal(i, calc);
             }
-            
         }
-        
+
         [Fact]
         public static void AccumulatorThrowsOnEmpty()
         {
             var origin = new List<CalculationResult>();
 
-            Assert.Throws<Exception>( () => origin.Accumulator((x, n) => x + n));
-
+            Assert.Throws<Exception>(() => origin.Accumulator((x, n) => x + n));
         }
-        
+
         [Theory]
         [MemberData(nameof(AccumulatorSet))]
-        public static void AccumulatorAppliesCorrectly(CalculationResultExtensions.AccFunc func,double expected)
+        public static void AccumulatorAppliesCorrectly(CalculationResultExtensions.AccFunc func, double expected)
         {
             var origin = GetResultList();
 
             var acc = origin.Accumulator(func);
 
-            Assert.Equal(expected,acc);
-            
+            Assert.Equal(expected, acc);
         }
-        
+
         [Theory]
         [MemberData(nameof(TestMapSet))]
         public static void MapModifiesListCorrectly(CalculationResultExtensions.MapFunc func)
@@ -72,7 +67,7 @@ namespace GeneticAlgorithmLib.test.statisticsTests.calculatedResults
 
             var newList = origin.Map(func);
 
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 var calc = origin.ElementAt(i).GetResult();
                 var mappedCalc = newList.ElementAt(i).GetResult();
@@ -81,7 +76,6 @@ namespace GeneticAlgorithmLib.test.statisticsTests.calculatedResults
 
                 Assert.Equal(manualCalc, mappedCalc);
             }
-            
         }
 
         public static IEnumerable<object[]> TestMapSet()
@@ -90,26 +84,26 @@ namespace GeneticAlgorithmLib.test.statisticsTests.calculatedResults
             yield return new object[] {(CalculationResultExtensions.MapFunc) (x => x + 3)};
             yield return new object[] {(CalculationResultExtensions.MapFunc) (x => x - 1)};
             yield return new object[] {(CalculationResultExtensions.MapFunc) (x => x * 20)};
-            yield return new object[] {(CalculationResultExtensions.MapFunc) (Math.Cos)};
+            yield return new object[] {(CalculationResultExtensions.MapFunc) Math.Cos};
         }
-        
+
         public static IEnumerable<object[]> AccumulatorSet()
         {
-            yield return new object[] {(CalculationResultExtensions.AccFunc) ((x,n) => x + n),45};
-            yield return new object[] {(CalculationResultExtensions.AccFunc) ((x,n) => x - n),-45};
+            yield return new object[] {(CalculationResultExtensions.AccFunc) ((x, n) => x + n), 45};
+            yield return new object[] {(CalculationResultExtensions.AccFunc) ((x, n) => x - n), -45};
             //yield return new object[] {(CalculationResultExtensions.AccFunc) ((x,n) => x / n)};
-            yield return new object[] {(CalculationResultExtensions.AccFunc) ((x,n) => x * n),0};
+            yield return new object[] {(CalculationResultExtensions.AccFunc) ((x, n) => x * n), 0};
         }
-        
+
         private static List<CalculationResult> GetResultList()
         {
             var resultList = new List<CalculationResult>();
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 var num = i;
                 var member = new RandomNumberMember(i);
 
-                var newResult = new CalculationResult(num,member.GetId());
+                var newResult = new CalculationResult(num, member.GetId());
                 resultList.Add(newResult);
             }
 

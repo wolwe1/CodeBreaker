@@ -1,5 +1,4 @@
-﻿using GeneticAlgorithmLib.source.core.population;
-using GeneticAlgorithmLib.source.mockImplementations;
+﻿using GeneticAlgorithmLib.source.mockImplementations;
 using GeneticAlgorithmLib.source.statistics;
 using Xunit;
 
@@ -14,8 +13,8 @@ namespace GeneticAlgorithmLib.test.statisticsTests
             var fitness = 10;
 
             var result = new MemberRecord<double>(member, fitness);
-            
-            Assert.Equal(fitness,result.GetFitness());
+
+            Assert.Equal(fitness, result.GetFitness());
         }
 
         [Fact]
@@ -25,20 +24,19 @@ namespace GeneticAlgorithmLib.test.statisticsTests
             var fitness = 10;
 
             var result = new MemberRecord<double>(member, fitness);
-            
+
             Assert.False(result.IsDuplicate);
-            Assert.Equal(1,result.NumberOfDuplicates);
+            Assert.Equal(1, result.NumberOfDuplicates);
 
             result.AddDuplicate();
-            
-            Assert.True(result.IsDuplicate);
-            Assert.Equal(2,result.NumberOfDuplicates);
-            
-            result.AddDuplicate();
-            
-            Assert.True(result.IsDuplicate);
-            Assert.Equal(3,result.NumberOfDuplicates);
 
+            Assert.True(result.IsDuplicate);
+            Assert.Equal(2, result.NumberOfDuplicates);
+
+            result.AddDuplicate();
+
+            Assert.True(result.IsDuplicate);
+            Assert.Equal(3, result.NumberOfDuplicates);
         }
 
         [Fact]
@@ -48,7 +46,7 @@ namespace GeneticAlgorithmLib.test.statisticsTests
             var fitness = 10;
 
             var result = new MemberRecord<double>(member, fitness);
-            Assert.Equal(member.GetId(),result.GetMemberId());
+            Assert.Equal(member.GetId(), result.GetMemberId());
         }
     }
 }

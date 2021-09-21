@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using GeneticAlgorithmLib.source.statistics.output;
 
 namespace GeneticAlgorithmLib.source.statistics.runStatistics
 {
     public interface IRunStatistic
     {
-        string GetStatistic<T>(List<GenerationRecord<T>> evaluationResults);
+        StatisticOutput GetStatistic<T>(List<GenerationRecord<T>> evaluationResults);
     }
 }

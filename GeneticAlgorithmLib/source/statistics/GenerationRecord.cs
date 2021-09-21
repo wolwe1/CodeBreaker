@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using GeneticAlgorithmLib.source.core.population;
 using GeneticAlgorithmLib.source.statistics.calculatedResults;
 
 namespace GeneticAlgorithmLib.source.statistics
 {
     /// <summary>
-    /// Holds a set of IPopulationMember ID and Result pairs
+    ///     Holds a set of IPopulationMember ID and Result pairs
     /// </summary>
     public class GenerationRecord<T>
     {
         private readonly List<MemberRecord<T>> _records;
-        public TimeSpan RunTime { get; set; }
 
         public GenerationRecord()
         {
             _records = new List<MemberRecord<T>>();
         }
 
+        public TimeSpan RunTime { get; set; }
+
         public void Add(IPopulationMember<T> member, double fitness)
         {
-            var newResult = new MemberRecord<T>(member,fitness);
-            
+            var newResult = new MemberRecord<T>(member, fitness);
+
             _records.Add(newResult);
         }
 
@@ -41,6 +42,11 @@ namespace GeneticAlgorithmLib.source.statistics
             return _records.Count;
         }
 
+        public MemberRecord<T> GetMemberWithMaxFitness()
+        {
+            var highestFitness = _records.Select(r => r.GetFitness()).Max();
+
+            return _records.FirstOrDefault(r => r.GetFitness() == highestFitness);
+        }
     }
-    
 }

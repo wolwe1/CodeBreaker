@@ -8,7 +8,6 @@ namespace GeneticAlgorithmLib.test.statisticsTests.historyTests
 {
     public class RunHistoryTests
     {
-
         [Fact]
         public static void GetGenerationReturnsCorrectRun()
         {
@@ -16,12 +15,11 @@ namespace GeneticAlgorithmLib.test.statisticsTests.historyTests
 
             var gen1 = history.GetGeneration(0);
             var gen10 = history.GetGeneration(9);
-            
-            Assert.Equal(45,gen1.GetTotalFitness());
-            Assert.Equal(945,gen10.GetTotalFitness());
-       
+
+            Assert.Equal(45, gen1.GetTotalFitness());
+            Assert.Equal(945, gen10.GetTotalFitness());
         }
-        
+
         [Fact]
         public static void GetGenerationThrowsOnInvalidAccess()
         {
@@ -35,10 +33,7 @@ namespace GeneticAlgorithmLib.test.statisticsTests.historyTests
         {
             var history = new RunRecord<double>(0);
 
-            for (int i = 0; i < 10; i++)
-            {
-                history.AddGeneration( GetEval(i));
-            }
+            for (var i = 0; i < 10; i++) history.AddGeneration(GetEval(i));
 
             return history;
         }
@@ -47,11 +42,11 @@ namespace GeneticAlgorithmLib.test.statisticsTests.historyTests
         {
             var eval = new GenerationRecord<double>();
 
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
-                var number = (generation * 10) + i;
+                var number = generation * 10 + i;
                 var member = new RandomNumberMember(number);
-                eval.Add(member,number);
+                eval.Add(member, number);
             }
 
             return eval;

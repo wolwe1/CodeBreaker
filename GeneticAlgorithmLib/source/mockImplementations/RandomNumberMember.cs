@@ -6,7 +6,7 @@ namespace GeneticAlgorithmLib.source.mockImplementations
     public class RandomNumberMember : IPopulationMember<double>
     {
         private readonly double _value;
-        
+
         public RandomNumberMember()
         {
             _value = new Random().Next(11);

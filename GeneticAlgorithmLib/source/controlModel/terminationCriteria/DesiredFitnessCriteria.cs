@@ -4,7 +4,7 @@ namespace GeneticAlgorithmLib.source.controlModel.terminationCriteria
 {
     public class DesiredFitnessCriteria : ITerminationCriteria
     {
-        private double _desiredFitness;
+        private readonly double _desiredFitness;
 
         public DesiredFitnessCriteria(double desiredFitness)
         {
@@ -17,7 +17,11 @@ namespace GeneticAlgorithmLib.source.controlModel.terminationCriteria
             var bestFitness = fitnessValues.Max();
 
             return bestFitness >= _desiredFitness;
+        }
 
+        public string GetReason()
+        {
+            return $"The desired fitness of {_desiredFitness} was met";
         }
     }
 }

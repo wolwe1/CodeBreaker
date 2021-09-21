@@ -6,7 +6,7 @@ namespace GeneticAlgorithmLib.source.fitnessFunctions
 {
     public class CompositeFitnessFunction : FitnessFunction
     {
-        private List<Tuple<IFitnessFunction, double>> _fitnessCriteria;
+        private readonly List<Tuple<IFitnessFunction, double>> _fitnessCriteria;
 
         public CompositeFitnessFunction()
         {
@@ -30,7 +30,7 @@ namespace GeneticAlgorithmLib.source.fitnessFunctions
 
         public CompositeFitnessFunction AddEvaluation(IFitnessFunction function, double multiplyer)
         {
-            _fitnessCriteria.Add(new Tuple<IFitnessFunction, double>(function,multiplyer));
+            _fitnessCriteria.Add(new Tuple<IFitnessFunction, double>(function, multiplyer));
 
             return this;
         }
