@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using TestObjectlib.source.simple.numeric;
+﻿using System.Collections.Generic;
+using TestObjects.source.simple.numeric;
 using Xunit;
 
-namespace TestObjectlib.test.simple.numeric
+namespace TestObjects.test.simple.numeric
 {
     public class EuclideanAlgorithmTests
     {

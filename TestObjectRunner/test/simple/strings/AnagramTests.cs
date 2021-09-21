@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using TestObjectlib.source.simple.strings;
+using TestObjects.source.simple.strings;
 using Xunit;
 
-namespace TestObjectlib.test.simple.strings
+namespace TestObjects.test.simple.strings
 {
     public class AnagramTests
     {

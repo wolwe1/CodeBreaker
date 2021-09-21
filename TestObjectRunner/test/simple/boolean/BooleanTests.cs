@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using TestObjectlib.source.simple.boolean;
+using TestObjects.source.simple.boolean;
 using Xunit;
 
-namespace TestObjectlib.test.simple.boolean
+namespace TestObjects.test.simple.boolean
 {
     public class BooleanTests
     {

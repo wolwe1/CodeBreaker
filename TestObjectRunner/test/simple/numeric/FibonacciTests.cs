@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TestObjectlib.source.simple.numeric;
+﻿using System.Collections.Generic;
+using TestObjects.source.simple.numeric;
 using Xunit;
 
-namespace TestObjectlib.test.simple.numeric
+namespace TestObjects.test.simple.numeric
 {
     public class FibonacciTests
     {
-        private Fibonacci _fibonacci;
+        private readonly Fibonacci _fibonacci;
 
         public FibonacciTests()
         {
@@ -18,9 +17,10 @@ namespace TestObjectlib.test.simple.numeric
         [MemberData(nameof(FibonacciNumbers))]
         public void FibonacciOfNShouldEqual(int n, int answer)
         {
-            var result = _fibonacci.Get(n);
+            var fib = new Fibonacci();
+            var result = fib.Get(n);
             
-            Assert.Equal(result,answer);
+            Assert.Equal(result.GetReturnValue(),answer);
         }
         
         [Theory]
@@ -29,7 +29,7 @@ namespace TestObjectlib.test.simple.numeric
         {
             var result = _fibonacci.GetIterative(n);
             
-            Assert.Equal(result,answer);
+            Assert.Equal(result.GetReturnValue(),answer);
         }
         
         public static IEnumerable<object[]> FibonacciNumbers()

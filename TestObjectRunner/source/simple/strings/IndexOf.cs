@@ -1,4 +1,4 @@
-﻿namespace TestObjectlib.source.simple.strings
+﻿namespace TestObjects.source.simple.strings
 {
     public class IndexOf
     {

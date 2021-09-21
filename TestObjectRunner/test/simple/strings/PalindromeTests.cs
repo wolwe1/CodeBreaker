@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using TestObjectlib.source.simple.strings;
+using TestObjects.source.simple.strings;
 using Xunit;
 
-namespace TestObjectlib.test.simple.strings
+namespace TestObjects.test.simple.strings
 {
     public class PalindromeTests
     {
@@ -18,7 +18,7 @@ namespace TestObjectlib.test.simple.strings
         {
             var result = _palindrome.Get("");
             
-            Assert.Equal("",result);
+            Assert.Equal("",result.GetReturnValue());
         }
 
         [Theory]
@@ -27,7 +27,7 @@ namespace TestObjectlib.test.simple.strings
         {
             var result = _palindrome.Get(str);
             
-            Assert.Equal(palindrome,result);
+            Assert.Equal(palindrome,result.GetReturnValue());
         }
         
         [Theory]
@@ -36,7 +36,7 @@ namespace TestObjectlib.test.simple.strings
         {
             var result = _palindrome.GetRecursive(str);
             
-            Assert.Equal(palindrome,result);
+            Assert.Equal(palindrome,result.GetReturnValue());
         }
 
         public static IEnumerable<object[]> PalindromeCollection()

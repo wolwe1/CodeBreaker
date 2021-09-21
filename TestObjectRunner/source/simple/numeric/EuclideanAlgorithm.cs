@@ -1,4 +1,4 @@
-﻿namespace TestObjectlib.source.simple.numeric
+﻿namespace TestObjects.source.simple.numeric
 {
     public class EuclideanAlgorithm
     {

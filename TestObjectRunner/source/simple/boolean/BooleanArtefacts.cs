@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TestObjectlib.source.simple.boolean
+namespace TestObjects.source.simple.boolean
 {
     public class BooleanArtefacts
     {

@@ -1,4 +1,6 @@
 ﻿using System;
+using TestObjects.source.simple.numeric;
+using TestObjects.source.simple.strings;
 
 namespace TestObjects
 {
@@ -6,7 +8,13 @@ namespace TestObjects
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var p = new Palindrome();
+            var f = new Fibonacci();
+            
+            
+            Console.WriteLine(p.Get("abc").GetReturnValue());
+            Console.WriteLine(f.Get(6).GetReturnValue());
+            
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using TestObjectlib.source.simple.numeric;
+using TestObjects.source.simple.numeric;
 using Xunit;
 
-namespace TestObjectlib.test.simple.numeric
+namespace TestObjects.test.simple.numeric
 {
     public class BinomialCoefficientTests
     {
