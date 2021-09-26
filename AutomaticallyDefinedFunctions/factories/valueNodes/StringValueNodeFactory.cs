@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AutomaticallyDefinedFunctions.source.nodes.valueNodes;
+using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 
 namespace AutomaticallyDefinedFunctions.factories.valueNodes
 {
@@ -16,5 +16,12 @@ namespace AutomaticallyDefinedFunctions.factories.valueNodes
             var choice = RandomNumberFactory.Next(26);
             return GetAll().ElementAt(choice);
         }
+        
+        public static ValueNode<string> Get(string id)
+        {
+            return new ValueNode<string>(id);
+        }
+        
+        
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutomaticallyDefinedFunctions.source.nodes.valueNodes;
+using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 
 namespace AutomaticallyDefinedFunctions.factories.valueNodes
 {
@@ -16,6 +16,13 @@ namespace AutomaticallyDefinedFunctions.factories.valueNodes
         {
             var choice = RandomNumberFactory.Next(10);
             return new ValueNode<double>(choice);
+        }
+
+        public static ValueNode<double> Get(string id)
+        {
+            var idAsDouble = Double.Parse(id);
+
+            return new ValueNode<double>(idAsDouble);
         }
     }
 }

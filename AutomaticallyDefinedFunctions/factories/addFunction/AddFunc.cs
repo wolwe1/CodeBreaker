@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutomaticallyDefinedFunctions.source.nodes;
+using AutomaticallyDefinedFunctions.factories.functionFactories;
+using AutomaticallyDefinedFunctions.parsing;
+using AutomaticallyDefinedFunctions.structure.nodes;
 
 namespace AutomaticallyDefinedFunctions.factories.addFunction
 {
@@ -34,6 +36,36 @@ namespace AutomaticallyDefinedFunctions.factories.addFunction
         public override int GetNullNodeCount()
         {
             return Children.Sum(x => x.GetNullNodeCount());
+        }
+        public override string GetId()
+        {
+            return $"{NodeCategory.Add}<{typeof(T)},{typeof(T)}>[{Children.ElementAt(0).GetId()}{Children.ElementAt(1).GetId()}]";
+        }
+
+        public override int GetNodeCount()
+        {
+            return Children.ElementAt(0).GetNodeCount() +
+                   Children.ElementAt(1).GetNodeCount();
+        }
+
+        public override INode<T> GetSubTree(int nodeIndexToGet)
+        {
+            var index = nodeIndexToGet;
+            if (index-- == 0)
+                return Children[0];
+
+            if (index - Children[0].GetNodeCount() <= 0)
+                return Children[0].GetSubTree(--index);
+
+            index -= Children[0].GetNodeCount();
+            
+            if (index-- == 0)
+                return Children[1];
+
+            if (index - Children[1].GetNodeCount() <= 0)
+                return Children[1].GetSubTree(--index);
+
+            throw new Exception("Sub tree could not be found");
         }
     }
 }

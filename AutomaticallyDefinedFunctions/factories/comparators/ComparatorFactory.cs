@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using AutomaticallyDefinedFunctions.source.ifStatement;
+using AutomaticallyDefinedFunctions.structure.ifStatement.comparators;
 
-namespace AutomaticallyDefinedFunctions.factories
+namespace AutomaticallyDefinedFunctions.factories.comparators
 {
     public static class ComparatorFactory
     {
         private static void ValidateType(Type t)
         {
-            if (t != typeof(string) || t == typeof(double) || t == typeof(bool))
+            if (t != typeof(string) && t != typeof(double) && t != typeof(bool))
                 throw new InvalidOperationException($"Unable to generate comparator function of type {t}");
         }
         public static LessThanComparator<T> CreateLessThanComparator<T>() where T : IComparable
@@ -38,5 +38,14 @@ namespace AutomaticallyDefinedFunctions.factories
             return new List<NodeComparator<T>>(){new LessThanComparator<T>(),new EqualsComparator<T>(),new GreaterThanComparator<T>()};
         }
 
+        public static NodeComparator<T> Get<T>(char c) where T : IComparable
+        {
+            return c switch{
+                '>' => new GreaterThanComparator<T>(),    
+                '=' => new EqualsComparator<T>(),    
+                '<' => new LessThanComparator<T>(),
+                _ => throw new ArgumentOutOfRangeException(nameof(c), c, null)
+            };
+        }
     }
 }

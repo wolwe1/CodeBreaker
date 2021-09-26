@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.factories.addFunction;
-using AutomaticallyDefinedFunctions.source.forLoop;
-using AutomaticallyDefinedFunctions.source.ifStatement;
-using AutomaticallyDefinedFunctions.source.nodes;
-using AutomaticallyDefinedFunctions.source.nodes.valueNodes;
+using AutomaticallyDefinedFunctions.structure.forLoop;
+using AutomaticallyDefinedFunctions.structure.ifStatement;
+using AutomaticallyDefinedFunctions.structure.ifStatement.comparators;
+using AutomaticallyDefinedFunctions.structure.nodes;
+using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 
 namespace AutomaticallyDefinedFunctions.factories
 {
@@ -25,26 +26,33 @@ namespace AutomaticallyDefinedFunctions.factories
         public static IfNode<T,U> CreateIfStatement<T,U>(INode<U> left,INode<U> right,INode<T> trueBlock,
             INode<T> falseBlock, NodeComparator<U> nodeOperator) where T : IComparable where U : IComparable
         {
-            var ifStatement = new IfNode<T,U>();
-            ifStatement.SetLeftPredicate(left);
-            ifStatement.SetRightPredicate(right);
-            ifStatement.SetComparisonOperator(nodeOperator);
-            ifStatement.SetFalseCodeBlock(falseBlock);
-            ifStatement.SetTrueCodeBlock(trueBlock);
-
-            return ifStatement;
+            return new IfNode<T,U>()
+                .SetLeftPredicate(left)
+                .SetRightPredicate(right)
+                .SetComparisonOperator(nodeOperator)
+                .SetFalseCodeBlock(falseBlock)
+                .SetTrueCodeBlock(trueBlock);
         }
 
         public static ForLoopNode<T, double> CreateSimpleForLoop<T>(double bound,T code) where T : IComparable
         {
-            var forloop = new ForLoopNode<T, double>();
-            forloop.SetCounter(new ValueNode<double>(0d))
+            return new ForLoopNode<T, double>()
+                .SetCounter(new ValueNode<double>(0d))
                 .SetIncrement(new ValueNode<double>(1d))
                 .SetBounds(new ValueNode<double>(bound))
                 .SetComparator(new LessThanComparator<double>())
                 .SetCodeBlock(new ValueNode<T>(code));
 
-            return forloop;
+        }
+
+        public static ForLoopNode<T, TU> CreateForLoop<T,TU>(INode<TU> counter, INode<TU>  increment, INode<TU>  bounds, NodeComparator<TU> comparator, INode<T> block) where T : IComparable where TU : IComparable
+        {
+            return new ForLoopNode<T, TU>()
+                .SetCounter(counter)
+                .SetIncrement(increment)
+                .SetBounds(bounds)
+                .SetComparator(comparator)
+                .SetCodeBlock(block);
         }
     }
 }

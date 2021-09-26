@@ -1,4 +1,5 @@
 ﻿using AutomaticallyDefinedFunctions.factories.addFunction;
+using AutomaticallyDefinedFunctions.factories.functionFactories;
 using Xunit;
 
 namespace AutomaticallyDefinedFunctions.Tests
