@@ -5,6 +5,6 @@ namespace CodeBreakerLib.coverage.calculators
 {
     public interface ICoverageCalculator
     {
-        double Calculate<T>(CoverageResults<T> coverageInfo) where T : IComparable;
+        double Calculate(CoverageResults coverageInfo);
     }
 }

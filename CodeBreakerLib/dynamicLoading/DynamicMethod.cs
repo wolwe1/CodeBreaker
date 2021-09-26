@@ -66,5 +66,10 @@ namespace CodeBreakerLib.dynamicLoading
         {
             return $"{_class.GetName()} - {GetName()}";
         }
+
+        public Type GetReturnType()
+        {
+            return _returnType;
+        }
     }
 }

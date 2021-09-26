@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeBreakerLib.dynamicLoading;
 using CodeBreakerLib.exceptions;
+using TestObjects.source.capture;
 
 namespace CodeBreakerLib
 {
@@ -15,15 +16,15 @@ namespace CodeBreakerLib
             _method = method;
         }
 
-        public T Run(List<object> parameters)
+        public CoverageResults Run(List<object> parameters)
         {
             if (!ValidParameters(parameters))
             {
                 try
                 {
-                    parameters = castParametersIfApplicable(parameters);
+                    parameters = CastParametersIfApplicable(parameters);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     throw ParameterMismatchException.Create(_method,parameters);
                 }
@@ -32,7 +33,7 @@ namespace CodeBreakerLib
 
             var parms = parameters.Cast<object>().ToArray();
             
-            return (T) _method.InvokeMethod(parms);
+            return (CoverageResults) _method.InvokeMethod(parms);
         }
 
         private bool ValidParameters(List<object> parameters)
@@ -41,21 +42,24 @@ namespace CodeBreakerLib
             {
                 var expectedArgument = _method.GetArguments()[i];
                 var givenParameter = parameters[i];
-
-                if (givenParameter.GetType() != expectedArgument) 
+                
+                if (givenParameter == null || givenParameter.GetType() != expectedArgument) 
                     return false;
             }
 
             return true;
         }
 
-        public List<object> castParametersIfApplicable(List<object> parameters)
+        private List<object> CastParametersIfApplicable(List<object> parameters)
         {
             var convertedParams = new List<object>();
             for (var i = 0; i < _method.GetArguments().Count; i++)
             {
                 var expectedArgument = _method.GetArguments()[i];
                 var givenParameter = parameters[i];
+
+                if (givenParameter == null)
+                    throw new Exception("Input value is null");
                 
                 var convertedParam = Convert.ChangeType(givenParameter, expectedArgument);
                 convertedParams.Add(convertedParam);
