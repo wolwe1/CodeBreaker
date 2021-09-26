@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations
+namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations.runtime
 {
     public interface IRuntimeMeasurement
     {

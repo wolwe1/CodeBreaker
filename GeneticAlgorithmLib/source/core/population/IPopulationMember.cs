@@ -1,4 +1,6 @@
-﻿namespace GeneticAlgorithmLib.source.core.population
+﻿using System.Collections.Generic;
+
+namespace GeneticAlgorithmLib.source.core.population
 {
     /// <summary>
     ///     Interface for genetic algorithm population members
@@ -11,6 +13,6 @@
         /// <returns>String value representing the members structure</returns>
         string GetId();
 
-        T GetResult();
+        IEnumerable<T> GetResult();
     }
 }

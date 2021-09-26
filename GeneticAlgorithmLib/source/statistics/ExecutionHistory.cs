@@ -13,19 +13,22 @@ namespace GeneticAlgorithmLib.source.statistics
     public abstract class ExecutionHistory<T> : IExecutionHistory<T>
     {
         private readonly Stopwatch _generationStopwatch;
-        private readonly IOutputPrinter _outputPrinter;
         private readonly List<RunRecord<T>> _runHistory;
         private readonly List<IRunStatistic> _runStatistics;
         private int _currentRunCount;
+        protected IOutputPrinter OutputPrinter;
 
-        protected ExecutionHistory()
+        public string AdditionalExecutionInfo;
+        
+        protected ExecutionHistory(IOutputPrinter printer)
         {
             _runStatistics = new List<IRunStatistic>();
             _runHistory = new List<RunRecord<T>>();
             _currentRunCount = -1;
 
             _generationStopwatch = new Stopwatch();
-            _outputPrinter = new DefaultOutputPrinter();
+            OutputPrinter = printer;
+            AdditionalExecutionInfo = "";
         }
 
         public void NewRun()
@@ -56,7 +59,8 @@ namespace GeneticAlgorithmLib.source.statistics
                 var runOutput = run.Summarise(_runStatistics);
                 Console.WriteLine("*****************");
                 Console.WriteLine($"Run {run.GetRunNumber()}");
-                _outputPrinter.Print(runOutput);
+                run.AdditionalRunInfo = AdditionalExecutionInfo;
+                OutputPrinter.Print(runOutput,run);
                 Console.WriteLine("*****************");
             }
         }

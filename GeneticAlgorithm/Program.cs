@@ -21,7 +21,7 @@ namespace GeneticAlgorithm
                 new CompositeFitnessFunction()
                     .AddEvaluation(new ValueDistanceFitnessFunction().SetGoal(10), 1);
 
-            IControlModel<double> controlModel = new SteadyStateControlModel<double>(populationMutator)
+            IControlModel<double> controlModel = new SteadyStateControlModel<double>(populationMutator,fitnessFunction)
                 .UseSelection(new FitnessProportionateSelection(fitnessFunction))
                 .UseTerminationCriteria(new GenerationCountCriteria(20))
                 .UseTerminationCriteria(new NoAverageImprovementCriteria(5))
@@ -30,7 +30,7 @@ namespace GeneticAlgorithm
 
             IExecutionHistory<double> history = new BasicExecutionHistory<double>();
             var geneticAlgorithm =
-                new GeneticAlgorithm<double>(populationGenerator, controlModel, fitnessFunction, history);
+                new GeneticAlgorithm<double>(populationGenerator, controlModel, history);
 
             var runHistory = geneticAlgorithm.Run();
 

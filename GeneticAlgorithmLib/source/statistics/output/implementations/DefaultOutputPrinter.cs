@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GeneticAlgorithmLib.source.statistics.history;
 
-namespace GeneticAlgorithmLib.source.statistics.output
+namespace GeneticAlgorithmLib.source.statistics.output.implementations
 {
     public class DefaultOutputPrinter : IOutputPrinter
     {
-        public void Print(List<StatisticOutput> runStatistics)
+        public virtual void Print<T>(List<StatisticOutput> runStatistics, RunRecord<T> runRecord)
         {
             var builder = new StringBuilder();
             builder.AppendLine(CreateRunOutput(runStatistics));
@@ -16,7 +17,7 @@ namespace GeneticAlgorithmLib.source.statistics.output
             Console.WriteLine(builder.ToString());
         }
 
-        public string CreateRunOutput(List<StatisticOutput> runStatistics)
+        protected string CreateRunOutput(List<StatisticOutput> runStatistics)
         {
             var builder = new StringBuilder();
 
@@ -31,7 +32,7 @@ namespace GeneticAlgorithmLib.source.statistics.output
             return builder.ToString();
         }
 
-        public string CreateGenerationOutput(List<StatisticOutput> runStatistics)
+        protected string CreateGenerationOutput(List<StatisticOutput> runStatistics)
         {
             var builder = new StringBuilder();
 
@@ -40,7 +41,7 @@ namespace GeneticAlgorithmLib.source.statistics.output
             //For each generation
             for (var index = 0; index < numberOfGenerations; index++)
             {
-                builder.AppendLine($"Generation {index} : ");
+                builder.AppendLine($"\nGeneration {index} : ");
                 foreach (var runStatistic in runStatistics)
                 {
                     var generationValuesForStatistic = runStatistic.GetGenerationValues();

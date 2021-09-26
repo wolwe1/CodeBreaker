@@ -4,7 +4,7 @@ using GeneticAlgorithmLib.source.statistics.calculatedResults;
 using GeneticAlgorithmLib.source.statistics.output;
 using GeneticAlgorithmLib.source.statistics.runStatistics.implementations.measure;
 
-namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations
+namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations.runtime
 {
     public class RunTimeStatistic : RunStatistic
     {

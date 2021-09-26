@@ -10,5 +10,6 @@ namespace GeneticAlgorithmLib.source.controlModel
         List<string> SelectParents(GenerationRecord<T> results);
         List<IPopulationMember<T>> ApplyOperators(List<string> parents);
         int GetInitialPopulationSize();
+        GenerationRecord<T> Evaluate(List<IPopulationMember<T>> population);
     }
 }

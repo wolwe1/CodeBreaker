@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GeneticAlgorithmLib.source.core.population;
 
 namespace GeneticAlgorithmLib.source.mockImplementations
@@ -22,9 +23,9 @@ namespace GeneticAlgorithmLib.source.mockImplementations
             return _value.ToString();
         }
 
-        public double GetResult()
+        public IEnumerable<double> GetResult()
         {
-            return _value;
+            return new List<double>(){_value};
         }
     }
 }

@@ -11,10 +11,13 @@ namespace GeneticAlgorithmLib.source.statistics.history
         private readonly List<GenerationRecord<T>> _generationResults;
         private readonly int _runCount;
 
+        public string AdditionalRunInfo { get; set; }
+
         public RunRecord(int runCount)
         {
             _runCount = runCount;
             _generationResults = new List<GenerationRecord<T>>();
+            AdditionalRunInfo = "";
         }
 
         public void AddGeneration(GenerationRecord<T> generationRecord)

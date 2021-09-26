@@ -11,16 +11,13 @@ namespace GeneticAlgorithmLib.source.core
     public class GeneticAlgorithm<T> : IGeneticAlgorithm<T> where T : IComparable
     {
         protected readonly IControlModel<T> ControlModel;
-        protected readonly IFitnessFunction FitnessFunction;
         protected readonly IExecutionHistory<T> History;
         protected readonly IPopulationGenerator<T> PopulationGenerator;
 
-        public GeneticAlgorithm(IPopulationGenerator<T> populationGenerator, IControlModel<T> controlModel,
-            IFitnessFunction fitnessFunction, IExecutionHistory<T> history)
+        public GeneticAlgorithm(IPopulationGenerator<T> populationGenerator, IControlModel<T> controlModel, IExecutionHistory<T> history)
         {
             PopulationGenerator = populationGenerator;
             ControlModel = controlModel;
-            FitnessFunction = fitnessFunction;
             History = history;
         }
 
@@ -51,7 +48,7 @@ namespace GeneticAlgorithmLib.source.core
             {
                 History.NewGeneration();
 
-                results = Evaluate(population);
+                results = ControlModel.Evaluate(population);
 
                 var parents = ControlModel.SelectParents(results);
 
@@ -62,18 +59,6 @@ namespace GeneticAlgorithmLib.source.core
 
             return History;
         }
-
-        protected GenerationRecord<T> Evaluate(List<IPopulationMember<T>> population)
-        {
-            var results = new GenerationRecord<T>();
-
-            foreach (var member in population)
-            {
-                var fitness = FitnessFunction.Evaluate(member);
-                results.Add(member, fitness);
-            }
-
-            return results;
-        }
+        
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace GeneticAlgorithmLib.source.builder
+﻿using GeneticAlgorithmLib.source.builder.controlModel;
+
+namespace GeneticAlgorithmLib.source.builder
 {
     public class GeneticAlgorithmBuilder
     {
