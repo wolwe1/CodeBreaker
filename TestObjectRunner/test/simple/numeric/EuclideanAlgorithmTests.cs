@@ -17,9 +17,9 @@ namespace TestObjects.test.simple.numeric
         [MemberData(nameof(GcdAnswers))]
         public void GcdOfTwoNumbersShouldEqual(int first, int second, int answer)
         {
-            var result = _euclideanAlgorithm.Gcd(first, second);
+            var result = _euclideanAlgorithm.Get(first, second);
                 
-            Assert.Equal(result,answer);
+            Assert.Equal(result.GetReturnValue(),answer);
         }
         
         
@@ -27,9 +27,9 @@ namespace TestObjects.test.simple.numeric
         [MemberData(nameof(GcdAnswers))]
         public void RecursiveGcdOfTwoNumbersShouldEqual(int first, int second, int answer)
         {
-            var result = _euclideanAlgorithm.GcdRecursive(first, second);
+            var result = _euclideanAlgorithm.GetRecursive(first, second);
                 
-            Assert.Equal(result,answer);
+            Assert.Equal(result.GetReturnValue(),answer);
         }
 
         public static IEnumerable<object[]> GcdAnswers()

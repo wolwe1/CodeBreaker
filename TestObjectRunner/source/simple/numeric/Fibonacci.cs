@@ -4,9 +4,9 @@ namespace TestObjects.source.simple.numeric
 {
     public class Fibonacci
     {
-        public CoverageResults<double> Get(int n)
+        public CoverageResults Get(int n)
         {
-            var coverage = new CoverageResults<double>("Fibonacci","Get",5);
+            var coverage = CoverageResults.SetupCoverage<double>("Fibonacci","Get",5);
             
             coverage.AddStartNode(NodeType.If);
             if (n <= 1)
@@ -28,9 +28,9 @@ namespace TestObjects.source.simple.numeric
             return coverage.SetResult(nMinus1.GetReturnValue() + nMinus2.GetReturnValue());
         }
 
-        public CoverageResults<double> GetIterative(int n)
+        public CoverageResults GetIterative(int n)
         {
-            var coverage = new CoverageResults<double>("Fibonacci","GetIterative",8);
+            var coverage = CoverageResults.SetupCoverage<double>("Fibonacci","GetIterative",8);
             
             coverage.AddStartNode(NodeType.Statement);
             var last = 1;

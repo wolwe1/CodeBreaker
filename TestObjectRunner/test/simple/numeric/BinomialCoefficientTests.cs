@@ -19,7 +19,7 @@ namespace TestObjects.test.simple.numeric
         {
             var result = _coefficient.Get(n, k);
             
-            Assert.Equal(result,answer);
+            Assert.Equal(result.GetReturnValue(),answer);
         }
 
         public static IEnumerable<object[]> BinomialCoefficients()

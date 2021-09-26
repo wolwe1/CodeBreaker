@@ -1,93 +1,122 @@
 ﻿using System;
+using TestObjects.source.capture;
 
 namespace TestObjects.source.simple.boolean
 {
     public class BooleanArtefacts
     {
 
-        public string TrueOrNothing(bool activate)
+        public CoverageResults TrueOrNothing(bool activate)
         {
-            const string Message = "The statement was activated";
+            var coverage = CoverageResults.SetupCoverage<string>("BooleanArtefacts","TrueOrNothing",3);
+            
+            coverage.AddStartNode(NodeType.Statement);
+            const string message = "The statement was activated";
 
+            coverage.AddNode(1,NodeType.If);
             if (activate)
             {
-                Console.WriteLine(Message);
-                return Message;
+                coverage.AddNode(1,NodeType.Return);
+                return coverage.SetResult(message);
             }
-
-            return "";
+            coverage.AddNode(2,NodeType.Return);
+            return coverage.SetResult("");
         }
 
-        public string EitherOr(bool activate)
+        public CoverageResults EitherOr(bool activate)
         {
+            var coverage = CoverageResults.SetupCoverage<string>("BooleanArtefacts","EitherOr",7);
+            
+            coverage.AddStartNode(NodeType.Statement);
             const string Message = "Either";
+            coverage.AddNode(1,NodeType.Statement);
             const string MessageTwo = "Or";
+            coverage.AddNode(2,NodeType.Statement);
             string result;
 
+            coverage.AddNode(3,NodeType.If);
             if (activate)
             {
-                Console.WriteLine(Message);
+                coverage.AddNode(4,NodeType.Statement);
                 result = Message;
             }
             else
             {
-                Console.WriteLine(MessageTwo);
+                coverage.AddNode(5,NodeType.Statement);
                 result = MessageTwo;
             }
-
-            return result;
+            
+            coverage.AddNode(6,NodeType.Return);
+            return coverage.SetResult(result);
         }
         
-        public string And(bool first, bool second)
+        public CoverageResults And(bool first, bool second)
         {
+            var coverage = CoverageResults.SetupCoverage<string>("BooleanArtefacts","And",4);
+            
+            coverage.AddStartNode(NodeType.Statement);
             const string Message = "The statement was activated";
 
+            coverage.AddNode(1,NodeType.If);
             if (first && second)
             {
-                Console.WriteLine(Message);
-                return Message;
+                coverage.AddNode(2,NodeType.Return);
+                return coverage.SetResult(Message);
             }
 
-            return "";
+            coverage.AddNode(3,NodeType.Return);
+            return coverage.SetResult("");
         }
         
-        public string Or(bool first, bool second)
+        public CoverageResults Or(bool first, bool second)
         {
+            var coverage = CoverageResults.SetupCoverage<string>("BooleanArtefacts","Or",4);
+            
+            coverage.AddStartNode(NodeType.Statement);
             const string Message = "The statement was activated";
 
+            coverage.AddNode(1,NodeType.If);
             if (first || second)
             {
-                Console.WriteLine(Message);
-                return Message;
+                coverage.AddNode(2,NodeType.Return);
+                return coverage.SetResult(Message);
             }
-
-            return "";
+            coverage.AddNode(3,NodeType.Return);
+            return coverage.SetResult("");
         }
         
-        public string AndOr(bool first, bool second)
+        public CoverageResults AndOr(bool first, bool second)
         {
+            var coverage = CoverageResults.SetupCoverage<string>("BooleanArtefacts","AndOr",9);
+            
+            coverage.AddStartNode(NodeType.Statement);
             var result = "Neither value were true";
-            const string MessageAnd = "Both values were true";
-            const string MessageOrOne = "The first value was true";
-            const string MessageOrTwo = "The second value was true";
-
+            coverage.AddNode(1,NodeType.Statement);
+            const string messageAnd = "Both values were true";
+            coverage.AddNode(2,NodeType.Statement);
+            const string messageOrOne = "The first value was true";
+            coverage.AddNode(3,NodeType.Statement);
+            const string messageOrTwo = "The second value was true";
+            
+            coverage.AddNode(4,NodeType.If);
             if (first && second)
             {
-                Console.WriteLine(MessageAnd);
-                result = MessageAnd;
+                coverage.AddNode(5,NodeType.Statement);
+                result = messageAnd;
             }
             else if(first)
             {
-                Console.WriteLine(MessageOrOne);
-                result = MessageOrOne;
+                coverage.AddNode(6,NodeType.Statement);
+                result = messageOrOne;
             }
             else if (second)
             {
-                Console.WriteLine(MessageOrTwo);
-                result = MessageOrTwo;
+                coverage.AddNode(7,NodeType.Statement);
+                result = messageOrTwo;
             }
-
-            return result;
+            
+            coverage.AddEndNode(8,NodeType.Return);
+            return coverage.SetResult(result);
         }
     }
 }

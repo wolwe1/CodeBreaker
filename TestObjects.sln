@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestObjectRunner", "TestObjectRunner\TestObjectRunner.csproj", "{5AA4131B-1567-4315-9BEB-BBB3F51E2417}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestObjectlib", "TestObjectlib\TestObjectlib.csproj", "{F6EE5B5A-99B5-4BBA-BADD-608B13376F8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestObjectsWeb", "TestObjectsWeb\TestObjectsWeb.csproj", "{9585CE04-D7D7-4DF9-A7E2-280439284EFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		{5AA4131B-1567-4315-9BEB-BBB3F51E2417}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AA4131B-1567-4315-9BEB-BBB3F51E2417}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AA4131B-1567-4315-9BEB-BBB3F51E2417}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F6EE5B5A-99B5-4BBA-BADD-608B13376F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6EE5B5A-99B5-4BBA-BADD-608B13376F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6EE5B5A-99B5-4BBA-BADD-608B13376F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6EE5B5A-99B5-4BBA-BADD-608B13376F8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9585CE04-D7D7-4DF9-A7E2-280439284EFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9585CE04-D7D7-4DF9-A7E2-280439284EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9585CE04-D7D7-4DF9-A7E2-280439284EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9585CE04-D7D7-4DF9-A7E2-280439284EFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

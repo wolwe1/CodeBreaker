@@ -19,8 +19,8 @@ namespace TestObjects.test.simple.boolean
             var resultWhenTrue = _booleanArtefacts.TrueOrNothing(true);
             var resultWhenFalse = _booleanArtefacts.TrueOrNothing(false);
             
-            Assert.Equal("The statement was activated",resultWhenTrue);
-            Assert.Equal("",resultWhenFalse);
+            Assert.Equal("The statement was activated",resultWhenTrue.GetReturnValue());
+            Assert.Equal("",resultWhenFalse.GetReturnValue());
 
         }
         
@@ -29,7 +29,7 @@ namespace TestObjects.test.simple.boolean
         {
             var result = _booleanArtefacts.EitherOr(true);
             
-            Assert.Equal("Either",result);
+            Assert.Equal("Either",result.GetReturnValue());
         }
         
         [Fact]
@@ -37,7 +37,7 @@ namespace TestObjects.test.simple.boolean
         {
             var result = _booleanArtefacts.EitherOr(false);
             
-            Assert.Equal("Or",result);
+            Assert.Equal("Or",result.GetReturnValue());
         }
         
         [Theory]
@@ -46,7 +46,7 @@ namespace TestObjects.test.simple.boolean
         {
             var result = _booleanArtefacts.And(first, second);
             
-            Assert.Equal(answer,result);
+            Assert.Equal(answer,result.GetReturnValue());
         }
         
         [Theory]
@@ -55,7 +55,7 @@ namespace TestObjects.test.simple.boolean
         {
             var result = _booleanArtefacts.Or(first, second);
             
-            Assert.Equal(answer,result);
+            Assert.Equal(answer,result.GetReturnValue());
 
         }
 
@@ -65,9 +65,8 @@ namespace TestObjects.test.simple.boolean
         {
             var result = _booleanArtefacts.AndOr(first, second);
             
-            Assert.Equal(answer,result);
+            Assert.Equal(answer,result.GetReturnValue());
         }
-
         
         public static IEnumerable<object[]> OrFunctionCombination()
         {

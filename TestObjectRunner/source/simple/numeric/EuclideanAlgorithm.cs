@@ -1,26 +1,42 @@
-﻿namespace TestObjects.source.simple.numeric
+﻿using TestObjects.source.capture;
+
+namespace TestObjects.source.simple.numeric
 {
     public class EuclideanAlgorithm
     {
 
-        public int Gcd(int a, int b)
+        public CoverageResults Get(int a, int b)
         {
+            var coverage = CoverageResults.SetupCoverage<double>("EuclideanAlgorithm","Get",5);
+            
+            coverage.AddStartNode(NodeType.Loop);
             while (b != 0)
             {
+                coverage.AddNode(1,NodeType.Statement);
                 var temp = b;
+                coverage.AddNode(2,NodeType.Statement);
                 b = a % b;
+                coverage.AddNode(3,NodeType.Statement);
                 a = temp;
             }
-
-            return a;
+            coverage.AddEndNode(4,NodeType.Statement);
+            return coverage.SetResult(a);
         }
 
-        public int GcdRecursive(int a, int b)
+        public CoverageResults GetRecursive(int a, int b)
         {
+            var coverage = CoverageResults.SetupCoverage<double>("EuclideanAlgorithm","Get",3);
+            
+            coverage.AddStartNode(NodeType.If);
             if (b == 0)
-                return a;
+            {
+                coverage.AddNode(1,NodeType.Return);
+                return coverage.SetResult(a);
+            }
+            coverage.AddNode(2,NodeType.Return);
+            var recurseResult = GetRecursive(b, a % b);
 
-            return GcdRecursive(b, a % b);
+            return coverage.Merge(recurseResult).SetResult(recurseResult.GetReturnValue()); 
         }
     }
 }
