@@ -12,7 +12,8 @@ namespace GeneticAlgorithmLib.source.controlModel.selectionMethods
         ///     Selects the ID's of members to be used in the next population, using the chosen underlying method
         /// </summary>
         /// <param name="results">The result set produced by evaluating the population</param>
+        /// <param name="maxParentsToProduce">The number of parents the method should select</param>
         /// <returns>List of member ID's selected for the next population</returns>
-        List<string> Select<T>(GenerationRecord<T> results);
+        List<string> Select<T>(GenerationRecord<T> results,int maxParentsToProduce);
     }
 }

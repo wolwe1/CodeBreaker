@@ -7,11 +7,11 @@ namespace GeneticAlgorithmLib.source.statistics
     public class MemberRecord<T>
     {
         private readonly Fitness _fitness;
-        private readonly IPopulationMember<T> _member;
+        public readonly IPopulationMember<T> Member;
 
         public MemberRecord(IPopulationMember<T> member, Fitness fitness)
         {
-            _member = member;
+            Member = member;
             _fitness = fitness;
 
             IsDuplicate = false;
@@ -37,7 +37,7 @@ namespace GeneticAlgorithmLib.source.statistics
 
         public string GetMemberId()
         {
-            return _member.GetId();
+            return Member.GetId();
         }
 
         public Fitness GetFitness()

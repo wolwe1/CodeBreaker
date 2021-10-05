@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using GeneticAlgorithmLib.source.statistics.calculatedResults;
 using GeneticAlgorithmLib.source.statistics.output;
 using GeneticAlgorithmLib.source.statistics.runStatistics.implementations.measure;
 
@@ -14,21 +12,17 @@ namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations.ot
         {
             _bestMemberMeasure = new BestPerformerMeasure();
         }
-
-        public StatisticOutput GetStatistic<T>(List<GenerationRecord<T>> generationRecords)
+        public StatisticOutput GetStatistic<T>(List<GenerationRecord<T>> evaluationResults)
         {
-            var resultSet = new CalculationResultSet();
+            var bestMemberInRun = _bestMemberMeasure.GetBestPerformer(evaluationResults);
 
-            var bestMemberPerGeneration = generationRecords
-                .Select(g => g.GetMemberWithMaxFitness());
+            var memberOutput = bestMemberInRun.Member.GetResult();
 
-            var bestFitnessValue = bestMemberPerGeneration.Max(m => m.GetFitnessValue());
-
-            var bestMemberInRun = bestMemberPerGeneration.FirstOrDefault(x => x.GetFitnessValue() == bestFitnessValue);
-
+            var output = string.Join(" - ", memberOutput);
+            
             return new StatisticOutput()
-                .SetHeading("Best member ID")
-                .SetRunValue(bestMemberInRun.GetMemberId());
+                .SetHeading("Best member Output")
+                .SetRunValue(output);
         }
     }
 }

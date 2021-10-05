@@ -12,7 +12,6 @@ namespace GeneticAlgorithmLib.source.statistics.history
             UseFitnessMeasure(new AverageMeasure());
             UseFitnessMeasure(new BestPerformerMeasure());
             UseStatistic(new RunTimeStatistic(new AverageMeasure()));
-            UseStatistic(new BestMemberOutputPrinter());
         }
 
         public BasicExecutionHistory<T> OutputToFile()

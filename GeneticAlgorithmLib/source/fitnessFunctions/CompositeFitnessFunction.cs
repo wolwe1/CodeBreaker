@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GeneticAlgorithmLib.source.core.population;
+using GeneticAlgorithmLib.source.statistics;
 
 namespace GeneticAlgorithmLib.source.fitnessFunctions
 {
     public class CompositeFitnessFunction : FitnessFunction
     {
         private readonly List<Tuple<IFitnessFunction, double>> _fitnessCriteria;
+        private readonly bool _isMinimising;
 
-        public CompositeFitnessFunction()
+        public CompositeFitnessFunction(bool isMinimising = false)
         {
             _fitnessCriteria = new List<Tuple<IFitnessFunction, double>>();
+            _isMinimising = isMinimising;
         }
 
         public override Fitness Evaluate<T>(IPopulationMember<T> member)
@@ -26,6 +30,14 @@ namespace GeneticAlgorithmLib.source.fitnessFunctions
             }
 
             return totalFitness;
+        }
+        
+        public override MemberRecord<T> GetBest<T>(IEnumerable<MemberRecord<T>> chosenMembers)
+        {
+            var orderedMembers = chosenMembers
+                .OrderByDescending(m => m.GetFitness().GetFitness());
+
+            return _isMinimising ? orderedMembers.Last() : orderedMembers.FirstOrDefault();
         }
 
         public CompositeFitnessFunction AddEvaluation(IFitnessFunction function, double multiplyer)

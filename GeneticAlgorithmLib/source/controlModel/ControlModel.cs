@@ -12,10 +12,11 @@ namespace GeneticAlgorithmLib.source.controlModel
     public abstract class ControlModel<T> : IControlModel<T> where T : IComparable
     {
         private readonly List<ITerminationCriteria> _terminationCriteria;
-        private ISelectionMethod _selectionMethod;
         private readonly IPopulationMutator<T> _populationMutator;
         private readonly IFitnessFunction _fitnessFunction;
         private int _popSize;
+        
+        protected ISelectionMethod SelectionMethod;
 
         protected ControlModel(IPopulationMutator<T> populationMutator, IFitnessFunction fitnessFunction)
         {
@@ -37,10 +38,7 @@ namespace GeneticAlgorithmLib.source.controlModel
             return false;
         }
 
-        public List<string> SelectParents(GenerationRecord<T> results)
-        {
-            return _selectionMethod.Select(results);
-        }
+        public abstract List<string> SelectParents(GenerationRecord<T> results);
 
         public List<IPopulationMember<T>> ApplyOperators(List<string> parents)
         {
@@ -62,7 +60,7 @@ namespace GeneticAlgorithmLib.source.controlModel
         
         public ControlModel<T> UseSelection(ISelectionMethod newMethod)
         {
-            _selectionMethod = newMethod;
+            SelectionMethod = newMethod;
 
             return this;
         }

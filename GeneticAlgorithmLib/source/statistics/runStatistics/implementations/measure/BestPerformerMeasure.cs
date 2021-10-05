@@ -23,11 +23,25 @@ namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations.me
             return "Best";
         }
 
-        public CalculationResult GetBestPerformer(CalculationResultSet set)
+        public static CalculationResult GetBestPerformer(CalculationResultSet set)
         {
-            var best = set.Max();
+            var resultList = set.ToList();
+            
+            return resultList
+                .OrderByDescending(r => r.GetResult())
+                .FirstOrDefault();
+        }
 
-            return set.ToList().FirstOrDefault(p => p.GetResult() == best);
+        public MemberRecord<T> GetBestPerformer<T>(IEnumerable<GenerationRecord<T>> generationRecords)
+        {
+            var bestMemberPerGeneration = generationRecords
+                .Select(g => g.GetMemberWithMaxFitness());
+
+            var bestMemberInRun = bestMemberPerGeneration
+                .OrderByDescending(m => m.GetFitnessValue())
+                .FirstOrDefault();
+
+            return bestMemberInRun;
         }
     }
 }

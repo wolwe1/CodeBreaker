@@ -22,7 +22,7 @@ namespace GeneticAlgorithm
                     .AddEvaluation(new ValueDistanceFitnessFunction().SetGoal(10), 1);
 
             IControlModel<double> controlModel = new SteadyStateControlModel<double>(populationMutator,fitnessFunction)
-                .UseSelection(new FitnessProportionateSelection(fitnessFunction))
+                .UseSelection(new TournamentSelection(fitnessFunction,0,3))
                 .UseTerminationCriteria(new GenerationCountCriteria(20))
                 .UseTerminationCriteria(new NoAverageImprovementCriteria(5))
                 .UseTerminationCriteria(new DesiredFitnessForFitnessFunctionCriteria(typeof(ValueDistanceFitnessFunction), 10))

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GeneticAlgorithmLib.source.fitnessFunctions;
@@ -13,7 +14,14 @@ namespace GeneticAlgorithmLib.source.controlModel.selectionMethods
         {
         }
 
-        public override List<string> Select<T>(GenerationRecord<T> results)
+        /// <summary>
+        /// Uses fitness proportionate selection to select parents. *May reduce parents
+        /// </summary>
+        /// <param name="results"></param>
+        /// <param name="maxParentsToProduce"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public override List<string> Select<T>(GenerationRecord<T> results,int maxParentsToProduce)
         {
             var numOccurrencesInNextPop = GetNumOccurrencesInNextPop(results);
 
@@ -23,7 +31,21 @@ namespace GeneticAlgorithmLib.source.controlModel.selectionMethods
 
             foreach (var candidate in candidates) selectedMembers.AddRange(RepeatMemberIdBasedOnOccurence(candidate));
 
+            if (selectedMembers.Count < maxParentsToProduce)
+                selectedMembers.AddRange(
+                    FillSelectedMembers(results, maxParentsToProduce - selectedMembers.Count)
+                );
+            
             return selectedMembers;
+        }
+
+        private IEnumerable<string> FillSelectedMembers<T>(GenerationRecord<T> results, int numberOfClonesToMake)
+        {
+            var bestPerformer = FitnessFunction.GetBest(results);
+
+            var clones = Enumerable.Repeat(bestPerformer.GetMemberId(), numberOfClonesToMake);
+
+            return clones;
         }
 
         private IEnumerable<string> RepeatMemberIdBasedOnOccurence(CalculationResult candidate)
