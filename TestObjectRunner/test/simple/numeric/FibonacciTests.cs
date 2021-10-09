@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using TestObjects.source.simple.numeric;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace TestObjects.test.simple.numeric
         public void FibonacciOfNShouldEqual(int n, int answer)
         {
             var fib = new Fibonacci();
-            var result = fib.Get(n);
+            var result = fib.GetRecursive(n,CancellationToken.None);
             
             Assert.Equal(result.GetReturnValue(),answer);
         }

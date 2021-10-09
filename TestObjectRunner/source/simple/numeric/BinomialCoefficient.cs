@@ -6,6 +6,15 @@ namespace TestObjects.source.simple.numeric
     {
         public CoverageResults Get(int n, int k)
         {
+            return GetSafe(n, k, 0);
+        }
+        public CoverageResults GetSafe(int n, int k,int callCount)
+        {
+            //Prevent blowing the stack
+            if(callCount >= 5)
+                return CoverageResults.SetupCoverage<double>("BinomialCoefficient","Get",6).SetResult(-1);
+
+            
             var coverage = CoverageResults.SetupCoverage<double>("BinomialCoefficient","Get",6);
             
             coverage.AddStartNode(NodeType.If);
@@ -25,9 +34,9 @@ namespace TestObjects.source.simple.numeric
  
             // Recur
             coverage.AddNode(4,NodeType.Return);
-            var nMinus1KMinus1 = Get(n - 1, k - 1);
+            var nMinus1KMinus1 = GetSafe(n - 1, k - 1,++callCount);
             coverage.AddNode(5,NodeType.Return);
-            var nMinus1K = Get(n - 1, k);
+            var nMinus1K = GetSafe(n - 1, k,++callCount);
 
             return coverage.Merge(nMinus1KMinus1)
                 .Merge(nMinus1K)
