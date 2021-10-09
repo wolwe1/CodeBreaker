@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.exceptions;
-using AutomaticallyDefinedFunctions.factories.addFunction;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
+using AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic;
+using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
-using AutomaticallyDefinedFunctions.structure.ifStatement.comparators;
+using AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFunction;
+using AutomaticallyDefinedFunctions.structure.functions.ifStatement.comparators;
 using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 
-namespace AutomaticallyDefinedFunctions.structure.forLoop
+namespace AutomaticallyDefinedFunctions.structure.functions.forLoop
 {
     public class ForLoopNode<T,TU>: FunctionNode<T> where T : IComparable where TU : IComparable
     {
@@ -25,7 +27,7 @@ namespace AutomaticallyDefinedFunctions.structure.forLoop
         public ForLoopNode()
         {
             _incrementalAdd = AddFunctionFactory.CreateAddFunction<TU>();
-            _resultsAdd = AddFunctionFactory.CreateAddFunction<T>();
+            _resultsAdd =  AddFunctionFactory.CreateAddFunction<T>();
         }
 
         private ForLoopNode(INode<TU> incremental, INode<TU> bound, NodeComparator<TU> comparator,

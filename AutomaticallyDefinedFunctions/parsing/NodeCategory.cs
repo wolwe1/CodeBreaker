@@ -14,5 +14,8 @@
         public static string Add => new NodeCategory("A").Value;
         
         public static string ValueNode => new NodeCategory("V").Value;
+        public static string Subtract => new NodeCategory("S").Value;
+        public static string Multiplication => new NodeCategory("M").Value;
+        public static string Division => new NodeCategory("D").Value;
     }
 }

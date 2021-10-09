@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
+using AutomaticallyDefinedFunctions.generators;
 
 namespace AutomaticallyDefinedFunctions.structure.nodes
 {

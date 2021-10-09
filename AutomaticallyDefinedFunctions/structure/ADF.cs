@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutomaticallyDefinedFunctions.exceptions;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
+using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
 namespace AutomaticallyDefinedFunctions.structure

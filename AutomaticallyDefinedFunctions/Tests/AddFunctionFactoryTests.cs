@@ -1,5 +1,6 @@
-﻿using AutomaticallyDefinedFunctions.factories.addFunction;
-using AutomaticallyDefinedFunctions.factories.functionFactories;
+﻿using AutomaticallyDefinedFunctions.factories.functionFactories;
+using AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic;
+using AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFunction;
 using Xunit;
 
 namespace AutomaticallyDefinedFunctions.Tests
@@ -13,9 +14,9 @@ namespace AutomaticallyDefinedFunctions.Tests
             var adder2 = AddFunctionFactory.CreateAddFunction<double>();
             var adder3 = AddFunctionFactory.CreateAddFunction<bool>();
 
-            Assert.Equal(typeof(StringAddFunction),adder.GetType());
-            Assert.Equal(typeof(NumericAddFunc),adder2.GetType());
-            Assert.Equal(typeof(BooleanAddFunc),adder3.GetType());
+            Assert.Equal(typeof(AddFunc<string>),adder.GetType());
+            Assert.Equal(typeof(AddFunc<double>),adder2.GetType());
+            Assert.Equal(typeof(AddFunc<bool>),adder3.GetType());
         }
     }
 }

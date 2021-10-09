@@ -1,7 +1,7 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
-namespace AutomaticallyDefinedFunctions.structure.ifStatement.comparators
+namespace AutomaticallyDefinedFunctions.structure.functions.ifStatement.comparators
 {
     public abstract class NodeComparator<T> where T : IComparable
     {

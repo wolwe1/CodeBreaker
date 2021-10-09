@@ -9,7 +9,7 @@ namespace ADFMain
     {
         static void Main(string[] args)
         {
-            RunADFGeneration<string>(1);
+            RunADFGeneration<double>(1);
         }
         
         public static void RunADFGeneration<T>(int runs) where T : IComparable

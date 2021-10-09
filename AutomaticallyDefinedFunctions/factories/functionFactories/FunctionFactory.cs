@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
 using AutomaticallyDefinedFunctions.structure.nodes;
 

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.exceptions;
 using AutomaticallyDefinedFunctions.factories;
-using AutomaticallyDefinedFunctions.structure.forLoop;
-using AutomaticallyDefinedFunctions.structure.ifStatement.comparators;
+using AutomaticallyDefinedFunctions.structure.functions.forLoop;
+using AutomaticallyDefinedFunctions.structure.functions.ifStatement.comparators;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 using Xunit;
 

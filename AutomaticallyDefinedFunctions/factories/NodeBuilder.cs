@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using AutomaticallyDefinedFunctions.factories.addFunction;
-using AutomaticallyDefinedFunctions.structure.forLoop;
-using AutomaticallyDefinedFunctions.structure.ifStatement;
-using AutomaticallyDefinedFunctions.structure.ifStatement.comparators;
+using AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFunction;
+using AutomaticallyDefinedFunctions.structure.functions.forLoop;
+using AutomaticallyDefinedFunctions.structure.functions.ifStatement;
+using AutomaticallyDefinedFunctions.structure.functions.ifStatement.comparators;
 using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 
@@ -15,12 +15,12 @@ namespace AutomaticallyDefinedFunctions.factories
         {
             var nodeOne = new ValueNode<double>(firstNumber);
             var nodeTwo = new ValueNode<double>(secondNumber);
-            return new NumericAddFunc(new List<INode<double>>() {nodeOne, nodeTwo});
+            return CreateAdditionFunction(nodeOne, nodeTwo);
         }
         
         public static AddFunc<double> CreateAdditionFunction(INode<double> firstNode, INode<double> secondNode)
         {
-            return new NumericAddFunc(new List<INode<double>>() {firstNode, secondNode});
+            return new AddFunc<double>(new List<INode<double>>() {firstNode, secondNode}, new NumericAddOperator());
         }
 
         public static IfNode<T,U> CreateIfStatement<T,U>(INode<U> left,INode<U> right,INode<T> trueBlock,

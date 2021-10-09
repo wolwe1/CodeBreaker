@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.exceptions;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
+using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
-using AutomaticallyDefinedFunctions.structure.ifStatement.comparators;
+using AutomaticallyDefinedFunctions.structure.functions.ifStatement.comparators;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
-namespace AutomaticallyDefinedFunctions.structure.ifStatement
+namespace AutomaticallyDefinedFunctions.structure.functions.ifStatement
 {
     public class IfNode<T,TU> : FunctionNode<T> where T : IComparable where TU : IComparable
     {

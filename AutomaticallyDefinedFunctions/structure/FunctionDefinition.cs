@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Immutable;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
+using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.factories;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
-using AutomaticallyDefinedFunctions.factories.valueNodes;
 using AutomaticallyDefinedFunctions.parsing;
 using AutomaticallyDefinedFunctions.structure;
 using AutomaticallyDefinedFunctions.structure.nodes;
@@ -12,12 +11,13 @@ namespace AutomaticallyDefinedFunctions.generators
     public class AdfGenerator<T>  where T : IComparable
     {
         private readonly FunctionDefinitionHolder<T> _definitionHolder;
-        private readonly FunctionGenerator _functionGenerator;
         private readonly AdfSettings _settings;
         
         //Helpers
         private readonly FunctionDefinitionGenerator<T> _definitionGenerator;
         private readonly MainGenerator<T> _mainGenerator;
+        //For external use
+        private readonly FunctionGenerator _functionGenerator;
 
         public AdfGenerator(int seed, AdfSettings settings)
         {
@@ -26,11 +26,10 @@ namespace AutomaticallyDefinedFunctions.generators
             _settings = settings;
             
             _definitionHolder = new FunctionDefinitionHolder<T>();
-            _functionGenerator = new FunctionGenerator(settings);
-            _definitionGenerator = new FunctionDefinitionGenerator<T>(_functionGenerator, settings);
-            _mainGenerator = new MainGenerator<T>(_functionGenerator, settings);
-            
-            Reset();
+            _definitionGenerator = new FunctionDefinitionGenerator<T>(settings);
+            _mainGenerator = new MainGenerator<T>(settings);
+
+            _functionGenerator = _mainGenerator.GetGeneratorCopy();
         }
         
         public Adf<T> Generate()
@@ -45,7 +44,7 @@ namespace AutomaticallyDefinedFunctions.generators
                 newAdf.UseDefinition(function);
             }
             
-            _functionGenerator.UseFactory(_definitionHolder);
+            _mainGenerator.AddDefinitions(_definitionHolder);
             
             for (var i = 0; i < _settings.ArgumentCount; i++) 
             {
@@ -53,25 +52,18 @@ namespace AutomaticallyDefinedFunctions.generators
                 
                 newAdf.UseMain(main);
             }
-            
-            Reset();
+
+            _mainGenerator.Reset();
             return newAdf;
         }
 
         public INode<T> GenerateSubTree(int maxDepth)
         {
-            Reset();
-            _functionGenerator.UseNullTerminals(false);
-            return _functionGenerator.CreateFunction<T>(maxDepth);
+            return _definitionGenerator.CreateFunction(maxDepth);
         }
 
         public Adf<T> GenerateFromId(string originalId)
         {
-            //Must reset factory to clear existing definitions
-            Reset();
-            //Generating from ID requires a value node factory
-            _functionGenerator.UseFactory(new ValueNodeFactory());
-
             var (mainProgramsIdList, functionDefinitionsIdList) = AdfParser.ParseAdfId(originalId);
 
             var mainPrograms = _mainGenerator.GenerateMainsFromIdList(mainProgramsIdList);
@@ -96,32 +88,14 @@ namespace AutomaticallyDefinedFunctions.generators
 
             return adf;
         }
-
-        private void Reset()
-        {
-            _definitionHolder.Clear();
-            _functionGenerator
-                .ClearFactories()
-                .UseFactory(new AddFunctionFactory())
-                .UseFactory(new IfFunctionFactory())
-                .UseFactory(new LoopFunctionFactory());
-        }
-
+        
         public FunctionDefinition<T> GenerateFunctionFromId(string id)
         {
-            //Must reset factory to clear existing definitions
-            Reset();
-            //Generating from ID requires a value node factory
-            _functionGenerator.UseFactory(new ValueNodeFactory());
             return _definitionGenerator.GenerateFunctionFromId(id,0);
         }
 
         public MainProgram<T> GenerateMainFromId(string id)
         {
-            //Must reset factory to clear existing definitions
-            Reset();
-            //Generating from ID requires a value node factory
-            _functionGenerator.UseFactory(new ValueNodeFactory());
             return _mainGenerator.GenerateMainFromId(id);
         }
 

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
-using AutomaticallyDefinedFunctions.structure.forLoop;
+using AutomaticallyDefinedFunctions.structure.functions.forLoop;
 using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 
-namespace AutomaticallyDefinedFunctions.factories.functionFactories
+namespace AutomaticallyDefinedFunctions.factories.functionFactories.operators
 {
     public class LoopFunctionFactory : FunctionFactory
     {

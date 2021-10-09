@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
-using AutomaticallyDefinedFunctions.structure.ifStatement;
+using AutomaticallyDefinedFunctions.structure.functions.ifStatement;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
-namespace AutomaticallyDefinedFunctions.factories.functionFactories
+namespace AutomaticallyDefinedFunctions.factories.functionFactories.operators
 {
     public class IfFunctionFactory : FunctionFactory
     {

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.factories;
-using AutomaticallyDefinedFunctions.factories.addFunction;
-using AutomaticallyDefinedFunctions.structure.ifStatement;
-using AutomaticallyDefinedFunctions.structure.ifStatement.comparators;
+using AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFunction;
+using AutomaticallyDefinedFunctions.structure.functions.ifStatement;
+using AutomaticallyDefinedFunctions.structure.functions.ifStatement.comparators;
+using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 using Xunit;
 
@@ -103,7 +104,7 @@ namespace AutomaticallyDefinedFunctions.Tests.nodes
                 ,smaller.GetValue()};
         }
 
-        private static IfNode<double,double> CreateIfStatement(AddFunc<double> firstAndTrue,AddFunc<double> secondAndFalse,NodeComparator<double> op)
+        private static IfNode<double,double> CreateIfStatement(INode<double> firstAndTrue,INode<double> secondAndFalse,NodeComparator<double> op)
         {
             return NodeBuilder.CreateIfStatement(firstAndTrue, secondAndFalse,
                 firstAndTrue, secondAndFalse, op);

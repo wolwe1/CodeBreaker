@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.structure;
-using AutomaticallyDefinedFunctions.structure.forLoop;
 using Xunit;
 
 namespace AutomaticallyDefinedFunctions.Tests.adf

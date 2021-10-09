@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AutomaticallyDefinedFunctions.structure.ifStatement.comparators;
+using AutomaticallyDefinedFunctions.structure.functions.ifStatement.comparators;
 
 namespace AutomaticallyDefinedFunctions.factories.comparators
 {

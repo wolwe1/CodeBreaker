@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutomaticallyDefinedFunctions.factories;
 using AutomaticallyDefinedFunctions.factories.comparators;
+using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.factories.valueNodes;
-using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
-using AutomaticallyDefinedFunctions.structure.ifStatement.comparators;
+using AutomaticallyDefinedFunctions.structure.functions.ifStatement.comparators;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
-namespace AutomaticallyDefinedFunctions.factories.functionFactories
+namespace AutomaticallyDefinedFunctions.generators
 {
     public class FunctionGenerator
     {
         private readonly List<IFunctionFactory> _factories;
-        private bool _useNullTerminals;
+        private readonly bool _useNullTerminals;
         private readonly AdfSettings _settings;
         
-        public FunctionGenerator(AdfSettings settings)
+        public FunctionGenerator(AdfSettings settings,bool useNullTerminals)
         {
             _factories = new List<IFunctionFactory>();
-            _useNullTerminals = true;
+            _useNullTerminals = useNullTerminals;
             _settings = settings;
         }
         
@@ -95,13 +96,7 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
             _factories.Add(factory);
             return this;
         }
-
-        public FunctionGenerator UseNullTerminals(bool useNullTerminals)
-        {
-            _useNullTerminals = useNullTerminals;
-            return this;
-        }
-
+        
         public FunctionGenerator ClearFactories()
         {
             _factories.Clear();

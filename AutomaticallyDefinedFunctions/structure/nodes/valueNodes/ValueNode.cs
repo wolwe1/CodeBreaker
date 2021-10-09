@@ -1,5 +1,6 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
+using AutomaticallyDefinedFunctions.generators;
 
 namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
 {
