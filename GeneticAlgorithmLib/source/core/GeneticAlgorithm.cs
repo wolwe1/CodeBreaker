@@ -13,6 +13,7 @@ namespace GeneticAlgorithmLib.source.core
         protected readonly IControlModel<T> ControlModel;
         protected readonly IExecutionHistory<T> History;
         protected readonly IPopulationGenerator<T> PopulationGenerator;
+        private bool _print;
 
         public GeneticAlgorithm(IPopulationGenerator<T> populationGenerator, IControlModel<T> controlModel, IExecutionHistory<T> history)
         {
@@ -46,6 +47,8 @@ namespace GeneticAlgorithmLib.source.core
             GenerationRecord<T> results = null;
             while (!ControlModel.TerminationCriteriaMet(generationCount++, results))
             {
+                if (_print) Console.WriteLine($"Generation {generationCount}");
+                
                 History.NewGeneration();
 
                 results = ControlModel.Evaluate(population);
@@ -59,6 +62,12 @@ namespace GeneticAlgorithmLib.source.core
 
             return History;
         }
-        
+
+        public GeneticAlgorithm<T> Print()
+        {
+            _print = true;
+            return this;
+        }
+
     }
 }
