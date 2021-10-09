@@ -21,7 +21,8 @@ namespace CodeBreakerLib.connectors.operators.implementation
             var mainToMutate = RandomNumberFactory.Next(adf.GetNumberOfMainPrograms());
             
             var numberOfNodes = adf.GetMainNodeCount(mainToMutate);
-            var nodeToReplace = RandomNumberFactory.Next(numberOfNodes);
+            //Prevent root node replacement
+            var nodeToReplace = RandomNumberFactory.Next(numberOfNodes - 1) + 1;
 
             var populationGenerator = (AdfPopulationGenerator<T>) generator;
             

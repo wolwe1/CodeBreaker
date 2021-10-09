@@ -37,47 +37,53 @@ namespace CodeBreakerLib.testHandler.integration
             _populationSize = populationSize;
         }
         
-        public GeneticAlgorithmBuilder(): this(0,65,3,5,50,1000) { }
-        
+        //public GeneticAlgorithmBuilder(): this(0,65,3,5,50,1000) { }
+        public GeneticAlgorithmBuilder(): this(0,65,6,15,50,100) { }
+
         
         public GeneticAlgorithm<T> Build<T>(Test<object> test) where T : IComparable
         {
-            var settings = new AdfSettings( _maxFunctionDepth, _maxMainDepth,test.GetArguments().Count,_terminalChance);
-            
-            IPopulationGenerator<T> populationGenerator = 
-                new AdfPopulationGenerator<T>(_seed,settings);
+            IPopulationGenerator<T> populationGenerator = CreatePopulationGenerator<T>(test);
 
             IPopulationMutator<T> populationMutator =
                 new AdfMutator<T>(populationGenerator)
-                    .UseOperator(new ReproductiveOperator<T>(40))
-                    .UseOperator(new MutationOperator<T>(30,3))
+                    .UseOperator(new ReproductiveOperator<T>(30))
+                    .UseOperator(new MutationOperator<T>(40,5))
                     .UseOperator(new FunctionSwapOperator<T>(30));
 
             var fitnessFunction = CreateFitnessFunction(test);;
 
             var controlModel = CreateControlModel(fitnessFunction,populationMutator);
 
-            return CreateGa(populationGenerator, controlModel, fitnessFunction);
+            return CreateGa(populationGenerator, controlModel);
         }
 
-        private static GeneticAlgorithm<T> CreateGa<T>(IPopulationGenerator<T> populationGenerator,
-            IControlModel<T> controlModel, IFitnessFunction fitnessFunction) where T : IComparable
+        public IPopulationGenerator<T> CreatePopulationGenerator<T>(Test<object> test) where T : IComparable
         {
-            IExecutionHistory<T> history = new BasicExecutionHistory<T>();//.OutputToFile();
+            //-1 for cancellation token
+            var settings = new AdfSettings( _maxFunctionDepth, _maxMainDepth,test.GetArguments().Count,_terminalChance);
             
-            return new GeneticAlgorithm<T>(populationGenerator,controlModel,fitnessFunction,history);
+            return 
+                new AdfPopulationGenerator<T>(_seed,settings);
+        }
+        public static GeneticAlgorithm<T> CreateGa<T>(IPopulationGenerator<T> populationGenerator,
+            IControlModel<T> controlModel) where T : IComparable
+        {
+            IExecutionHistory<T> history = new ExecutionOutput<T>().OutputToFile();
+            
+            return new GeneticAlgorithm<T>(populationGenerator,controlModel,history).Print();
         }
 
-        private IFitnessFunction CreateFitnessFunction(Test<object> test)
+        public IFitnessFunction CreateFitnessFunction(Test<object> test)
         {
             return new CompositeFitnessFunction()
                 .AddEvaluation(new CodeCoverageFitnessFunction(test,new StatementCoverageCalculator()), 1);
         }
 
-        private IControlModel<T> CreateControlModel<T>(IFitnessFunction fitnessFunction,IPopulationMutator<T> populationMutator)
+        public IControlModel<T> CreateControlModel<T>(IFitnessFunction fitnessFunction,IPopulationMutator<T> populationMutator) where T : IComparable
         {
-            return new SteadyStateControlModel<T>(populationMutator)
-                .UseSelection(new FitnessProportionateSelection(fitnessFunction))
+            return new SteadyStateControlModel<T>(populationMutator,fitnessFunction)
+                .UseSelection(new TournamentSelection(fitnessFunction,_seed,3))
                 .UseTerminationCriteria(new GenerationCountCriteria(_maxGenerations))
                 .UseTerminationCriteria(new NoAverageImprovementCriteria(5))
                 .UseTerminationCriteria(new DesiredFitnessForFitnessFunctionCriteria(typeof(StatementCoverageCalculator),100))

@@ -9,7 +9,7 @@ namespace CodeBreakerLib.connectors
 {
     public class ADFGeneticAlgorithm<T> : GeneticAlgorithm<T> where T : IComparable
     {
-        public ADFGeneticAlgorithm(IPopulationGenerator<T> populationGenerator, IControlModel<T> controlModel, ADFFitnessFunction fitnessFunction, IExecutionHistory<T> history) : base(populationGenerator, controlModel, fitnessFunction, history)
+        public ADFGeneticAlgorithm(IPopulationGenerator<T> populationGenerator, IControlModel<T> controlModel, IExecutionHistory<T> history) : base(populationGenerator, controlModel, history)
         {
             
         }

@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutomaticallyDefinedFunctions.exceptions;
 using CodeBreakerLib.connectors;
 using CodeBreakerLib.coverage.calculators;
 using CodeBreakerLib.exceptions;
 using GeneticAlgorithmLib.source.core.population;
 using GeneticAlgorithmLib.source.fitnessFunctions;
+using GeneticAlgorithmLib.source.statistics;
 using TestObjects.source.capture;
 
 namespace CodeBreakerLib.fitnessFunctions
@@ -25,7 +27,7 @@ namespace CodeBreakerLib.fitnessFunctions
             var inputValues = TryGetMemberResults(member);
             
             var parameters = CreateParametersFromInputs(inputValues);
-
+            
             var coverageInfo = TryRunTest<T>(parameters);
             
             return coverageInfo == null ? 
@@ -33,9 +35,17 @@ namespace CodeBreakerLib.fitnessFunctions
                 new Fitness(_coverageCalculator.GetType(), _coverageCalculator.Calculate(coverageInfo));
         }
 
+        public override MemberRecord<T> GetBest<T>(IEnumerable<MemberRecord<T>> chosenMembers)
+        {
+            var membersOrderedByCoverage = chosenMembers
+                .OrderByDescending(m => m.GetFitness().GetFitness());
+
+            return membersOrderedByCoverage.FirstOrDefault();
+        }
+
         private CoverageResults TryRunTest<T>(List<object> parameters)
         {
-            if (parameters == null)
+            if (parameters is null)
                 return null;
 
             try

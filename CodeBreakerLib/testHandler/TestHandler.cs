@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CodeBreakerLib.resultsHandler;
 using CodeBreakerLib.testHandler.integration;
 using CodeBreakerLib.testHandler.setup;
 using GeneticAlgorithmLib.source.statistics;
 
 namespace CodeBreakerLib.testHandler
 {
-
     public class TestHandler
     {
         private readonly ITestStrategy _testStrategy;
-        private readonly ResultsHandler _resultsHandler = new();
         
         private List<Test<object>> _tests;
         private int _currentTest = 0;
@@ -39,6 +36,11 @@ namespace CodeBreakerLib.testHandler
             
         }
 
+        public List<Test<object>> GetTests()
+        {
+            return _tests;
+        }
+        
         private Test<object> GetNextTest()
         {
             return _currentTest >= _tests.Count ? null : _tests.ElementAt(_currentTest++);

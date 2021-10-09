@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using CodeBreakerLib.exceptions;
 
 namespace CodeBreakerLib.dynamicLoading
@@ -37,6 +38,9 @@ namespace CodeBreakerLib.dynamicLoading
             try
             {
                 var method = _class.GetTypeOf().GetMethod(functionName);
+                if (method == null)
+                    throw new Exception("Not found");
+                
                 return method;
             }
             catch (Exception e)
