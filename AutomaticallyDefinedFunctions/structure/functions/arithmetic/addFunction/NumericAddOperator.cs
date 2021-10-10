@@ -6,9 +6,9 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFuncti
 {
     public class NumericAddOperator : IArithmeticOperator<double> 
     {
-        public double GetResult(List<INode<double>> children)
+        public double GetResult(List<INode> children)
         {
-            return children.Sum( (child) => child.GetValue());
+            return children.Sum( (child) => ((INode<double>)child).GetValue());
         }
     }
 }

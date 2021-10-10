@@ -6,9 +6,9 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.multiplic
 {
     public class NumericMultiplicationFunc : IArithmeticOperator<double>
     {
-        public double GetResult(List<INode<double>> children)
+        public double GetResult(List<INode> children)
         {
-            return children[0].GetValue() * children[1].GetValue();
+            return ((INode<double>)children[0]).GetValue() * ((INode<double>)children[1]).GetValue();
         }
     }
 }

@@ -6,10 +6,10 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.divisionF
 {
     public class NumericDivisionFunc : IArithmeticOperator<double>
     {
-        public double GetResult(List<INode<double>> children)
+        public double GetResult(List<INode> children)
         {
-            var firstVal = children[0].GetValue();
-            var secondVal = children[1].GetValue();
+            var firstVal = ((INode<double>)children[0]).GetValue();
+            var secondVal = ((INode<double>)children[1]).GetValue();
 
             if (secondVal == 0)
                 return 0;

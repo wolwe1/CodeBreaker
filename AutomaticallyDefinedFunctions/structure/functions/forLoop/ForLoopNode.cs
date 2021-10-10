@@ -39,22 +39,14 @@ namespace AutomaticallyDefinedFunctions.structure.functions.forLoop
             _block = block;
             _counter = counter;
 
-            RegisterChildren( new List<INode<T>> {_block});
+            RegisterChildren( new List<INode> {_block});
         }
-        
+
         public override string GetId()
         {
             return $"{NodeCategory.Loop}<{typeof(T)},{typeof(TU)}>[{_counter.GetId()}{_incremental.GetId()}{_comparator.GetSymbol()}{_bound.GetId()}{_block.GetId()}]";
         }
-
-        public override int GetNodeCount()
-        {
-            return _counter.GetNodeCount() +
-                   _incremental.GetNodeCount() +
-                   _bound.GetNodeCount() +
-                   _block.GetNodeCount();
-        }
-
+        
         public override INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
         {
             var index = nodeIndexToReplace;
@@ -133,26 +125,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions.forLoop
 
             return _resultsAdd.GetValue();
         }
-
-        public override bool IsValid()
-        {
-            return _counter != null && _incremental != null && _comparator != null
-                   && _bound != null && _incrementalAdd != null && _resultsAdd != null 
-                   && _block != null && _block.IsValid();
-        }
-
-        public override int GetNullNodeCount()
-        {
-            var numberOfNullNodes = 0;
-
-            numberOfNullNodes += GetNullNodeCountForComponent(_incremental);
-            numberOfNullNodes += GetNullNodeCountForComponent(_bound);
-            numberOfNullNodes += GetNullNodeCountForComponent(_block);
-            numberOfNullNodes += GetNullNodeCountForComponent(_counter);
-            
-            return numberOfNullNodes;
-        }
-
+        
         public override INode<T> GetCopy()
         {
             return new ForLoopNode<T, TU>(_incremental.GetCopy(),_bound.GetCopy(),_comparator.GetCopy(),_block.GetCopy(),_counter.GetCopy());

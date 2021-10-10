@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 
@@ -34,12 +35,7 @@ namespace AutomaticallyDefinedFunctions.structure
         {
             return _function.GetId();
         }
-
-        public override int GetNodeCount()
-        {
-            return _function.GetNodeCount();
-        }
-
+        
         public override INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
         {
             return _function.ReplaceNode(nodeIndexToReplace,generator,maxDepth);
@@ -54,17 +50,7 @@ namespace AutomaticallyDefinedFunctions.structure
         {
             return _function.GetValue();
         }
-
-        public override bool IsValid()
-        {
-            return _function != null && _function.IsValid();
-        }
-
-        public override int GetNullNodeCount()
-        {
-            return _function.GetNullNodeCount();
-        }
-
+        
         public override INode<T> GetCopy()
         {
             return new FunctionDefinition<T>(_name, _function.GetCopy(), _arguments);

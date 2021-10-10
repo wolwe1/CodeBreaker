@@ -7,13 +7,13 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFuncti
 {
     public class StringAddOperator : IArithmeticOperator<string>
     {
-        public string GetResult(List<INode<string>> children)
+        public string GetResult(List<INode> children)
         {
             var builder = new StringBuilder();
 
             foreach (var child in children)
             {
-                builder.Append(child.GetValue());
+                builder.Append(((INode<string>)child).GetValue());
             }
 
             return builder.ToString();

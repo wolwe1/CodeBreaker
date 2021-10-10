@@ -6,9 +6,9 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFuncti
 {
     public class BooleanAddOperator: IArithmeticOperator<bool>
     {
-        public bool GetResult(List<INode<bool>> children)
+        public bool GetResult(List<INode> children)
         {
-            return children.Aggregate(true, (total, next) => total && next.GetValue());
+            return children.Aggregate(true, (total, next) => total && ((INode<bool>)next).GetValue());
         }
     }
 }

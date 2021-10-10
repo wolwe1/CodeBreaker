@@ -1,5 +1,6 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.functions.arithmetic;
 using AutomaticallyDefinedFunctions.structure.nodes;
 

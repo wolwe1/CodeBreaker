@@ -25,7 +25,6 @@ namespace AutomaticallyDefinedFunctions.structure.functions.ifStatement
             _trueBlock = trueBlock;
             _falseBlock = falseBlock;
 
-            RegisterChildren(new List<INode<T>>() {_trueBlock, falseBlock});
         }
 
         public IfNode()
@@ -63,14 +62,6 @@ namespace AutomaticallyDefinedFunctions.structure.functions.ifStatement
             return
                 $"{NodeCategory.If}<{typeof(T)},{typeof(TU)}>[{_leftPredicate.GetId()}{_rightPredicate.GetId()}{_comparator.GetSymbol()}{_trueBlock.GetId()}{_falseBlock.GetId()}]";
 
-        }
-
-        public override int GetNodeCount()
-        {
-            return _leftPredicate.GetNodeCount() +
-                   _rightPredicate.GetNodeCount() +
-                   _trueBlock.GetNodeCount() +
-                   _falseBlock.GetNodeCount();
         }
 
         public override INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
@@ -138,27 +129,6 @@ namespace AutomaticallyDefinedFunctions.structure.functions.ifStatement
             
             return _comparator.PassesCheck(_leftPredicate, _rightPredicate) ? 
                 _trueBlock.GetValue() : _falseBlock.GetValue();
-        }
-
-        public override bool IsValid()
-        {
-            return _leftPredicate != null && _leftPredicate.IsValid() &&
-                   _rightPredicate != null && _rightPredicate.IsValid() &&
-                   _comparator != null &&
-                   _trueBlock != null && _trueBlock.IsValid() &&
-                   _falseBlock != null && _falseBlock.IsValid() ;
-        }
-
-        public override int GetNullNodeCount()
-        {
-            var numberOfNullNodes = 0;
-
-            numberOfNullNodes += GetNullNodeCountForComponent(_leftPredicate);
-            numberOfNullNodes += GetNullNodeCountForComponent(_rightPredicate);
-            numberOfNullNodes += GetNullNodeCountForComponent(_trueBlock);
-            numberOfNullNodes += GetNullNodeCountForComponent(_falseBlock);
-            
-            return numberOfNullNodes;
         }
 
         public override INode<T> GetCopy()
