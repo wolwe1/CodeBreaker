@@ -1,6 +1,7 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
+using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.functions.ifStatement;
 using AutomaticallyDefinedFunctions.structure.nodes;
 

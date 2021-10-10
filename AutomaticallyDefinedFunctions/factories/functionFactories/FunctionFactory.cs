@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
+using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
 namespace AutomaticallyDefinedFunctions.factories.functionFactories

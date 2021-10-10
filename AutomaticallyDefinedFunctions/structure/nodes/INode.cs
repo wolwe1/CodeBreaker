@@ -1,6 +1,7 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.state;
 
 namespace AutomaticallyDefinedFunctions.structure.nodes
 {
@@ -18,5 +19,6 @@ namespace AutomaticallyDefinedFunctions.structure.nodes
         int GetNodeCount();
         INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth);
         INode<T> GetSubTree(int nodeIndexToGet);
+        void Visit(INodeVisitor visitor);
     }
 }

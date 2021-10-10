@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.state;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
 namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic
@@ -38,6 +39,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic
         }
         public override int GetNodeCount()
         {
+            //TODO: Investigate
             return Children.ElementAt(0).GetNodeCount() +
                    Children.ElementAt(1).GetNodeCount();
         }
@@ -97,7 +99,10 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic
         {
             return new List<INode<T>>() {GetChild(0).GetCopy(), GetChild(1).GetCopy()};
         }
-        
+        public override void Visit(INodeVisitor visitor)
+        {
+            visitor.Accept(this);
+        }
 
     }
 }

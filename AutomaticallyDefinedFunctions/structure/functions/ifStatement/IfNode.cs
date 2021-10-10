@@ -4,6 +4,7 @@ using AutomaticallyDefinedFunctions.exceptions;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
+using AutomaticallyDefinedFunctions.state;
 using AutomaticallyDefinedFunctions.structure.functions.ifStatement.comparators;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
@@ -67,6 +68,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions.ifStatement
 
         public override int GetNodeCount()
         {
+            //TODO: Investigate
             return _leftPredicate.GetNodeCount() +
                    _rightPredicate.GetNodeCount() +
                    _trueBlock.GetNodeCount() +
@@ -174,6 +176,16 @@ namespace AutomaticallyDefinedFunctions.structure.functions.ifStatement
             var newFalseBlock = ReplaceNullNodesForComponent(_falseBlock,maxDepth,generator);
 
             return new IfNode<T, TU>(newLeftPred,newRightPred,_comparator.GetCopy(),newTrueBlock,newFalseBlock);
+        }
+        
+        public override void Visit(INodeVisitor visitor)
+        {
+            visitor.Accept(this);
+            
+            _falseBlock.Visit(visitor);
+            _trueBlock.Visit(visitor);
+            _leftPredicate.Visit(visitor);
+            _rightPredicate.Visit(visitor);
         }
     }
 }

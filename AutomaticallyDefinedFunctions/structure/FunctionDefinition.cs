@@ -2,6 +2,8 @@
 using System.Collections.Immutable;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.state;
+using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 
@@ -75,5 +77,9 @@ namespace AutomaticallyDefinedFunctions.structure
             return new FunctionDefinition<T>(_name, _function.ReplaceNullNodes(maxDepth,generator), _arguments);
         }
         
+        public override void Visit(INodeVisitor visitor)
+        {
+            visitor.Accept(_function);
+        }
     }
 }

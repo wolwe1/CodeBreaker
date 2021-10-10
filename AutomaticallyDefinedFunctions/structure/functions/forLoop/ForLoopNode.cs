@@ -5,6 +5,7 @@ using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
+using AutomaticallyDefinedFunctions.state;
 using AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFunction;
 using AutomaticallyDefinedFunctions.structure.functions.ifStatement.comparators;
 using AutomaticallyDefinedFunctions.structure.nodes;
@@ -49,6 +50,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions.forLoop
 
         public override int GetNodeCount()
         {
+            //TODO: Investigate
             return _counter.GetNodeCount() +
                    _incremental.GetNodeCount() +
                    _bound.GetNodeCount() +
@@ -194,5 +196,14 @@ namespace AutomaticallyDefinedFunctions.structure.functions.forLoop
 
         }
 
+        public override void Visit(INodeVisitor visitor)
+        {
+            visitor.Accept(this);
+            
+            _incremental.Visit(visitor);
+            _counter.Visit(visitor);
+            _block.Visit(visitor);
+            _bound.Visit(visitor);
+        }
     }
 }

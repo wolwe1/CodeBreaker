@@ -1,31 +1,32 @@
 ﻿using System;
-using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.parsing;
+using AutomaticallyDefinedFunctions.state;
 
 namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
 {
     public class ValueNode<T> : INode<T> where T : IComparable
     {
-        private readonly T _value;
+        protected T Value;
 
         public ValueNode(T value)
         {
-            _value = value;
+            Value = value;
         }
         
         protected ValueNode()
         {
-            _value = default(T);
+            Value = default(T);
         }
 
         public virtual T GetValue()
         {
-            return _value;
+            return Value;
         }
 
         public virtual bool IsValid()
         {
-            return _value != null;
+            return Value != null;
         }
 
         public virtual int GetNullNodeCount()
@@ -35,7 +36,7 @@ namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
 
         public virtual INode<T> GetCopy()
         {
-            return new ValueNode<T>(_value);
+            return new ValueNode<T>(Value);
         }
 
         public INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator)
@@ -47,15 +48,10 @@ namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
         {
             return false;
         }
-
-        public string GetStructure()
-        {
-            return $"Value node({_value})";
-        }
-
+        
         public virtual string GetId()
         {
-            return $"V['{_value}']";
+            return $"{NodeCategory.ValueNode}['{Value}']";
         }
 
         public int GetNodeCount()
@@ -71,6 +67,12 @@ namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
         public virtual INode<T> GetSubTree(int nodeIndexToGet)
         {
             return this;
+        }
+        
+        public virtual void Visit(INodeVisitor visitor)
+        {
+            visitor.Accept(this);
+            
         }
     }
 }

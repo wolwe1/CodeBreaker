@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.state;
+using AutomaticallyDefinedFunctions.structure.nodes;
 
-namespace AutomaticallyDefinedFunctions.structure.nodes
+namespace AutomaticallyDefinedFunctions.structure.functions
 {
     public abstract class FunctionNode<T> : INode<T> where T : IComparable
     {
@@ -90,7 +91,6 @@ namespace AutomaticallyDefinedFunctions.structure.nodes
         public abstract int GetNodeCount();
         public abstract INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth);
         public abstract INode<T> GetSubTree(int nodeIndexToGet);
-
         public abstract T GetValue();
 
         public abstract bool IsValid();
@@ -100,5 +100,6 @@ namespace AutomaticallyDefinedFunctions.structure.nodes
         public abstract INode<T> GetCopy();
 
         public abstract INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator);
+        public abstract void Visit(INodeVisitor visitor);
     }
 }
