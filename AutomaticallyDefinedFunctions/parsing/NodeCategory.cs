@@ -17,5 +17,8 @@
         public static string Subtract => new NodeCategory("S").Value;
         public static string Multiplication => new NodeCategory("M").Value;
         public static string Division => new NodeCategory("D").Value;
+        public static string Equal => new NodeCategory("=").Value;
+        public static string LessThan => new NodeCategory("<").Value;
+        public static string GreaterThan => new NodeCategory(">").Value;
     }
 }

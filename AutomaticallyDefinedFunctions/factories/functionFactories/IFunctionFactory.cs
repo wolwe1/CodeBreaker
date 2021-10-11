@@ -7,7 +7,7 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
 {
     public interface IFunctionFactory
     {
-        public FunctionNode<T> Get<T, TU>(int maxDepth, FunctionGenerator parent)
+        public FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionGenerator parent)
             where T : IComparable where TU : IComparable;
 
         public bool CanDispatchFunctionOfType(Type t);

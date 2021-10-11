@@ -31,13 +31,6 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.subtractF
         {
             return _subtractOperator.GetResult(Children);
         }
-
-        public override INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
-        {
-            var (left,right) = GetReplaceNodes(nodeIndexToReplace, generator, maxDepth);
-
-            return new SubtractFunc<T>(left, right,_subtractOperator);
-        }
         
         public override INode<T> GetCopy()
         {

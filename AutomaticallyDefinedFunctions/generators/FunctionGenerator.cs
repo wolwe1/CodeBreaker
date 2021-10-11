@@ -7,7 +7,7 @@ using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.factories.valueNodes;
 using AutomaticallyDefinedFunctions.parsing;
 using AutomaticallyDefinedFunctions.structure.functions;
-using AutomaticallyDefinedFunctions.structure.functions.ifStatement.comparators;
+using AutomaticallyDefinedFunctions.structure.functions.comparators;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
 namespace AutomaticallyDefinedFunctions.generators
@@ -15,6 +15,7 @@ namespace AutomaticallyDefinedFunctions.generators
     public class FunctionGenerator
     {
         private readonly List<IFunctionFactory> _factories;
+        private readonly List<ComparatorFactory> _comparators;
         private readonly bool _useNullTerminals;
         private readonly AdfSettings _settings;
         
@@ -23,6 +24,13 @@ namespace AutomaticallyDefinedFunctions.generators
             _factories = new List<IFunctionFactory>();
             _useNullTerminals = useNullTerminals;
             _settings = settings;
+
+            _comparators = new List<ComparatorFactory>()
+            {
+                new EqualComparatorFactory(),
+                new LessThanComparatorFactory(),
+                new GreaterThanComparatorFactory()
+            };
         }
         
         public FunctionNode<T> CreateFunction<T>(int maxDepth) where T : IComparable
@@ -44,7 +52,7 @@ namespace AutomaticallyDefinedFunctions.generators
             
             var choice = RandomNumberFactory.Next(factoriesThatCanDispatch.Count());
 
-            return factoriesThatCanDispatch.ElementAt(choice).Get<T, TU>(maxDepth, this);
+            return factoriesThatCanDispatch.ElementAt(choice).CreateFunction<T, TU>(maxDepth, this);
         }
 
         private IEnumerable<IFunctionFactory> GetFactoriesThatCanDispatch<T>()
@@ -53,26 +61,25 @@ namespace AutomaticallyDefinedFunctions.generators
         }
     
 
-        public NodeComparator<T> ChooseComparator<T>() where T : IComparable
+        public NodeComparator<T> ChooseComparator<T>(int maxDepth) where T : IComparable
         {
-            var choice = RandomNumberFactory.Next(3);
+            var comparatorFactories = _comparators
+                .Where(f => f.CanDispatchFunctionOfType(typeof(T)));
+            
+            var choice = RandomNumberFactory.Next(comparatorFactories.Count());
 
-            return choice switch
-            {
-                0 => ComparatorFactory.CreateEqualsComparator<T>(),
-                1 => ComparatorFactory.CreateLessThanComparator<T>(),
-                2 => ComparatorFactory.CreateGreaterThanComparator<T>(),
-                _ => throw new ArgumentOutOfRangeException()
-            };
+            var chosenComparatorFactory = comparatorFactories.ElementAt(choice);
+            
+            return (NodeComparator<T>)chosenComparatorFactory.CreateFunction<T,T>(maxDepth, this);
         }
         
-        public static NodeComparator<T> ChooseComparator<T>(ref string id) where T : IComparable
-        {
-            var comparator = ComparatorFactory.Get<T>(id[0]);
-            id = id[1..];
-            
-            return comparator;
-        }
+        // public static NodeComparator<T> ChooseComparator<T>(ref string id) where T : IComparable
+        // {
+        //     var comparator = ComparatorFactory.Get<T>(id[0]);
+        //     id = id[1..];
+        //     
+        //     return comparator;
+        // }
 
         public INode<T> Choose<T>(int maxDepth) where T : IComparable
         {
@@ -109,7 +116,14 @@ namespace AutomaticallyDefinedFunctions.generators
         {
             id = AdfParser.GetIdWithoutDelimiters(id);
             var generator = _factories.FirstOrDefault(f => f.CanMap(id));
-            if (generator == null)
+            
+            if (generator != null) return generator.GenerateFunction<T>(id, this);
+            
+            
+            //Use comparator
+            generator = _comparators.FirstOrDefault(f => f.CanMap(id));
+            
+            if(generator == null)
                 throw new Exception($"Unable to find generator for ID '{id}'");
             
             return generator.GenerateFunction<T>(id,this);

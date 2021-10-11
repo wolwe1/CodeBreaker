@@ -2,6 +2,7 @@
 using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.structure.nodes;
+using AutomaticallyDefinedFunctions.structure.visitors;
 
 namespace AutomaticallyDefinedFunctions.structure
 {
@@ -41,12 +42,13 @@ namespace AutomaticallyDefinedFunctions.structure
 
         public MainProgram<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
         {
-            return new MainProgram<T>(_nodeTree.ReplaceNode(nodeIndexToReplace, generator,maxDepth));
+            var visitor = new BranchReplacementVisitor(generator,maxDepth);
+            var treeCopy = _nodeTree.GetCopy();
+            //Alters tree in place
+            treeCopy.Visit(visitor);
+            
+            return new MainProgram<T>(treeCopy);
         }
-
-        public INode<T> GetSubTree(int nodeIndexToGet)
-        {
-            return _nodeTree.GetSubTree(nodeIndexToGet);
-        }
+        
     }
 }

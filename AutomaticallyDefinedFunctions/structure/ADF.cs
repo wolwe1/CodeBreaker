@@ -109,12 +109,7 @@ namespace AutomaticallyDefinedFunctions.structure
             _mainPrograms[mainIndex] = _mainPrograms[mainIndex].ReplaceNode(nodeIndexToReplace, generator,maxDepth);
             return this;
         }
-
-        public INode<T> GetSubTreeOfMain(int mainIndex, int nodeIndexToGet)
-        {
-            return _mainPrograms[mainIndex].GetSubTree(nodeIndexToGet);
-        }
-
+        
         public int GetNumberOfDefinitions()
         {
             return _functionDefinitions.Count;

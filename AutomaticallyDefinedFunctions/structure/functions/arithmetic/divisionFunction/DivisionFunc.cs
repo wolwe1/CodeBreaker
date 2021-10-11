@@ -31,13 +31,6 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.divisionF
             return _divideOperator.GetResult(Children);
         }
 
-        public override INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
-        {
-            var (left,right) = GetReplaceNodes(nodeIndexToReplace, generator, maxDepth);
-
-            return new DivisionFunc<T>(left, right,_divideOperator);
-        }
-        
         public override INode<T> GetCopy()
         {
             var childCopies = GetChildCopies();

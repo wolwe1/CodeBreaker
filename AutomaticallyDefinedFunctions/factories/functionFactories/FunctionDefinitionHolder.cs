@@ -17,7 +17,7 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
             _functionDefinitions = new List<FunctionDefinition<T>>();
         }
 
-        public override FunctionNode<TX> Get<TX, TU>(int maxDepth, FunctionGenerator parent)
+        public override FunctionNode<TX> CreateFunction<TX, TU>(int maxDepth, FunctionGenerator parent)
         {
             //Type safety check
             if (typeof(TX) != typeof(T))
@@ -46,7 +46,7 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
             return t == typeof(T);
         }
 
-        protected override INode<T1> GenerateFunction<T1, TU>(string id, FunctionGenerator functionGenerator)
+        protected override INode<T1> GenerateFunctionFromId<T1, TU>(string id, FunctionGenerator functionGenerator)
         {
             throw new NotImplementedException();
         }

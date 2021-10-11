@@ -11,7 +11,7 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic
         protected ArithmeticFunctionFactory(string symbol) : base(symbol) { }
         
         protected abstract ArithmeticFunc<T> CreateArithmeticFunction<T>() where T : IComparable;
-        public override FunctionNode<T> Get<T, TU>(int maxDepth, FunctionGenerator parent)
+        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionGenerator parent)
         {
             var addFunc = CreateArithmeticFunction<T>();
 
@@ -21,7 +21,7 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic
             return addFunc.AddChild(firstChild).AddChild(secondChild);
         }
 
-        protected override INode<T> GenerateFunction<T, TU>(string id, FunctionGenerator functionGenerator)
+        protected override INode<T> GenerateFunctionFromId<T, TU>(string id, FunctionGenerator functionGenerator)
         {
             var leftChild = functionGenerator.GenerateChildFromId<T>(ref id);
             

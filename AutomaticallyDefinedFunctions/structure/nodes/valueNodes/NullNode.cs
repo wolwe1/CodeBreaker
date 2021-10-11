@@ -1,5 +1,4 @@
 ﻿using System;
-using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
 
 namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
@@ -41,10 +40,6 @@ namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
         }
         
         public override INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
-        {
-            return this;
-        }
-        public override INode<T> GetSubTree(int nodeIndexToGet)
         {
             return this;
         }

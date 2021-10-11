@@ -30,13 +30,6 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.multiplic
         {
             return _multiplicationOperator.GetResult(Children);
         }
-
-        public override INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
-        {
-            var (left,right) = GetReplaceNodes(nodeIndexToReplace, generator, maxDepth);
-
-            return new MultiplicationFunc<T>(left, right,_multiplicationOperator);
-        }
         
         public override INode<T> GetCopy()
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutomaticallyDefinedFunctions.exceptions;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.structure;
 using Xunit;
@@ -15,8 +16,32 @@ namespace AutomaticallyDefinedFunctions.Tests.adf
         {
             for (var i = 0; i < 50; i++)
             {
-                var adf = generator.Generate().GetMainPrograms().First();
-                MainProgramCorrectlyProduceId(adf,generator);
+                var mainProgram = generator.Generate().GetMainPrograms().First();
+                MainProgramCorrectlyProduceId(mainProgram,generator);
+                ReproducedMainsReturnSameResult(mainProgram, generator);
+            }
+        }
+        
+        public void ReproducedMainsReturnSameResult<T>(MainProgram<T> mainProgram,AdfGenerator<T> generator) where T : IComparable
+        {
+            var originalId = mainProgram.GetId();
+
+            var mainFromId = generator.GenerateMainFromId(originalId);
+
+            var reproducedValue = TryRun(mainFromId);
+            var originalValue = TryRun(mainProgram);
+            Assert.Equal(originalValue, reproducedValue );
+        }
+
+        private T TryRun<T>(MainProgram<T> prog) where T : IComparable
+        {
+            try
+            {
+                return prog.GetValue();
+            }
+            catch (ProgramLoopException )
+            {
+                return default(T);
             }
         }
         

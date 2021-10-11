@@ -1,6 +1,7 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.structure.visitors;
 
 namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
 {
@@ -58,19 +59,17 @@ namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
             return $"V['{_value}']";
         }
 
-        public int GetNodeCount()
-        {
-            return 1;
-        }
+        public int GetNodeCount() => 1;
 
-        public virtual INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
+        public virtual INode ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
         {
             return generator.CreateFunction<T>(maxDepth);
         }
 
-        public virtual INode<T> GetSubTree(int nodeIndexToGet)
+        public void Visit(INodeVisitor visitor)
         {
-            return this;
+            visitor.Accept(this);
         }
+        
     }
 }

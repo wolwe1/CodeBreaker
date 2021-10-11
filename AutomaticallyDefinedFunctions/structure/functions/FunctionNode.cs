@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
@@ -7,40 +8,65 @@ namespace AutomaticallyDefinedFunctions.structure.functions
 {
     public abstract class FunctionNode<T> : ChildManager, INode<T> where T : IComparable
     {
-        protected FunctionNode(){}
+        protected FunctionNode(int expectedChildrenAmount): base(expectedChildrenAmount){}
         protected FunctionNode(IEnumerable<INode<T>> nodes) : base(nodes) {}
 
-        public bool IsNullNode() => false;
+        public override bool IsNullNode() => false;
  
-        protected INode<TX> ReplaceNullNodesForComponent<TX>(INode<TX> component,int maxDepth, FunctionGenerator generator) where TX : IComparable
+        protected INode ReplaceNullNodesForComponent(INode component,int maxDepth, FunctionGenerator generator)
         {
-            if (component.IsNullNode())
+            if (!component.IsNullNode())
             {
-                return generator.Choose<TX>(maxDepth - 1);
+                return component switch
+                {
+                    INode<string> strComp => strComp.GetNullNodeCount() > 0
+                        ? strComp.ReplaceNullNodes(maxDepth - 1, generator)
+                        : strComp.GetCopy(),
+                    INode<bool> boolComp => boolComp.GetNullNodeCount() > 0
+                        ? boolComp.ReplaceNullNodes(maxDepth - 1, generator)
+                        : boolComp.GetCopy(),
+                    INode<double> doubleComp => doubleComp.GetNullNodeCount() > 0
+                        ? doubleComp.ReplaceNullNodes(maxDepth - 1, generator)
+                        : doubleComp.GetCopy(),
+                    _ => throw new Exception($"Unable to dispatch type ReplaceNullNodesForComponent")
+                };
             }
-            
-            return component.GetNullNodeCount() > 0 ? component.ReplaceNullNodes(maxDepth - 1,generator) : component.GetCopy();
+
+            return DispatchForGenerator(component, generator, maxDepth);
         }
-        
+
+        private static INode DispatchForGenerator(INode node, FunctionGenerator generator, int maxDepth)
+        {
+            return node switch
+            {
+                INode<string> => generator.Choose<string>(maxDepth - 1),
+                INode<bool> => generator.Choose<bool>(maxDepth - 1),
+                INode<double> => generator.Choose<double>(maxDepth - 1),
+                _ => throw new Exception($"Unable to dispatch type in ReplaceNullNodesForComponent")
+            };
+        }
+
         public new FunctionNode<T> AddChild(INode newNode)
         {
             base.AddChild(newNode);
             return this;
         }
         
-        public INode<T> GetChild(int index)
+        protected string CreateId<TU>(string nodeCategory)
         {
-            return (INode<T>) base.GetChild(index);
+            var header = $"{nodeCategory}<{typeof(T)},{typeof(TU)}>";
+            var childIds = Children.Select(child => child.GetId());
+            
+            var body = $"[{string.Join("",childIds)}]";
+
+            return $"{header}{body}";
         }
-        
-        public abstract string GetId();
-        public abstract INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth);
-        public abstract INode<T> GetSubTree(int nodeIndexToGet);
+
+        public abstract INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator);
 
         public abstract T GetValue();
 
         public abstract INode<T> GetCopy();
-
-        public abstract INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator);
+        
     }
 }

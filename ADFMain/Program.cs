@@ -18,7 +18,7 @@ namespace ADFMain
             settings.NumberOfFunctions = 5;
 
             var adfGenerator = new AdfGenerator<T>(0, settings);
-            for (int i = 0; i < runs; i++)
+            for (var i = 0; i < runs; i++)
             {
                 try
                 {

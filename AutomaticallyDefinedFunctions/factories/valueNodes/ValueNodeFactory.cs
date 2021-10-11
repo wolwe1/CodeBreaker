@@ -80,7 +80,7 @@ namespace AutomaticallyDefinedFunctions.factories.valueNodes
             return new NullNode<T>();
         }
 
-        public override FunctionNode<T> Get<T, TU>(int maxDepth, FunctionGenerator parent)
+        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionGenerator parent)
         {
             throw new NotImplementedException();
         }
@@ -90,7 +90,7 @@ namespace AutomaticallyDefinedFunctions.factories.valueNodes
             return false;
         }
 
-        protected override INode<T> GenerateFunction<T, TU>(string id, FunctionGenerator functionGenerator)
+        protected override INode<T> GenerateFunctionFromId<T, TU>(string id, FunctionGenerator functionGenerator)
         {
             return Get<T>(AdfParser.GetValueFromQuotes(id));
         }

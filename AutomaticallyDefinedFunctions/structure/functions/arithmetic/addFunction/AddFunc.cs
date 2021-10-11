@@ -41,13 +41,6 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFuncti
             return _arithmeticOperator.GetResult(Children);
         }
 
-        public override INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
-        {
-            var (left,right) = GetReplaceNodes(nodeIndexToReplace, generator, maxDepth);
-
-            return new AddFunc<T>(left, right,_arithmeticOperator);
-        }
-        
         public override INode<T> GetCopy()
         {
             var childCopies = GetChildCopies();

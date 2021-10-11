@@ -14,7 +14,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic
             _category = category;
         }
 
-        protected ArithmeticFunc(string category)
+        protected ArithmeticFunc(string category) : base(2)
         {
             _category = category;
         }
@@ -29,51 +29,13 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic
         {
             return $"{_category}<{typeof(T)},{typeof(T)}>[{GetChildAs<T>(0).GetId()}{GetChildAs<T>(1).GetId()}]";
         }
-        
-        public override INode<T> GetSubTree(int nodeIndexToGet)
-        {
-            var index = nodeIndexToGet;
-            if (index-- == 0)
-                return GetChildAs<T>(0);
-
-            if (index - Children[0].GetNodeCount() <= 0)
-                return GetChildAs<T>(0).GetSubTree(--index);
-
-            index -= Children[0].GetNodeCount();
-            
-            if (index-- == 0)
-                return GetChildAs<T>(1);
-
-            if (index - Children[1].GetNodeCount() <= 0)
-                return GetChildAs<T>(1).GetSubTree(--index);
-
-            throw new Exception("Sub tree could not be found");
-        }
-
-        protected (INode<T>,INode<T>) GetReplaceNodes(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
-        {
-            var index = nodeIndexToReplace;
-            if (--index == 0)
-                return (generator.CreateFunction<T>(maxDepth), GetChildAs<T>(1).GetCopy());
-
-            if ((index -= Children[0].GetNodeCount()) <= 0)
-                return (GetChildAs<T>(0).ReplaceNode(index, generator, maxDepth),GetChildAs<T>(1).GetCopy());
-
-            if (index-- == 0)
-                return (GetChildCopyAs<T>(0),generator.CreateFunction<T>(maxDepth));
-            
-            if ((index -= Children[1].GetNodeCount()) <= 0)
-                return (GetChildCopyAs<T>(1),GetChildAs<T>(1).ReplaceNode(index, generator, maxDepth));
-            
-            throw new Exception("Could not find desired node to replace");
-        }
 
         protected (INode<T>, INode<T>) GetChildrenWithoutNullNodes(int maxDepth, FunctionGenerator generator)
         {
-            var newLeftChild = ReplaceNullNodesForComponent((INode<T>) Children[0],maxDepth - 1,generator);
-            var newRightChild = ReplaceNullNodesForComponent((INode<T>) Children[1],maxDepth - 1,generator);
+            var newLeftChild = ReplaceNullNodesForComponent(GetChildAs<T>(0),maxDepth - 1,generator);
+            var newRightChild = ReplaceNullNodesForComponent(GetChildAs<T>(1),maxDepth - 1,generator);
 
-            return (newLeftChild, newRightChild);
+            return ((INode<T>, INode<T>)) (newLeftChild, newRightChild);
         }
 
         protected IEnumerable<INode<T>> GetChildCopies()

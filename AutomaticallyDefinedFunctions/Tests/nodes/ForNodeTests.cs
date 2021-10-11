@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.exceptions;
 using AutomaticallyDefinedFunctions.factories;
+using AutomaticallyDefinedFunctions.structure.functions.comparators;
 using AutomaticallyDefinedFunctions.structure.functions.forLoop;
-using AutomaticallyDefinedFunctions.structure.functions.ifStatement.comparators;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 using Xunit;
 
@@ -43,16 +43,11 @@ namespace AutomaticallyDefinedFunctions.Tests.nodes
             var counter = new ValueNode<double>(0);
             var increment = new ValueNode<double>(1);
             var bounds = new ValueNode<double>(10);
-            var comparator = new LessThanComparator<double>();
-            var block = new ValueNode<string>("a");
+            var comparator = new LessThanComparator<double>(counter,bounds);
 
-            var equals = new EqualsComparator<double>();
-
-            var func = NodeBuilder.CreateForLoop<string,double>(null, null, null, null, null);
-            var func2 = NodeBuilder.CreateForLoop<string,double>(counter, null, null, null, null);
-            var func3 = NodeBuilder.CreateForLoop<string,double>(counter, increment, null, null, null);
-            var func4 = NodeBuilder.CreateForLoop<string,double>(counter, increment, bounds, null, null);
-            var func5 = NodeBuilder.CreateForLoop<string,double>(counter, increment, bounds, comparator, null);
+            var func = NodeBuilder.CreateForLoop<string,double>(null, null, null);
+            var func2 = NodeBuilder.CreateForLoop<string,double>( increment,null, null);
+            var func3 = NodeBuilder.CreateForLoop<string,double>( increment,comparator, null);
 
             yield return new object[] {func};
             
@@ -60,9 +55,6 @@ namespace AutomaticallyDefinedFunctions.Tests.nodes
             
             yield return new object[] {func3};
             
-            yield return new object[] {func4};
-            
-            yield return new object[] {func5};
         }
     }
 }

@@ -16,14 +16,14 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
             _symbol = symbol;
         }
 
-        public abstract FunctionNode<T> Get<T, TU>(int maxDepth, FunctionGenerator parent)
+        public abstract FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionGenerator parent)
             where T : IComparable where TU : IComparable;
 
         public abstract bool CanDispatchFunctionOfType(Type t);
 
         public bool CanMap(string id)
         {
-            return Equals(id[0].ToString(), _symbol);
+            return id.StartsWith(_symbol);
         }
         
         public INode<T> GenerateFunction<T>(string id, FunctionGenerator functionGenerator) where T : IComparable
@@ -33,24 +33,24 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
             var typeInfo = AdfParser.GetTypeInfo(id,_symbol);
             
             if(typeInfo == "")
-                return GenerateFunction<T,T>(id[1..],functionGenerator);
+                return GenerateFunctionFromId<T,T>(id[1..],functionGenerator);
             
             var auxType = AdfParser.GetAuxType(typeInfo);
             
             var idForChildren = id[typeInfo.Length..];
             
             if(auxType == typeof(string))
-                return GenerateFunction<T, string>(idForChildren,functionGenerator);
+                return GenerateFunctionFromId<T, string>(idForChildren,functionGenerator);
             if(auxType == typeof(double))
-                return GenerateFunction<T, double>(idForChildren,functionGenerator);
+                return GenerateFunctionFromId<T, double>(idForChildren,functionGenerator);
             if(auxType == typeof(bool))
-                return GenerateFunction<T, bool>(idForChildren,functionGenerator);
+                return GenerateFunctionFromId<T, bool>(idForChildren,functionGenerator);
             
             throw new Exception("Type information for function not found");
             
         }
 
-        protected abstract INode<T> GenerateFunction<T, TU>(string id, FunctionGenerator functionGenerator)
+        protected abstract INode<T> GenerateFunctionFromId<T, TU>(string id, FunctionGenerator functionGenerator)
             where T : IComparable where TU : IComparable;
         
     }

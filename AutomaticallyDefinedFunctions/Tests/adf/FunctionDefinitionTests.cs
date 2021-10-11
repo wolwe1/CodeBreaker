@@ -15,11 +15,11 @@ namespace AutomaticallyDefinedFunctions.Tests.adf
         {
             for (var i = 0; i < 50; i++)
             {
-                var adf = generator.Generate().GetDefinitions().First();
-                FunctionDefinitionsCorrectlyProduceId<T>(adf,generator);
+                var functionDefinition = generator.Generate().GetDefinitions().First();
+                FunctionDefinitionsCorrectlyProduceId(functionDefinition,generator);
             }
         }
-        
+
         public void FunctionDefinitionsCorrectlyProduceId<T>(FunctionDefinition<T> adf,AdfGenerator<T> generator) where T : IComparable
         {
             var originalId = adf.GetId();
