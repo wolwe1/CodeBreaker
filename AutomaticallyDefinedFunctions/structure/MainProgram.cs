@@ -1,7 +1,9 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.state;
 using AutomaticallyDefinedFunctions.structure.nodes;
+using AutomaticallyDefinedFunctions.structure.nodes.statenodes;
 using AutomaticallyDefinedFunctions.structure.visitors;
 
 namespace AutomaticallyDefinedFunctions.structure
@@ -49,6 +51,10 @@ namespace AutomaticallyDefinedFunctions.structure
             
             return new MainProgram<T>(treeCopy);
         }
-        
+
+        public void Visit(INodeVisitor visitor)
+        {
+            _nodeTree.Visit(visitor);
+        }
     }
 }

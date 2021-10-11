@@ -10,26 +10,26 @@ namespace AutomaticallyDefinedFunctions.structure
 {
     public class Adf<T> where T : IComparable
     {
-        private readonly List<MainProgram<T>> _mainPrograms;
-        private readonly List<FunctionDefinition<T>> _functionDefinitions;
-        private readonly AdfValidator _validator;
+        protected readonly List<MainProgram<T>> MainPrograms;
+        protected readonly List<FunctionDefinition<T>> FunctionDefinitions;
+        protected readonly AdfValidator Validator;
 
         public Adf()
         {
-            _mainPrograms = new List<MainProgram<T>>();
-            _functionDefinitions = new List<FunctionDefinition<T>>();
-            _validator = new AdfValidator();
+            MainPrograms = new List<MainProgram<T>>();
+            FunctionDefinitions = new List<FunctionDefinition<T>>();
+            Validator = new AdfValidator();
         }
 
-        private Adf(List<MainProgram<T>> mainPrograms, List<FunctionDefinition<T>> functionDefinitions)
+        protected Adf(List<MainProgram<T>> mainPrograms, List<FunctionDefinition<T>> functionDefinitions)
         {
-            _mainPrograms = mainPrograms;
-            _functionDefinitions = functionDefinitions;
+            MainPrograms = mainPrograms;
+            FunctionDefinitions = functionDefinitions;
         }
-
+        
         public IEnumerable<T> GetValues()
         {
-            return _mainPrograms.Select(main =>
+            return MainPrograms.Select(main =>
             {
                 try
                 {
@@ -44,29 +44,29 @@ namespace AutomaticallyDefinedFunctions.structure
 
         public Adf<T> UseDefinition(FunctionDefinition<T> definition)
         {
-            _functionDefinitions.Add(definition);
+            FunctionDefinitions.Add(definition);
             return this;
         }
         
         public Adf<T> UseMain(MainProgram<T> main)
         {
-            _mainPrograms.Add(main);
+            MainPrograms.Add(main);
             return this;
         }
 
         public bool IsValid()
         {
-            return _validator.IsValid(this);
+            return Validator.IsValid(this);
         }
 
         public IEnumerable<FunctionDefinition<T>> GetDefinitions()
         {
-            return _functionDefinitions.Select(function => (FunctionDefinition<T>)function.GetCopy());
+            return FunctionDefinitions.Select(function => (FunctionDefinition<T>)function.GetCopy());
         }
 
         public IEnumerable<MainProgram<T>> GetMainPrograms()
         {
-            return _mainPrograms.Select(main => main.GetCopy());
+            return MainPrograms.Select(main => main.GetCopy());
         }
 
         public string GetId()
@@ -77,53 +77,53 @@ namespace AutomaticallyDefinedFunctions.structure
             return $"ADF({mainIds}-{functionIds})";
         }
         
-        private IEnumerable<string> GetMainProgramIds()
+        protected IEnumerable<string> GetMainProgramIds()
         {
-            return _mainPrograms.Select(main => main.GetId());
+            return MainPrograms.Select(main => main.GetId());
         }
 
-        private IEnumerable<string> GetFunctionIds()
+        protected IEnumerable<string> GetFunctionIds()
         {
-            return _functionDefinitions.Select(func => func.GetId());
+            return FunctionDefinitions.Select(func => func.GetId());
         }
 
         public int GetMainNodeCount(int mainIndex)
         {
-            return _mainPrograms.ElementAt(mainIndex).GetNodeCount();
+            return MainPrograms.ElementAt(mainIndex).GetNodeCount();
         }
 
         public Adf<T> GetCopy()
         {
-            var mainProgramCopies = _mainPrograms.Select(main => main.GetCopy());
-            var functionDefinitionCopies = _functionDefinitions.Select(func => (FunctionDefinition<T>)func.GetCopy());
+            var mainProgramCopies = MainPrograms.Select(main => main.GetCopy());
+            var functionDefinitionCopies = FunctionDefinitions.Select(func => (FunctionDefinition<T>)func.GetCopy());
             return new Adf<T>(mainProgramCopies.ToList(), functionDefinitionCopies.ToList());
         }
 
         public int GetNumberOfMainPrograms()
         {
-            return _mainPrograms.Count;
+            return MainPrograms.Count;
         }
 
         public Adf<T> ReplaceNodeInMain(int mainIndex, int nodeIndexToReplace,FunctionGenerator generator,int maxDepth)
         {
-            _mainPrograms[mainIndex] = _mainPrograms[mainIndex].ReplaceNode(nodeIndexToReplace, generator,maxDepth);
+            MainPrograms[mainIndex] = MainPrograms[mainIndex].ReplaceNode(nodeIndexToReplace, generator,maxDepth);
             return this;
         }
         
         public int GetNumberOfDefinitions()
         {
-            return _functionDefinitions.Count;
+            return FunctionDefinitions.Count;
         }
         
         public FunctionDefinition<T> GetFunctionDefinition(int index)
         {
-            return (FunctionDefinition<T>) _functionDefinitions[index].GetCopy();
+            return (FunctionDefinition<T>) FunctionDefinitions[index].GetCopy();
         }
 
         public Adf<T> SetFunctionDefinition(int definitionIndex, FunctionDefinition<T> newDefinition)
         {
             var copy = GetCopy();
-            copy._functionDefinitions[definitionIndex] = newDefinition;
+            copy.FunctionDefinitions[definitionIndex] = newDefinition;
 
             return copy;
         }

@@ -46,5 +46,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.subtractF
             return new SubtractFunc<T>(left, right,_subtractOperator);
         }
         
+        
+        
     }
 }
