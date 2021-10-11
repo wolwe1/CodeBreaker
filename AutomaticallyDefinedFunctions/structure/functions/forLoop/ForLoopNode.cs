@@ -51,7 +51,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions.forLoop
         private T Loop(NodeComparator<TU> comparator, INode<TU> counter)
         {
             _incrementalAdd.Refresh(counter,Increment);
-
+            _resultsAdd.Clear();
             var safetyBreak = 0;
             while (comparator.PassesCheck())
             {

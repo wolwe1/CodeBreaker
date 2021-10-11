@@ -61,7 +61,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions
         public INode<T> GetChildAs<T>(int index) where T : IComparable
         {
             //Enables property based getters without throwing
-            if (index > Children.Count)
+            if (index >= Children.Count)
                 return null;
             
             return Children[index] as INode<T>;

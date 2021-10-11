@@ -4,6 +4,6 @@ namespace AutomaticallyDefinedFunctions.structure.visitors
 {
     public interface INodeVisitor
     {
-        public void Accept(INode valueNode);
+        public void Accept(INode node);
     }
 }

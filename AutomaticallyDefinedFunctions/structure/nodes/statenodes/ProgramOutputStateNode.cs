@@ -6,11 +6,12 @@ namespace AutomaticallyDefinedFunctions.structure.nodes.statenodes
     {
         public ProgramOutputStateNode(T value): base(value) { }
 
-        public ProgramOutputStateNode()
-        {
-            
-        }
+        public ProgramOutputStateNode() { }
 
+        public override bool IsValid()
+        {
+            return true;
+        }
         public override INode<T> GetCopy()
         {
             return new ProgramOutputStateNode<T>(Value);

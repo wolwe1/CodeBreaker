@@ -27,7 +27,7 @@ namespace AutomaticallyDefinedFunctions.structure
             FunctionDefinitions = functionDefinitions;
         }
         
-        public IEnumerable<T> GetValues()
+        public List<T> GetValues()
         {
             return MainPrograms.Select(main =>
             {
@@ -39,7 +39,7 @@ namespace AutomaticallyDefinedFunctions.structure
                 {
                     return default(T);
                 }
-            });
+            }).ToList();
         }
 
         public Adf<T> UseDefinition(FunctionDefinition<T> definition)

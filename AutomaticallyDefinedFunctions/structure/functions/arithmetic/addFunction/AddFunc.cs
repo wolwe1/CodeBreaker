@@ -53,5 +53,10 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFuncti
 
             return new AddFunc<T>(left, right,_arithmeticOperator);
         }
+
+        public void Clear()
+        {
+           Children.Clear();
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace AutomaticallyDefinedFunctions.structure.visitors
             _maxDepth = maxDepth;
         }
 
-        public void Accept(INode valueNode)
+        public void Accept(INode node)
         {
             throw new System.NotImplementedException();
         }

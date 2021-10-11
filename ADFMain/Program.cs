@@ -31,21 +31,22 @@ namespace ADFMain
                 var results = adf.GetValues();
                 adf.Update(results.ElementAt(0),"Nice");
                 
-                Console.WriteLine(results.ElementAt(0));
+                Console.WriteLine($"{i}: {results.ElementAt(0)}");
             }
         }
 
         private static MainProgram<string> CreateMainWithStateNodes()
         {
-            var codeBlock = new IfNode<string, bool>()
-                .SetComparisonOperator(new NotNullComparator<string>(new ProgramOutputStateNode<string>()))
-                .SetFalseCodeBlock(new ValueNode<string>("No last value"))
-                .SetTrueCodeBlock(new ProgramOutputStateNode<string>());
+            var codeBlock = new IfNode<string, double>()
+                .SetComparisonOperator(
+                    new NotEqualComparator<double>(new ValueNode<double>(1),new ExecutionCountStateNode()))
+                .SetFalseCodeBlock(new ProgramOutputStateNode<string>())
+                .SetTrueCodeBlock(new ValueNode<string>("No last value"));
 
             var func = new ForLoopNode<string, double>()
-                .SetComparator(new LessThanComparator<double>(new ValueNode<double>(0),new ExecutionCountStateNode()))
+                .SetComparator(new LessThanComparator<double>(new ValueNode<double>(0),new ValueNode<double>(1)))
                 .SetIncrement(new ValueNode<double>(1))
-                .SetCodeBlock(new ValueNode<string>("a"));
+                .SetCodeBlock(codeBlock);
             
             
             return new MainProgram<string>(func);
