@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.visitors;
 
@@ -12,6 +11,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions
         protected readonly List<INode> Children;
         private readonly int _expectedChildrenAmount;
 
+        public INode Parent { get; set; }
         private ChildManager()
         {
             Children = new List<INode>();
@@ -19,7 +19,12 @@ namespace AutomaticallyDefinedFunctions.structure.functions
 
         protected ChildManager(IEnumerable<INode> nodes): this()
         {
-            Children.AddRange(nodes);
+            foreach (var node in nodes)
+            {
+                node.Parent = this;
+                Children.Add(node);
+            }
+     
             _expectedChildrenAmount = Children.Count;
         }
 
@@ -84,6 +89,19 @@ namespace AutomaticallyDefinedFunctions.structure.functions
             visitor.Accept(this);
 
             Children.ForEach(child => child.Visit(visitor));
+        }
+
+        public void SetChild(INode nodeToReplace, INode newNode)
+        {
+            for (var index = 0; index < Children.Count; index++)
+            {
+                var child = Children[index];
+                if (child.Equals(nodeToReplace))
+                {
+                    Children[index] = newNode;
+                    break;
+                }
+            }
         }
         
         public abstract bool IsNullNode();

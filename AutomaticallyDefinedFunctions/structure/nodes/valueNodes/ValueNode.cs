@@ -1,7 +1,6 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
-using AutomaticallyDefinedFunctions.state;
 using AutomaticallyDefinedFunctions.structure.visitors;
 
 namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
@@ -9,6 +8,7 @@ namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
     public class ValueNode<T> : INode<T> where T : IComparable
     {
         protected T Value;
+        public INode Parent { get; set; }
 
         public ValueNode(T value)
         {
@@ -40,7 +40,7 @@ namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
             return new ValueNode<T>(Value);
         }
 
-        public INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator)
+        public INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
             return GetCopy();
         }
@@ -57,9 +57,9 @@ namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
 
         public int GetNodeCount() => 1;
 
-        public virtual INode ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
+        public virtual INode ReplaceNode(int nodeIndexToReplace, FunctionCreator creator, int maxDepth)
         {
-            return generator.CreateFunction<T>(maxDepth);
+            return creator.CreateFunction<T>(maxDepth);
         }
         
         
@@ -68,5 +68,6 @@ namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
             visitor.Accept(this);
             
         }
+        
     }
 }

@@ -78,11 +78,11 @@ namespace AutomaticallyDefinedFunctions.structure.functions.forLoop
             return new ForLoopNode<T, TU>(Increment.GetCopy(),(NodeComparator<TU>) Comparator.GetCopy(),CodeBlock.GetCopy());
         }
 
-        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator)
+        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
-            var newIncremental = ReplaceNullNodesForComponent(Increment,maxDepth,generator);
-            var newBlock = ReplaceNullNodesForComponent(CodeBlock,maxDepth,generator);
-            var newComparator = ReplaceNullNodesForComponent(Comparator,maxDepth,generator);
+            var newIncremental = ReplaceNullNodesForComponent(Increment,maxDepth,creator);
+            var newBlock = ReplaceNullNodesForComponent(CodeBlock,maxDepth,creator);
+            var newComparator = ReplaceNullNodesForComponent(Comparator,maxDepth,creator);
 
             return new ForLoopNode<T, TU>((INode<TU>) newIncremental, (NodeComparator<TU>) newComparator,(INode<T>) newBlock);
         }

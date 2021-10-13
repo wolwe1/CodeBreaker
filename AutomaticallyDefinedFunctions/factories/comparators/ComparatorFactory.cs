@@ -7,5 +7,15 @@ namespace AutomaticallyDefinedFunctions.factories.comparators
     {
         protected ComparatorFactory(string symbol) : base(symbol) { }
 
+        public override bool CanDispatch<T>()
+        {
+            return typeof(T) == typeof(bool);
+        }
+
+        public override bool CanDispatchAux<T>()
+        {
+            return CanDispatch<T>();
+        }
+        
     }
 }

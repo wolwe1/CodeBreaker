@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutomaticallyDefinedFunctions.factories;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.generators.adf;
 using AutomaticallyDefinedFunctions.structure;
 using Xunit;
 
@@ -33,20 +35,17 @@ namespace AutomaticallyDefinedFunctions.Tests.adf
         {
             yield return new object[]
             {
-                new AdfGenerator<string>(1,
-                    new AdfSettings(2, 3, 1, 65))
+                NodeBuilder.CreateAdfGenerator<string>()
             };
             
             yield return new object[]
             {
-                new AdfGenerator<double>(1,
-                    new AdfSettings(2, 3, 1, 65))
+                NodeBuilder.CreateAdfGenerator<double>()
             };
             
             yield return new object[]
             {
-                new AdfGenerator<bool>(1,
-                    new AdfSettings(2, 3, 1, 65))
+                NodeBuilder.CreateAdfGenerator<bool>()
             };
         }
     }

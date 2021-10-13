@@ -39,10 +39,10 @@ namespace AutomaticallyDefinedFunctions.structure.functions.comparators
             return newComp;
         }
 
-        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator)
+        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
-            var leftWithoutNulls = (INode<T>) ReplaceNullNodesForComponent(LeftPredicate, maxDepth, generator);
-            var rightWithoutNulls = (INode<T>) ReplaceNullNodesForComponent(RightPredicate, maxDepth, generator);
+            var leftWithoutNulls = (INode<T>) ReplaceNullNodesForComponent(LeftPredicate, maxDepth, creator);
+            var rightWithoutNulls = (INode<T>) ReplaceNullNodesForComponent(RightPredicate, maxDepth, creator);
 
             return new EqualsComparator<T>(leftWithoutNulls, rightWithoutNulls);
         }

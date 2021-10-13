@@ -6,7 +6,7 @@ using AutomaticallyDefinedFunctions.parsing;
 using AutomaticallyDefinedFunctions.structure;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
-namespace AutomaticallyDefinedFunctions.generators
+namespace AutomaticallyDefinedFunctions.generators.adf
 {
     public class AdfGenerator<T>  where T : IComparable
     {
@@ -17,7 +17,7 @@ namespace AutomaticallyDefinedFunctions.generators
         private readonly FunctionDefinitionGenerator<T> _definitionGenerator;
         private readonly MainGenerator<T> _mainGenerator;
         //For external use
-        private readonly FunctionGenerator _functionGenerator;
+        private readonly FunctionCreator _functionCreator;
 
         public AdfGenerator(int seed, AdfSettings settings)
         {
@@ -29,7 +29,7 @@ namespace AutomaticallyDefinedFunctions.generators
             _definitionGenerator = new FunctionDefinitionGenerator<T>(settings);
             _mainGenerator = new MainGenerator<T>(settings);
 
-            _functionGenerator = _mainGenerator.GetGeneratorCopy();
+            _functionCreator = _mainGenerator.GetGeneratorCopy();
         }
         
         public Adf<T> Generate()
@@ -99,9 +99,9 @@ namespace AutomaticallyDefinedFunctions.generators
             return _mainGenerator.GenerateMainFromId(id);
         }
 
-        public FunctionGenerator GetFunctionGenerator()
+        public FunctionCreator GetFunctionCreator()
         {
-            return _functionGenerator;
+            return _functionCreator;
         }
     }
 }

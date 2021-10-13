@@ -5,13 +5,12 @@ using AutomaticallyDefinedFunctions.structure.nodes;
 
 namespace AutomaticallyDefinedFunctions.factories.functionFactories
 {
-    public interface IFunctionFactory
+    public interface IFunctionFactory: IDispatcher
     {
-        public FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionGenerator parent)
+        public FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent)
             where T : IComparable where TU : IComparable;
-
-        public bool CanDispatchFunctionOfType(Type t);
+        
         bool CanMap(string id);
-        INode<T> GenerateFunction<T>(string id, FunctionGenerator functionGenerator) where T : IComparable;
+        INode<T> GenerateFunctionFromId<T>(string id, FunctionCreator functionCreator) where T : IComparable;
     }
 }

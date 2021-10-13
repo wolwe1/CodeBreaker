@@ -39,9 +39,9 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.subtractF
             return new SubtractFunc<T>(childCopies,_subtractOperator);
         }
 
-        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator)
+        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
-            var (left,right) = GetChildrenWithoutNullNodes(maxDepth,generator);
+            var (left,right) = GetChildrenWithoutNullNodes(maxDepth,creator);
 
             return new SubtractFunc<T>(left, right,_subtractOperator);
         }

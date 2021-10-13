@@ -7,50 +7,48 @@ using AutomaticallyDefinedFunctions.structure.nodes;
 
 namespace AutomaticallyDefinedFunctions.structure.functions.boolean
 {
-    public class NotNullComparator<TU> : NodeComparator<bool> where TU : IComparable
+    public class NotNullComparator<T> : NodeComparator<T> where T : IComparable
     {
-        private INode<TU> Argument => GetChildAs<TU>(0);
+        private INode<T> Argument => GetChildAs<T>(0);
 
-        private NotNullComparator() : base(1)
-        {
-        }
+        private NotNullComparator() : base(1) { }
         
-        public NotNullComparator(INode<TU> argument) : this()
+        public NotNullComparator(INode<T> argument) : this()
         {
             RegisterChildren(new List<INode>(){argument});
         }
 
         public override string GetId()
         {
-            return CreateId<TU>(NodeCategory.NotNull);
+            return CreateId<T>(NodeCategory.NotNull);
         }
 
-        public override bool GetValue()
+        public override T GetValue()
         {
-            return Argument.GetValue() is not null;
+            throw new NotImplementedException();
         }
         
-        public override INode<bool> GetCopy()
+        public override INode<T> GetCopy()
         {
-            return new NotNullComparator<TU>(Argument.GetCopy());
+            return new NotNullComparator<T>(Argument.GetCopy());
         }
 
-        public override INode<bool> ReplaceNullNodes(int maxDepth, FunctionGenerator generator)
+        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
             if (Argument.IsNullNode())
-                return SetArgument(generator.CreateFunction<TU>(maxDepth));
+                return SetArgument(creator.CreateFunction<T>(maxDepth));
             
-            return SetArgument(Argument.ReplaceNullNodes(maxDepth, generator));
+            return SetArgument(Argument.ReplaceNullNodes(maxDepth, creator));
         }
 
-        public NotNullComparator<TU> SetArgument(INode<TU> node)
+        public NotNullComparator<T> SetArgument(INode<T> node)
         {
-            return new NotNullComparator<TU>(node);
+            return new NotNullComparator<T>(node);
         }
 
         public override bool PassesCheck()
         {
-            return GetValue();
+            return Argument.GetValue() is not null;
         }
     }
 }

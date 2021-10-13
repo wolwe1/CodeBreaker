@@ -22,9 +22,14 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic
             return CreateDivisionFunction<T>();
         }
 
-        public override bool CanDispatchFunctionOfType(Type t)
+        public override bool CanDispatch<T>()
         {
-            return t == typeof(double);
+            return typeof(T) == typeof(double);
+        }
+
+        public override bool CanDispatchAux<T>()
+        {
+            return CanDispatch<T>();
         }
     }
 }

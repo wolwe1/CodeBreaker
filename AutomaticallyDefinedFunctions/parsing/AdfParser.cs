@@ -11,8 +11,11 @@ namespace AutomaticallyDefinedFunctions.parsing
 
             var contents = content.Split("-");
 
-            return (contents[0].Split(";"),
-                contents[1].Split(";"));
+            var mainContent = contents[0].Length > 0 ? contents[0].Split(";") : Array.Empty<string>();
+            var definitionContent = contents[1].Length > 0 ? contents[1].Split(";") : Array.Empty<string>();
+            
+            return (mainContent,
+                definitionContent);
         }
 
         public static string GetIdWithoutDelimiters(string id)

@@ -38,9 +38,9 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.divisionF
             return new DivisionFunc<T>(childCopies,_divideOperator);
         }
 
-        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator)
+        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
-            var (left,right) = GetChildrenWithoutNullNodes(maxDepth,generator);
+            var (left,right) = GetChildrenWithoutNullNodes(maxDepth,creator);
 
             return new DivisionFunc<T>(left, right,_divideOperator);
         }

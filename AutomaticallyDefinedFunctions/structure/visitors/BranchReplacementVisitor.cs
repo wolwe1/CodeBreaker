@@ -5,12 +5,12 @@ namespace AutomaticallyDefinedFunctions.structure.visitors
 {
     public class BranchReplacementVisitor : INodeVisitor
     {
-        private readonly FunctionGenerator _generator;
+        private readonly FunctionCreator _creator;
         private readonly int _maxDepth;
 
-        public BranchReplacementVisitor(FunctionGenerator generator, int maxDepth)
+        public BranchReplacementVisitor(FunctionCreator creator, int maxDepth)
         {
-            _generator = generator;
+            _creator = creator;
             _maxDepth = maxDepth;
         }
 

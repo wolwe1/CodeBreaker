@@ -30,10 +30,10 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic
             return $"{_category}<{typeof(T)},{typeof(T)}>[{GetChildAs<T>(0).GetId()}{GetChildAs<T>(1).GetId()}]";
         }
 
-        protected (INode<T>, INode<T>) GetChildrenWithoutNullNodes(int maxDepth, FunctionGenerator generator)
+        protected (INode<T>, INode<T>) GetChildrenWithoutNullNodes(int maxDepth, FunctionCreator creator)
         {
-            var newLeftChild = ReplaceNullNodesForComponent(GetChildAs<T>(0),maxDepth - 1,generator);
-            var newRightChild = ReplaceNullNodesForComponent(GetChildAs<T>(1),maxDepth - 1,generator);
+            var newLeftChild = ReplaceNullNodesForComponent(GetChildAs<T>(0),maxDepth - 1,creator);
+            var newRightChild = ReplaceNullNodesForComponent(GetChildAs<T>(1),maxDepth - 1,creator);
 
             return ((INode<T>, INode<T>)) (newLeftChild, newRightChild);
         }

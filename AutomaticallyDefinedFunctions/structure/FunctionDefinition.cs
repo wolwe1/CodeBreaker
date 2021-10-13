@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.parsing;
 using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
@@ -11,7 +12,7 @@ namespace AutomaticallyDefinedFunctions.structure
         private readonly string _name;
         private readonly INode<T> _function;
 
-        private FunctionDefinition(string name,INode<T> function): base(1)
+        public FunctionDefinition(string name,INode<T> function): base(1)
         {
             _name = name;
             _function = function;
@@ -30,7 +31,7 @@ namespace AutomaticallyDefinedFunctions.structure
 
         public override string GetId()
         {
-            return _function.GetId();
+            return CreateId<T>(NodeCategory.FunctionDefinition);
         }
         
         public override T GetValue()
@@ -43,9 +44,9 @@ namespace AutomaticallyDefinedFunctions.structure
             return new FunctionDefinition<T>(_name, _function.GetCopy());
         }
 
-        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator)
+        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
-            return new FunctionDefinition<T>(_name, _function.ReplaceNullNodes(maxDepth,generator));
+            return new FunctionDefinition<T>(_name, _function.ReplaceNullNodes(maxDepth,creator));
         }
         
     }

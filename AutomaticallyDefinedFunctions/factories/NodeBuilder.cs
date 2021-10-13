@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using AutomaticallyDefinedFunctions.factories.functionFactories;
+using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.generators.adf;
 using AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFunction;
 using AutomaticallyDefinedFunctions.structure.functions.comparators;
 using AutomaticallyDefinedFunctions.structure.functions.forLoop;
@@ -48,5 +51,22 @@ namespace AutomaticallyDefinedFunctions.factories
                 .SetComparator(comparator)
                 .SetCodeBlock(block);
         }
+        
+        public static AdfGenerator<T> CreateAdfGenerator<T>() where T : IComparable
+        {
+            var settings = new AdfSettings(2, 3, 1, 65);
+
+            return new AdfGenerator<T>(1, settings);
+        }
+
+        public static FunctionCreator CreateFunctionCreator()
+        {
+            var settings = new AdfSettings(3, 3, 1, 60);
+
+            var factory = new FunctionCreator(settings, false);
+
+            return factory;
+        }
+        
     }
 }

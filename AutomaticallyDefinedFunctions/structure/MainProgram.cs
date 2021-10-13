@@ -1,9 +1,6 @@
 ﻿using System;
-using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
-using AutomaticallyDefinedFunctions.state;
 using AutomaticallyDefinedFunctions.structure.nodes;
-using AutomaticallyDefinedFunctions.structure.nodes.statenodes;
 using AutomaticallyDefinedFunctions.structure.visitors;
 
 namespace AutomaticallyDefinedFunctions.structure
@@ -42,9 +39,9 @@ namespace AutomaticallyDefinedFunctions.structure
             return _nodeTree.GetNodeCount();
         }
 
-        public MainProgram<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
+        public MainProgram<T> ReplaceNode(int nodeIndexToReplace, FunctionCreator creator, int maxDepth)
         {
-            var visitor = new BranchReplacementVisitor(generator,maxDepth);
+            var visitor = new BranchReplacementVisitor(creator,maxDepth);
             var treeCopy = _nodeTree.GetCopy();
             //Alters tree in place
             treeCopy.Visit(visitor);

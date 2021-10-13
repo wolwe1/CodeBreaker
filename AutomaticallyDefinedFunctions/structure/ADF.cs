@@ -5,6 +5,7 @@ using AutomaticallyDefinedFunctions.exceptions;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.structure.nodes;
+using AutomaticallyDefinedFunctions.structure.visitors;
 
 namespace AutomaticallyDefinedFunctions.structure
 {
@@ -104,9 +105,9 @@ namespace AutomaticallyDefinedFunctions.structure
             return MainPrograms.Count;
         }
 
-        public Adf<T> ReplaceNodeInMain(int mainIndex, int nodeIndexToReplace,FunctionGenerator generator,int maxDepth)
+        public Adf<T> VisitMain(int mainIndex, INodeVisitor visitor)
         {
-            MainPrograms[mainIndex] = MainPrograms[mainIndex].ReplaceNode(nodeIndexToReplace, generator,maxDepth);
+            MainPrograms[mainIndex].Visit(visitor);
             return this;
         }
         

@@ -47,9 +47,9 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFuncti
             return new AddFunc<T>(childCopies,_arithmeticOperator);
         }
 
-        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator)
+        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
-            var (left,right) = GetChildrenWithoutNullNodes(maxDepth,generator);
+            var (left,right) = GetChildrenWithoutNullNodes(maxDepth,creator);
 
             return new AddFunc<T>(left, right,_arithmeticOperator);
         }

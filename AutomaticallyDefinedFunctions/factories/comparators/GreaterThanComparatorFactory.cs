@@ -11,7 +11,7 @@ namespace AutomaticallyDefinedFunctions.factories.comparators
     {
         public GreaterThanComparatorFactory() : base(NodeCategory.GreaterThan) { }
 
-        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionGenerator parent)
+        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent)
         {
             var leftPredicate = parent.Choose<T>(maxDepth - 1);
             var rightPredicate = parent.Choose<T>(maxDepth - 1);
@@ -19,18 +19,23 @@ namespace AutomaticallyDefinedFunctions.factories.comparators
             return new GreaterThanComparator<T>(leftPredicate, rightPredicate);
         }
 
-        protected override INode<T> GenerateFunctionFromId<T, TU>(string id, FunctionGenerator functionGenerator)
+        protected override INode<T> GenerateFunctionFromId<T, TU>(string id, FunctionCreator functionCreator)
         {
-            var leftPredicate = functionGenerator.GenerateChildFromId<T>(ref id);
-            var rightPredicate = functionGenerator.GenerateChildFromId<T>(ref id);
+            var leftPredicate = functionCreator.GenerateChildFromId<T>(ref id);
+            var rightPredicate = functionCreator.GenerateChildFromId<T>(ref id);
 
             return new GreaterThanComparator<T>(leftPredicate, rightPredicate);
         }
         
-        public override bool CanDispatchFunctionOfType(Type t)
+        public override bool CanDispatch<T>()
         {
-            return t == typeof(string) || t == typeof(bool) || t == typeof(double);
+            return typeof(T) == typeof(bool) || typeof(T) == typeof(double);
         }
-        
+
+        public override bool CanDispatchAux<T>()
+        {
+            return CanDispatch<T>();
+        }
+
     }
 }

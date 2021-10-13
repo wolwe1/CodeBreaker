@@ -9,19 +9,21 @@
             Value = value;
         }
 
-        public static string If => new NodeCategory("I").Value;
-        public static string Loop => new NodeCategory("L").Value;
-        public static string Add => new NodeCategory("A").Value;
+        public static string If => new NodeCategory("IF").Value;
+        public static string Loop => new NodeCategory("LOOP").Value;
+        public static string Add => new NodeCategory("ADD").Value;
         
         public static string ValueNode => new NodeCategory("V").Value;
-        public static string Subtract => new NodeCategory("S").Value;
-        public static string Multiplication => new NodeCategory("M").Value;
-        public static string Division => new NodeCategory("D").Value;
-        public static string State => new NodeCategory("Z").Value;
-        public static string NotNull => new NodeCategory("Y").Value;
+        public static string Subtract => new NodeCategory("SUB").Value;
+        public static string Multiplication => new NodeCategory("MULT").Value;
+        public static string Division => new NodeCategory("DIV").Value;
+        public static string State => new NodeCategory("STATE").Value;
+        public static string NotNull => new NodeCategory("!NULL").Value;
         public static string Equal => new NodeCategory("=").Value;
         public static string LessThan => new NodeCategory("<").Value;
         public static string GreaterThan => new NodeCategory(">").Value;
-        public static string NotEqual => new NodeCategory(">").Value;
+        public static string NotEqual => new NodeCategory("!=").Value;
+        public static string LengthOf => new NodeCategory("Len").Value;
+        public static string FunctionDefinition => new NodeCategory("Func").Value;
     }
 }

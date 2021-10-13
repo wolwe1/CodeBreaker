@@ -13,7 +13,7 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.operators
     {
         public LoopFunctionFactory() : base(NodeCategory.Loop) { }
         
-        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionGenerator parent)
+        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent)
         {
             var sameAuxAsReturn = RandomNumberFactory.TrueOrFalse();
 
@@ -46,19 +46,24 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.operators
             }
         }
         
-        public override bool CanDispatchFunctionOfType(Type t)
+        public override bool CanDispatch<T>()
         {
-            return t == typeof(string) || t == typeof(double) || t == typeof(bool);
+            return typeof(T) == typeof(string) || typeof(T) == typeof(double) || typeof(T) == typeof(bool);
         }
 
-        protected override INode<T> GenerateFunctionFromId<T,TU>(string id, FunctionGenerator functionGenerator)
+        public override bool CanDispatchAux<T>()
         {
-            var incremental = functionGenerator.GenerateChildFromId<TU>(ref id);
+            return CanDispatch<T>();
+        }
+
+        protected override INode<T> GenerateFunctionFromId<T,TU>(string id, FunctionCreator functionCreator)
+        {
+            var incremental = functionCreator.GenerateChildFromId<TU>(ref id);
  
-            var comparator = (NodeComparator<TU>)functionGenerator.GenerateChildFromId<TU>(ref id);
+            var comparator = (NodeComparator<TU>)functionCreator.GenerateChildFromId<TU>(ref id);
                 //FunctionGenerator.ChooseComparator<TU>(ref id);
 
-            var block = functionGenerator.GenerateChildFromId<T>(ref id);
+            var block = functionCreator.GenerateChildFromId<T>(ref id);
             
             return new ForLoopNode<T,TU>()
                 .SetIncrement(incremental)

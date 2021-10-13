@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
+using AutomaticallyDefinedFunctions.structure;
 using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
@@ -16,42 +16,58 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
             _symbol = symbol;
         }
 
-        public abstract FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionGenerator parent)
+        public abstract FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent)
             where T : IComparable where TU : IComparable;
-
-        public abstract bool CanDispatchFunctionOfType(Type t);
 
         public bool CanMap(string id)
         {
             return id.StartsWith(_symbol);
         }
-        
-        public INode<T> GenerateFunction<T>(string id, FunctionGenerator functionGenerator) where T : IComparable
+
+        public static INode<T> GenerateDefinitionFromId<T>(string id, FunctionCreator functionCreator) where T : IComparable
         {
+            var typeInfo = AdfParser.GetTypeInfo(id,NodeCategory.FunctionDefinition);
+            var idForChildren = id[typeInfo.Length..];
+                
+            return new FunctionDefinition<T>("Unknown",functionCreator.GenerateChildFromId<T>(ref idForChildren));
+        }
+
+        public INode<T> GenerateFunctionFromId<T>(string id, FunctionCreator functionCreator) where T : IComparable
+        {
+            string typeInfo;
+            string idForChildren;
+
+            if (id.StartsWith(NodeCategory.FunctionDefinition))
+                return GenerateDefinitionFromId<T>(id, functionCreator);
+                
+            
             if(!CanMap(id)) throw new Exception($"Cannot generate statement from ID beginning with {AdfParser.GetTypeInfo(id,_symbol)}");
             
-            var typeInfo = AdfParser.GetTypeInfo(id,_symbol);
+            typeInfo = AdfParser.GetTypeInfo(id,_symbol);
             
             if(typeInfo == "")
-                return GenerateFunctionFromId<T,T>(id[1..],functionGenerator);
+                return GenerateFunctionFromId<T,T>(id[1..],functionCreator);
             
             var auxType = AdfParser.GetAuxType(typeInfo);
             
-            var idForChildren = id[typeInfo.Length..];
+            idForChildren = id[typeInfo.Length..];
             
             if(auxType == typeof(string))
-                return GenerateFunctionFromId<T, string>(idForChildren,functionGenerator);
+                return GenerateFunctionFromId<T, string>(idForChildren,functionCreator);
             if(auxType == typeof(double))
-                return GenerateFunctionFromId<T, double>(idForChildren,functionGenerator);
+                return GenerateFunctionFromId<T, double>(idForChildren,functionCreator);
             if(auxType == typeof(bool))
-                return GenerateFunctionFromId<T, bool>(idForChildren,functionGenerator);
+                return GenerateFunctionFromId<T, bool>(idForChildren,functionCreator);
             
             throw new Exception("Type information for function not found");
             
         }
 
-        protected abstract INode<T> GenerateFunctionFromId<T, TU>(string id, FunctionGenerator functionGenerator)
+        protected abstract INode<T> GenerateFunctionFromId<T, TU>(string id, FunctionCreator functionCreator)
             where T : IComparable where TU : IComparable;
-        
+
+        public abstract bool CanDispatch<T>();
+
+        public abstract bool CanDispatchAux<T>();
     }
 }

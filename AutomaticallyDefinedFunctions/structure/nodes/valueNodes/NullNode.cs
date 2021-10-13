@@ -39,7 +39,7 @@ namespace AutomaticallyDefinedFunctions.structure.nodes.valueNodes
             return new NullNode<T>();
         }
         
-        public override INode<T> ReplaceNode(int nodeIndexToReplace, FunctionGenerator generator, int maxDepth)
+        public override INode<T> ReplaceNode(int nodeIndexToReplace, FunctionCreator creator, int maxDepth)
         {
             return this;
         }

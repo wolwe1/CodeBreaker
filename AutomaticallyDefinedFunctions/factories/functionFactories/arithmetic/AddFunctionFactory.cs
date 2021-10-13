@@ -33,11 +33,15 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic
             return CreateAddFunction<T>();
         }
         
-
-        public override bool CanDispatchFunctionOfType(Type t)
+        public override bool CanDispatch<T>()
         {
-            return t == typeof(string) || t == typeof(double) || t == typeof(bool);
+            return typeof(T) == typeof(double) || typeof(T) == typeof(string) || typeof(T) == typeof(bool);
         }
-        
+
+        public override bool CanDispatchAux<T>()
+        {
+            return CanDispatch<T>();
+        }
+
     }
 }

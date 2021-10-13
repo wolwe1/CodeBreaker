@@ -17,7 +17,7 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
             _functionDefinitions = new List<FunctionDefinition<T>>();
         }
 
-        public override FunctionNode<TX> CreateFunction<TX, TU>(int maxDepth, FunctionGenerator parent)
+        public override FunctionNode<TX> CreateFunction<TX, TU>(int maxDepth, FunctionCreator parent)
         {
             //Type safety check
             if (typeof(TX) != typeof(T))
@@ -41,14 +41,20 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
             _functionDefinitions.Clear();
         }
         
-        public override bool CanDispatchFunctionOfType(Type t)
+        public override bool CanDispatch<TX>()
         {
-            return t == typeof(T);
+            return typeof(TX) == typeof(T);
         }
 
-        protected override INode<T1> GenerateFunctionFromId<T1, TU>(string id, FunctionGenerator functionGenerator)
+        public override bool CanDispatchAux<TX>()
         {
-            throw new NotImplementedException();
+            return true;
+        }
+
+        protected override INode<T1> GenerateFunctionFromId<T1, TU>(string id, FunctionCreator functionCreator)
+        {
+            var nodeTree = functionCreator.GenerateChildFromId<T1>(ref id);
+            return new FunctionDefinition<T1>("Unknown",nodeTree);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.visitors;
 
 namespace AutomaticallyDefinedFunctions.structure.nodes
@@ -13,12 +14,14 @@ namespace AutomaticallyDefinedFunctions.structure.nodes
         bool IsNullNode();
         string GetId();
         void Visit(INodeVisitor visitor);
+        
+        INode Parent { get; set; }
     }
     
     public interface INode<out T> : INode where T : IComparable
     {
         public T GetValue();
         INode<T> GetCopy();
-        INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator);
+        INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator);
     }
 }

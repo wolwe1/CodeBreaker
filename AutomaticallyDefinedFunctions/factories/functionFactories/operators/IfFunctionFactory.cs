@@ -10,20 +10,15 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.operators
 {
     public class IfFunctionFactory : FunctionFactory
     {
-        public IfFunctionFactory() : base(NodeCategory.If)
-        {
-            
-        }
+        public IfFunctionFactory() : base(NodeCategory.If) { }
         
-        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth,FunctionGenerator parent)
+        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth,FunctionCreator parent)
         {
             var sameAuxAsReturn = RandomNumberFactory.TrueOrFalse();
 
             if (sameAuxAsReturn)
             {
                 var ifNode = new IfNode<T, T>();
-                var leftPredicate = parent.Choose<T>(maxDepth - 1);
-                var rightPredicate = parent.Choose<T>(maxDepth - 1);
                 var comparator = parent.ChooseComparator<T>(maxDepth - 1);
                 var trueBlock = parent.Choose<T>(maxDepth - 1);
                 var falseBlock = parent.Choose<T>(maxDepth - 1);
@@ -47,19 +42,24 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.operators
             }
         }
         
-        public override bool CanDispatchFunctionOfType(Type t)
+        public override bool CanDispatch<T>()
         {
-            return t == typeof(string) || t == typeof(double) || t == typeof(bool);
+            return typeof(T) == typeof(double) || typeof(T) == typeof(string) || typeof(T) == typeof(bool);
         }
 
-        protected override INode<T> GenerateFunctionFromId<T,TU>(string id, FunctionGenerator functionGenerator)
+        public override bool CanDispatchAux<T>()
         {
-            var comparator = (NodeComparator<TU>)functionGenerator.GenerateChildFromId<TU>(ref id);
+            return CanDispatch<T>();
+        }
+
+        protected override INode<T> GenerateFunctionFromId<T,TU>(string id, FunctionCreator functionCreator)
+        {
+            var comparator = (NodeComparator<TU>)functionCreator.GenerateChildFromId<TU>(ref id);
                 //FunctionGenerator.ChooseComparator<TU>(ref id);
 
-            var trueBlock = functionGenerator.GenerateChildFromId<T>(ref id);
+            var trueBlock = functionCreator.GenerateChildFromId<T>(ref id);
 
-            var falseBlock = functionGenerator.GenerateChildFromId<T>(ref id);
+            var falseBlock = functionCreator.GenerateChildFromId<T>(ref id);
             
             return new IfNode<T,TU>()
                 .SetComparisonOperator(comparator)

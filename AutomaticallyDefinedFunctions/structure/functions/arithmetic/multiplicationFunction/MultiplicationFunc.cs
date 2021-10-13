@@ -38,9 +38,9 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.multiplic
             return new MultiplicationFunc<T>(childCopies,_multiplicationOperator);
         }
 
-        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator)
+        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
-            var (left,right) = GetChildrenWithoutNullNodes(maxDepth,generator);
+            var (left,right) = GetChildrenWithoutNullNodes(maxDepth,creator);
 
             return new MultiplicationFunc<T>(left, right,_multiplicationOperator);
         }

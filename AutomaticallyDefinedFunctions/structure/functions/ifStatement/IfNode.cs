@@ -54,11 +54,11 @@ namespace AutomaticallyDefinedFunctions.structure.functions.ifStatement
             return new IfNode<T, TU>((NodeComparator<TU>) Comparator.GetCopy(),TrueBlock.GetCopy(),FalseBlock.GetCopy());
         }
 
-        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator)
+        public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
-            var newTrueBlock = ReplaceNullNodesForComponent(TrueBlock,maxDepth,generator);
-            var newFalseBlock = ReplaceNullNodesForComponent(FalseBlock,maxDepth,generator);
-            var newComparator = ReplaceNullNodesForComponent(Comparator,maxDepth,generator);
+            var newTrueBlock = ReplaceNullNodesForComponent(TrueBlock,maxDepth,creator);
+            var newFalseBlock = ReplaceNullNodesForComponent(FalseBlock,maxDepth,creator);
+            var newComparator = ReplaceNullNodesForComponent(Comparator,maxDepth,creator);
 
             return new IfNode<T, TU>((NodeComparator<TU>) newComparator, (INode<T>) newTrueBlock,(INode<T>) newFalseBlock);
         }

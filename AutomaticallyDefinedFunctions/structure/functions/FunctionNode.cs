@@ -13,35 +13,35 @@ namespace AutomaticallyDefinedFunctions.structure.functions
 
         public override bool IsNullNode() => false;
  
-        protected INode ReplaceNullNodesForComponent(INode component,int maxDepth, FunctionGenerator generator)
+        protected INode ReplaceNullNodesForComponent(INode component,int maxDepth, FunctionCreator creator)
         {
             if (!component.IsNullNode())
             {
                 return component switch
                 {
                     INode<string> strComp => strComp.GetNullNodeCount() > 0
-                        ? strComp.ReplaceNullNodes(maxDepth - 1, generator)
+                        ? strComp.ReplaceNullNodes(maxDepth - 1, creator)
                         : strComp.GetCopy(),
                     INode<bool> boolComp => boolComp.GetNullNodeCount() > 0
-                        ? boolComp.ReplaceNullNodes(maxDepth - 1, generator)
+                        ? boolComp.ReplaceNullNodes(maxDepth - 1, creator)
                         : boolComp.GetCopy(),
                     INode<double> doubleComp => doubleComp.GetNullNodeCount() > 0
-                        ? doubleComp.ReplaceNullNodes(maxDepth - 1, generator)
+                        ? doubleComp.ReplaceNullNodes(maxDepth - 1, creator)
                         : doubleComp.GetCopy(),
                     _ => throw new Exception($"Unable to dispatch type ReplaceNullNodesForComponent")
                 };
             }
 
-            return DispatchForGenerator(component, generator, maxDepth);
+            return DispatchForGenerator(component, creator, maxDepth);
         }
 
-        private static INode DispatchForGenerator(INode node, FunctionGenerator generator, int maxDepth)
+        private static INode DispatchForGenerator(INode node, FunctionCreator creator, int maxDepth)
         {
             return node switch
             {
-                INode<string> => generator.Choose<string>(maxDepth - 1),
-                INode<bool> => generator.Choose<bool>(maxDepth - 1),
-                INode<double> => generator.Choose<double>(maxDepth - 1),
+                INode<string> => creator.Choose<string>(maxDepth - 1),
+                INode<bool> => creator.Choose<bool>(maxDepth - 1),
+                INode<double> => creator.Choose<double>(maxDepth - 1),
                 _ => throw new Exception($"Unable to dispatch type in ReplaceNullNodesForComponent")
             };
         }
@@ -62,7 +62,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions
             return $"{header}{body}";
         }
 
-        public abstract INode<T> ReplaceNullNodes(int maxDepth, FunctionGenerator generator);
+        public abstract INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator);
 
         public abstract T GetValue();
 
