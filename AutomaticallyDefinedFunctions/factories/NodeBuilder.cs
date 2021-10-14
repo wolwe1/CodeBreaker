@@ -67,6 +67,14 @@ namespace AutomaticallyDefinedFunctions.factories
 
             return factory;
         }
-        
+
+        public static FunctionCreator CreateStateFunctionCreator<TAdf,TProgResp>()
+        {
+            var settings = new StateAdfSettings<TAdf,TProgResp>(3, 3, 1, 60);
+
+            var factory = new FunctionCreator(settings, false);
+
+            return factory;
+        }
     }
 }

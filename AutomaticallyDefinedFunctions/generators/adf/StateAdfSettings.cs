@@ -1,4 +1,5 @@
 ﻿using AutomaticallyDefinedFunctions.factories.valueNodes;
+using AutomaticallyDefinedFunctions.factories.valueNodes.state;
 
 namespace AutomaticallyDefinedFunctions.generators.adf
 {
@@ -7,7 +8,9 @@ namespace AutomaticallyDefinedFunctions.generators.adf
         public StateAdfSettings(int maxFunctionDepth, int maxMainDepth, int argumentCount, int terminalChance) : base(
             maxFunctionDepth, maxMainDepth, argumentCount, terminalChance)
         {
-            ValueNodeFactories.Add(new StateNodeFactory<TAdfResponse,TProgResponse>());
+            ValueNodeFactories.Add(new ProgramResponseStateFactory<TProgResponse>());
+            ValueNodeFactories.Add(new ExecutionCountStateFactory());
+            ValueNodeFactories.Add(new LastOutputStateFactory<TAdfResponse>());
         }
     }
 }

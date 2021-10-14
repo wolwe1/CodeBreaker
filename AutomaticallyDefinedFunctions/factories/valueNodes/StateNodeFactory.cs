@@ -1,57 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.parsing;
 using AutomaticallyDefinedFunctions.structure.nodes;
-using AutomaticallyDefinedFunctions.structure.nodes.statenodes;
 
 namespace AutomaticallyDefinedFunctions.factories.valueNodes
 {
-    public class StateNodeFactory<TAdf,TProgResponse> : IValueNodeFactory
+    public abstract class StateNodeFactory : IValueNodeFactory
     {
-        public INode<T> Get<T>() where T : IComparable
+        protected readonly string Name;
+
+        protected StateNodeFactory(string name)
         {
-            var listOfApplicableNodes = new List<StateNode<T>>();
-
-            //The desired type of the node is the same as the output of the adf
-            if (typeof(T) == typeof(TAdf))
-            {
-                listOfApplicableNodes.Add(new LastOutputStateNode<T>(default));
-            }
-            
-            //The desired type of the node is the same as the output of the adf
-            if (typeof(T) == typeof(TProgResponse))
-            {
-                listOfApplicableNodes.Add(new ProgramResponseStateNode<T>(default));
-            }
-            
-            if (typeof(T) == typeof(double))
-            {
-                return (INode<T>) new ExecutionCountStateNode();
-            }
-
-            if(listOfApplicableNodes.Count == 0)
-                throw new Exception($"State node factory could not dispatch type {typeof(T)}");
-            
-            var choice = RandomNumberFactory.Next(listOfApplicableNodes.Count);
-
-            return listOfApplicableNodes[choice];
-
+            Name = name;
         }
 
         public INode<T> GenerateFunctionFromId<T>(string id, FunctionCreator functionCreator) where T : IComparable
         {
-            throw new NotImplementedException();
-        }
-
-        public bool CanDispatch<T>()
-        {
-            return typeof(T) == typeof(double) || typeof(T) == typeof(TAdf) || typeof(T) == typeof(TProgResponse);
+            return Get<T>(AdfParser.GetValueFromQuotes(id[Name.Length..]));
         }
 
         public bool CanMap(string id)
         {
-            return id.StartsWith(NodeCategory.State);
+            return id.StartsWith(Name);
         }
+        
+        public abstract bool CanDispatch<T>();
+        public abstract INode<T> Get<T>() where T : IComparable;
+        protected abstract INode<T> Get<T>(string id) where T : IComparable;
     }
 }

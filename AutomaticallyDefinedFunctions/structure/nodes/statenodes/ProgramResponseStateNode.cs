@@ -1,12 +1,13 @@
 ﻿using System;
+using AutomaticallyDefinedFunctions.parsing;
 
-namespace AutomaticallyDefinedFunctions.structure.nodes.statenodes
+namespace AutomaticallyDefinedFunctions.structure.nodes.stateNodes
 {
     public class ProgramResponseStateNode<T> : StateNode<T> where T : IComparable
     {
-        public ProgramResponseStateNode(T value): base(value) { }
+        public ProgramResponseStateNode(T value): base(value,NodeCategory.ProgramResponse) { }
 
-        public ProgramResponseStateNode() { }
+        public ProgramResponseStateNode(): base(NodeCategory.ProgramResponse) { }
 
         public override bool IsValid()
         {

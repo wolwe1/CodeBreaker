@@ -1,20 +1,32 @@
 ﻿using System;
-using AutomaticallyDefinedFunctions.parsing;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 
-namespace AutomaticallyDefinedFunctions.structure.nodes.statenodes
+namespace AutomaticallyDefinedFunctions.structure.nodes.stateNodes
 {
     public interface IStateNode{}
     public abstract class StateNode<T> : ValueNode<T>, IStateNode where T : IComparable
     {
-        protected StateNode(){}
-        protected StateNode(T value) : base(value) {}
+        protected readonly string Name;
+
+        protected StateNode(string name)
+        {
+            Name = name;
+        }
+
+        protected StateNode(T value, string name) : base(value)
+        {
+            Name = name;
+        }
 
         public override string GetId()
         {
-            return $"{NodeCategory.State}['{Value}']";
+            return $"{Name}['{Value}']";
         }
 
+        public override bool IsValid()
+        {
+            return true;
+        }
         public void UpdateState(T value)
         {
             Value = value;

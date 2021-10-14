@@ -25,5 +25,8 @@
         public static string NotEqual => new NodeCategory("!=").Value;
         public static string LengthOf => new NodeCategory("Len").Value;
         public static string FunctionDefinition => new NodeCategory("Func").Value;
+        public static string ExecutionCount => new NodeCategory("ExecCount").Value;
+        public static string LastOutput => new NodeCategory("LastOut").Value;
+        public static string ProgramResponse => new NodeCategory("ProgResp").Value;
     }
 }

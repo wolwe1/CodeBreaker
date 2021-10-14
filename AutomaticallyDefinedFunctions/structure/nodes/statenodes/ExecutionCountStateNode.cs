@@ -1,12 +1,14 @@
 ﻿using System;
+using AutomaticallyDefinedFunctions.parsing;
 
-namespace AutomaticallyDefinedFunctions.structure.nodes.statenodes
+namespace AutomaticallyDefinedFunctions.structure.nodes.stateNodes
 {
     //Uses double to behave with the rest of the type system
     public class ExecutionCountStateNode : StateNode<double>
     {
-        public ExecutionCountStateNode(){}
-        public ExecutionCountStateNode(double value): base(value) { }
+        
+        public ExecutionCountStateNode(): base(NodeCategory.ExecutionCount){}
+        public ExecutionCountStateNode(double value): base(value,NodeCategory.ExecutionCount) { }
 
         public override INode<double> GetCopy()
         {

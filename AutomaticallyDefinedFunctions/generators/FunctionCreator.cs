@@ -81,7 +81,7 @@ namespace AutomaticallyDefinedFunctions.generators
             
             return generator.GenerateFunctionFromId<T>(id,this);
         }
-        
+
         public INode<T> GenerateChildFromId<T>(ref string id) where T : IComparable
         {
             var child = GenerateFunctionFromId<T>(id);
