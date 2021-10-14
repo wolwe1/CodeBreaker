@@ -17,7 +17,7 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
             _functionDefinitions = new List<FunctionDefinition<T>>();
         }
 
-        public override FunctionNode<TX> CreateFunction<TX, TU>(int maxDepth, FunctionCreator parent)
+        public override FunctionNode<TX> CreateFunction<TX>(int maxDepth, FunctionCreator parent)
         {
             //Type safety check
             if (typeof(TX) != typeof(T))
@@ -44,11 +44,6 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
         public override bool CanDispatch<TX>()
         {
             return typeof(TX) == typeof(T);
-        }
-
-        public override bool CanDispatchAux<TX>()
-        {
-            return true;
         }
 
         protected override INode<T1> GenerateFunctionFromId<T1, TU>(string id, FunctionCreator functionCreator)

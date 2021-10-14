@@ -6,6 +6,6 @@ namespace AutomaticallyDefinedFunctions.factories
     {
         bool CanDispatch<T>();
         
-        bool CanDispatchAux<T>();
+        bool CanMap(string id);
     }
 }

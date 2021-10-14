@@ -38,10 +38,5 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic
             return typeof(T) == typeof(double) || typeof(T) == typeof(string) || typeof(T) == typeof(bool);
         }
 
-        public override bool CanDispatchAux<T>()
-        {
-            return CanDispatch<T>();
-        }
-
     }
 }

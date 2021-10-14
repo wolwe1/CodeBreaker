@@ -1,26 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutomaticallyDefinedFunctions.factories.valueNodes;
 using AutomaticallyDefinedFunctions.parsing;
 using AutomaticallyDefinedFunctions.structure;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
 namespace AutomaticallyDefinedFunctions.generators.adf
 {
-    public class FunctionDefinitionGenerator<T> : FunctionGenerator where T : IComparable
+    public class FunctionDefinitionGenerator<T> where T : IComparable
     {
-        public FunctionDefinitionGenerator(AdfSettings settings): base(settings,true) { }
+        private readonly FunctionCreator _creator;
+        private readonly AdfSettings _settings;
+
+        public FunctionDefinitionGenerator(AdfSettings settings)
+        {
+            _creator = new FunctionCreator(settings, true);
+            _settings = settings;
+        }
 
         public FunctionDefinition<T> GenerateFunctionDefinition(int functionCount)
         {
             return FunctionDefinition<T>.Create($"ADF{functionCount}")
-                .UseFunction(FunctionCreator.CreateFunction<T>(Settings.MaxFunctionDepth));
+                .UseFunction(_creator.CreateFunction<T>(_settings.MaxFunctionDepth));
         }
         
         public List<FunctionDefinition<T>> GenerateFunctionsFromIdList(IEnumerable<string> ids)
         {
-            FunctionCreator.UseFactory(new ValueNodeFactory());
             return ids.Select(GenerateFunctionFromIdNoAdd).ToList();
         }
 
@@ -30,28 +35,27 @@ namespace AutomaticallyDefinedFunctions.generators.adf
             var idWithoutLead = id;
             if (!id.StartsWith(NodeCategory.FunctionDefinition))
                 return FunctionDefinition<T>.Create($"ADF{functionCount}")
-                    .UseFunction(FunctionCreator.GenerateFunctionFromId<T>(idWithoutLead));
+                    .UseFunction(_creator.GenerateFunctionFromId<T>(idWithoutLead));
             
             var endOfDefinitionTypeInfo = id.IndexOf(">") + 2;
             idWithoutLead = id[endOfDefinitionTypeInfo..^1];
 
             return FunctionDefinition<T>.Create($"ADF{functionCount}")
-                .UseFunction(FunctionCreator.GenerateFunctionFromId<T>(idWithoutLead));
+                .UseFunction(_creator.GenerateFunctionFromId<T>(idWithoutLead));
         }
         public FunctionDefinition<T> GenerateFunctionFromId(string id,int functionCount)
         {
-            FunctionCreator.UseFactory(new ValueNodeFactory());
             return GenerateFunctionFromIdNoAdd(id, functionCount);
         }
 
         public INode<T> CreateFunction(int maxDepth)
         {
-            return FunctionCreator.CreateFunction<T>(maxDepth);
+            return _creator.CreateFunction<T>(maxDepth);
         }
 
         public FunctionCreator GetGenerator()
         {
-            return FunctionCreator;
+            return new FunctionCreator(_settings,true);
         }
         
     }

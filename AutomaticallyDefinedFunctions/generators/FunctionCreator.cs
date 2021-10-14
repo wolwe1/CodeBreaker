@@ -25,29 +25,16 @@ namespace AutomaticallyDefinedFunctions.generators
         
         public FunctionNode<T> CreateFunction<T>(int maxDepth) where T : IComparable
         {
-            var choice = RandomNumberFactory.Next(3);
+            var chosenFactory = FunctionPicker.PickFactoryAs<T,IFunctionFactory>(Factories);
 
-            return choice switch
-            {
-                0 => CreateFunction<T, string>(maxDepth),
-                1 => CreateFunction<T, bool>(maxDepth),
-                2 => CreateFunction<T, double>(maxDepth),
-                _ => throw new InvalidOperationException("Cannot dispatch function factory on type " + typeof(T))
-            };
-        }
-        
-        private FunctionNode<T> CreateFunction<T, TU>(int maxDepth) where T : IComparable where TU : IComparable
-        {
-            var chosenFactory = FunctionPicker.PickFactoryWithAuxAs<T, TU,IFunctionFactory>(Factories);
-
-            return chosenFactory.CreateFunction<T, TU>(maxDepth, this);
+            return chosenFactory.CreateFunction<T>(maxDepth, this);
         }
         
         public NodeComparator<T> ChooseComparator<T>(int maxDepth) where T : IComparable
         {
             var chosenComparatorFactory = FunctionPicker.PickFactoryAs<T,ComparatorFactory>(Comparators);
             
-            return (NodeComparator<T>)chosenComparatorFactory.CreateFunction<T,T>(maxDepth, this);
+            return (NodeComparator<T>)chosenComparatorFactory.CreateFunction<T>(maxDepth, this);
         }
 
         public INode<T> Choose<T>(int maxDepth) where T : IComparable
@@ -82,8 +69,10 @@ namespace AutomaticallyDefinedFunctions.generators
             var generator = Factories.FirstOrDefault(f => f.CanMap(id));
             
             if (generator != null) return generator.GenerateFunctionFromId<T>(id, this);
-            
-            
+
+            var terminalGenerator = ValueNodeFactories.FirstOrDefault(f => f.CanMap(id));
+
+            if (terminalGenerator != null) return terminalGenerator.GenerateFunctionFromId<T>(id,this);
             //Use comparator
             generator = Comparators.FirstOrDefault(f => f.CanMap(id));
             
@@ -105,7 +94,7 @@ namespace AutomaticallyDefinedFunctions.generators
             return child;
         }
 
-        private string GetIdAfter(string id, string afterSubstring)
+        private static string GetIdAfter(string id, string afterSubstring)
         {
             var afterSubstringWithoutDelimiters = AdfParser.GetIdWithoutDelimiters(afterSubstring);
             return id[(id.IndexOf(afterSubstringWithoutDelimiters, StringComparison.Ordinal) + afterSubstringWithoutDelimiters.Length)..];

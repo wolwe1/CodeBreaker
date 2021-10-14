@@ -11,7 +11,7 @@ namespace AutomaticallyDefinedFunctions.factories.comparators
     {
         public EqualComparatorFactory() : base(NodeCategory.Equal) { }
 
-        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent)
+        public override FunctionNode<T> CreateFunction<T>(int maxDepth, FunctionCreator parent)
         {
             var leftPredicate = parent.Choose<T>(maxDepth - 1);
             var rightPredicate = parent.Choose<T>(maxDepth - 1);

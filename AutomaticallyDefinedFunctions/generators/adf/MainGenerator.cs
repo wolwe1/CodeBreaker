@@ -7,18 +7,25 @@ using AutomaticallyDefinedFunctions.structure;
 
 namespace AutomaticallyDefinedFunctions.generators.adf
 {
-    public class MainGenerator<T> : FunctionGenerator where T : IComparable
+    public class MainGenerator<T> where T : IComparable
     {
-        public MainGenerator(AdfSettings settings) : base(settings,false) { }
+        private FunctionCreator _creator;
+        private readonly AdfSettings _settings;
+
+        public MainGenerator(AdfSettings settings)
+        {
+            _creator = new FunctionCreator(settings, false);
+            _settings = settings;
+        }
 
         public void AddDefinitions(FunctionDefinitionHolder<T> definitionHolder)
         {
-            FunctionCreator.UseFactory(definitionHolder);
+            _creator.UseFactory(definitionHolder);
         }
                 
         public MainProgram<T> GenerateMainFunction()
         {
-            var mainTree = FunctionCreator.CreateFunction<T>(Settings.MaxMainDepth);
+            var mainTree = _creator.CreateFunction<T>(_settings.MaxMainDepth);
             var main = new MainProgram<T>(mainTree);
             
             return main;
@@ -26,9 +33,8 @@ namespace AutomaticallyDefinedFunctions.generators.adf
         
         public MainProgram<T> GenerateMainFromId(string id)
         {
-            FunctionCreator.UseFactory(new ValueNodeFactory());
             var functionId = id["Main".Length..];
-            var newFunction = FunctionCreator.GenerateFunctionFromId<T>(functionId);
+            var newFunction = _creator.GenerateFunctionFromId<T>(functionId);
 
             return new MainProgram<T>(newFunction);
         }
@@ -36,24 +42,24 @@ namespace AutomaticallyDefinedFunctions.generators.adf
         private MainProgram<T> GenerateMainFromIdNoAdd(string id)
         {
             var functionId = id["Main".Length..];
-            var newFunction = FunctionCreator.GenerateFunctionFromId<T>(functionId);
+            var newFunction = _creator.GenerateFunctionFromId<T>(functionId);
 
             return new MainProgram<T>(newFunction);
         }
         
         public IEnumerable<MainProgram<T>> GenerateMainsFromIdList(IEnumerable<string> ids)
         {
-            FunctionCreator.UseFactory(new ValueNodeFactory());
             return ids.Select(GenerateMainFromIdNoAdd);
         }
 
         public FunctionCreator GetGeneratorCopy()
         {
-            var newCreator = new FunctionCreator(Settings, false);
-            Factories.ForEach(f => newCreator.UseFactory(f));
-            Comparators.ForEach(c => newCreator.UseComparator(c));
+            return new FunctionCreator(_settings, false);
+        }
 
-            return newCreator;
+        public void Reset()
+        {
+            _creator = GetGeneratorCopy();
         }
     }
 }

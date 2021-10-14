@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.structure.functions;
+using AutomaticallyDefinedFunctions.structure.functions.forLoop;
 
 namespace AutomaticallyDefinedFunctions.factories
 {
     public static class RandomNumberFactory
     {
-        private static Random Random = new();
+        private static Random _random = new();
 
         public static int Next(int maxValue)
         {
-            return Random.Next(maxValue);
+            return _random.Next(maxValue);
         }
 
         public static bool TrueOrFalse()
@@ -18,7 +22,7 @@ namespace AutomaticallyDefinedFunctions.factories
 
         public static void SetSeed(int seed)
         {
-            Random = new Random(seed);
+            _random = new Random(seed);
         }
 
         public static bool AboveThreshold(int threshold)

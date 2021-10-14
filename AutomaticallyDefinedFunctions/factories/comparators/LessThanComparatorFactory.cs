@@ -11,7 +11,7 @@ namespace AutomaticallyDefinedFunctions.factories.comparators
     {
         public LessThanComparatorFactory() : base(NodeCategory.LessThan) { }
 
-        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent)
+        public override FunctionNode<T> CreateFunction<T>(int maxDepth, FunctionCreator parent)
         {
             var leftPredicate = parent.Choose<T>(maxDepth - 1);
             var rightPredicate = parent.Choose<T>(maxDepth - 1);
@@ -31,10 +31,6 @@ namespace AutomaticallyDefinedFunctions.factories.comparators
         {
             return typeof(T) == typeof(bool) || typeof(T) == typeof(double);
         }
-
-        public override bool CanDispatchAux<T>()
-        {
-            return CanDispatch<T>();
-        }
+        
     }
 }

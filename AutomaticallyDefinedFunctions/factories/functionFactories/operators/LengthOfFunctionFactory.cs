@@ -11,9 +11,30 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.operators
     {
         public LengthOfFunctionFactory() : base(NodeCategory.LengthOf) { }
 
-        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent)
+        public override FunctionNode<T> CreateFunction<T>(int maxDepth, FunctionCreator parent)
         {
+            var sameAuxAsReturn = RandomNumberFactory.TrueOrFalse();
+
+            if (sameAuxAsReturn)
+            {
+                return CreateFunction<T, T>(maxDepth, parent);
+            }
+            
+            var choice = RandomNumberFactory.Next(3);
+
+            return choice switch
+            {
+                0 => CreateFunction<T, string>(maxDepth, parent),
+                1 => CreateFunction<T, double>(maxDepth, parent),
+                2 => CreateFunction<T, bool>(maxDepth, parent),
+                _ => throw new Exception($"Could not dispatch type {typeof(T)}")
+            };
             //Sus boxing but T will be double
+            
+        }
+
+        private FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent) where TU : IComparable where T : IComparable
+        {
             return (FunctionNode<T>) (object) new LengthOfNode<TU>(parent.Choose<TU>(maxDepth - 1));
         }
 
@@ -21,12 +42,7 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.operators
         {
             return typeof(T) == typeof(double);
         }
-
-        public override bool CanDispatchAux<T>()
-        {
-            return CanDispatch<T>();
-        }
-
+        
         protected override INode<T> GenerateFunctionFromId<T, TU>(string id, FunctionCreator functionCreator)
         {
             return (FunctionNode<T>) (object) new LengthOfNode<TU>(functionCreator.GenerateChildFromId<TU>(ref id)); 

@@ -10,7 +10,7 @@ namespace AutomaticallyDefinedFunctions.factories.comparators
     {
         public NotEqualComparatorFactory() : base(NodeCategory.NotEqual) { }
 
-        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent)
+        public override FunctionNode<T> CreateFunction<T>(int maxDepth, FunctionCreator parent)
         {
             return new NotEqualComparator<T>(parent.Choose<T>(maxDepth - 1),parent.Choose<T>(maxDepth - 1));
         }

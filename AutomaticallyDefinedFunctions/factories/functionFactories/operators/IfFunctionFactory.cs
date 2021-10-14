@@ -12,44 +12,34 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.operators
     {
         public IfFunctionFactory() : base(NodeCategory.If) { }
         
-        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth,FunctionCreator parent)
+        public override FunctionNode<T> CreateFunction<T>(int maxDepth,FunctionCreator parent)
         {
-            var sameAuxAsReturn = RandomNumberFactory.TrueOrFalse();
+            var choice = RandomNumberFactory.Next(2);
 
-            if (sameAuxAsReturn)
+            return choice switch
             {
-                var ifNode = new IfNode<T, T>();
-                var comparator = parent.ChooseComparator<T>(maxDepth - 1);
-                var trueBlock = parent.Choose<T>(maxDepth - 1);
-                var falseBlock = parent.Choose<T>(maxDepth - 1);
-
-                return ifNode
-                    .SetComparisonOperator(comparator)
-                    .SetFalseCodeBlock(falseBlock)
-                    .SetTrueCodeBlock(trueBlock);
-            }
-            else
-            {
-                var ifNode = new IfNode<T, TU>();
-                var comparator = parent.ChooseComparator<TU>(maxDepth - 1);
-                var trueBlock = parent.Choose<T>(maxDepth - 1);
-                var falseBlock = parent.Choose<T>(maxDepth - 1);
-
-                return ifNode
-                    .SetComparisonOperator(comparator)
-                    .SetFalseCodeBlock(falseBlock)
-                    .SetTrueCodeBlock(trueBlock);
-            }
+                0 => CreateFunction<T, double>(maxDepth, parent),
+                1 => CreateFunction<T, bool>(maxDepth, parent),
+                _ => throw new Exception($"Could not dispatch type {typeof(T)}")
+            };
         }
-        
+
+        private FunctionNode<T> CreateFunction<T,TU>(int maxDepth,FunctionCreator parent) where T : IComparable where TU : IComparable
+        {
+            var ifNode = new IfNode<T, TU>();
+            var comparator = parent.ChooseComparator<TU>(maxDepth - 1);
+            var trueBlock = parent.Choose<T>(maxDepth - 1);
+            var falseBlock = parent.Choose<T>(maxDepth - 1);
+
+            return ifNode
+                .SetComparisonOperator(comparator)
+                .SetFalseCodeBlock(falseBlock)
+                .SetTrueCodeBlock(trueBlock);
+        }
+
         public override bool CanDispatch<T>()
         {
             return typeof(T) == typeof(double) || typeof(T) == typeof(string) || typeof(T) == typeof(bool);
-        }
-
-        public override bool CanDispatchAux<T>()
-        {
-            return CanDispatch<T>();
         }
 
         protected override INode<T> GenerateFunctionFromId<T,TU>(string id, FunctionCreator functionCreator)

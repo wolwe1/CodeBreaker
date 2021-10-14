@@ -11,7 +11,7 @@ namespace AutomaticallyDefinedFunctions.factories.comparators
     {
         public NotNullComparatorFactory() : base(NodeCategory.NotNull) { }
 
-        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent)
+        public override FunctionNode<T> CreateFunction<T>(int maxDepth, FunctionCreator parent)
         {
             return new NotNullComparator<T>(parent.Choose<T>(maxDepth - 1));
         }
@@ -24,11 +24,6 @@ namespace AutomaticallyDefinedFunctions.factories.comparators
         public override bool CanDispatch<T>()
         {
             return typeof(T) == typeof(string);
-        }
-
-        public override bool CanDispatchAux<T>()
-        {
-            return CanDispatch<T>();
         }
     }
 }

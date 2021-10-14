@@ -8,7 +8,8 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic
     public class SubtractFunctionFactory : ArithmeticFunctionFactory
     {
         public SubtractFunctionFactory(): base(NodeCategory.Subtract){}
-        public static SubtractFunc<T> CreateSubtractFunction<T>() where T : IComparable
+
+        private static SubtractFunc<T> CreateSubtractFunction<T>() where T : IComparable
         {
             if (typeof(T) == typeof(double))
             {
@@ -25,11 +26,6 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic
         public override bool CanDispatch<T>()
         {
             return typeof(T) == typeof(double);
-        }
-
-        public override bool CanDispatchAux<T>()
-        {
-            return CanDispatch<T>();
         }
     }
 }

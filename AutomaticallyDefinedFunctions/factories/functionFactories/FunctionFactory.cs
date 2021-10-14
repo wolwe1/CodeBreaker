@@ -16,8 +16,7 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
             _symbol = symbol;
         }
 
-        public abstract FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent)
-            where T : IComparable where TU : IComparable;
+        public abstract FunctionNode<T> CreateFunction<T>(int maxDepth, FunctionCreator parent) where T : IComparable;
 
         public bool CanMap(string id)
         {
@@ -68,6 +67,5 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories
 
         public abstract bool CanDispatch<T>();
 
-        public abstract bool CanDispatchAux<T>();
     }
 }

@@ -11,7 +11,7 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic
         protected ArithmeticFunctionFactory(string symbol) : base(symbol) { }
         
         protected abstract ArithmeticFunc<T> CreateArithmeticFunction<T>() where T : IComparable;
-        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent)
+        public override FunctionNode<T> CreateFunction<T>(int maxDepth, FunctionCreator parent)
         {
             var addFunc = CreateArithmeticFunction<T>();
 

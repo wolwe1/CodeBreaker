@@ -16,17 +16,5 @@ namespace AutomaticallyDefinedFunctions.generators
             return (TFactory)factoriesThatCanDispatch.ElementAt(choice);
         }
         
-        public static TFactory PickFactoryWithAuxAs<T,TU,TFactory>(IEnumerable<IDispatcher> factories)
-        {
-            var factoriesThatCanDispatchPrimary = factories
-                .Where(f => f.CanDispatch<T>());
-            
-            var secondaryDispatchCapable = factoriesThatCanDispatchPrimary
-                .Where(f => f.CanDispatchAux<TU>()).ToList();
-
-            var choice = RandomNumberFactory.Next(secondaryDispatchCapable.Count);
-
-            return (TFactory)secondaryDispatchCapable.ElementAt(choice);
-        }
     }
 }

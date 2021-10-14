@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.parsing;
 using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.nodes.statenodes;
 
@@ -37,14 +39,19 @@ namespace AutomaticallyDefinedFunctions.factories.valueNodes
 
         }
 
+        public INode<T> GenerateFunctionFromId<T>(string id, FunctionCreator functionCreator) where T : IComparable
+        {
+            throw new NotImplementedException();
+        }
+
         public bool CanDispatch<T>()
         {
             return typeof(T) == typeof(double) || typeof(T) == typeof(TAdf) || typeof(T) == typeof(TProgResponse);
         }
 
-        public bool CanDispatchAux<T>()
+        public bool CanMap(string id)
         {
-            return true;
+            return id.StartsWith(NodeCategory.State);
         }
     }
 }

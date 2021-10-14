@@ -8,7 +8,8 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic
     public class DivisionFunctionFactory : ArithmeticFunctionFactory
     {
         public DivisionFunctionFactory(): base(NodeCategory.Division){}
-        public static DivisionFunc<T> CreateDivisionFunction<T>() where T : IComparable
+
+        private static DivisionFunc<T> CreateDivisionFunction<T>() where T : IComparable
         {
             if (typeof(T) == typeof(double))
             {
@@ -26,10 +27,6 @@ namespace AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic
         {
             return typeof(T) == typeof(double);
         }
-
-        public override bool CanDispatchAux<T>()
-        {
-            return CanDispatch<T>();
-        }
+        
     }
 }

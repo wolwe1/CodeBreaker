@@ -40,7 +40,7 @@ namespace AutomaticallyDefinedFunctions.factories.valueNodes
             return new NullNode<T>();
         }
 
-        public override FunctionNode<T> CreateFunction<T, TU>(int maxDepth, FunctionCreator parent)
+        public override FunctionNode<T> CreateFunction<T>(int maxDepth, FunctionCreator parent)
         {
             throw new NotImplementedException();
         }
@@ -49,7 +49,11 @@ namespace AutomaticallyDefinedFunctions.factories.valueNodes
         {
             return Get<T>(AdfParser.GetValueFromQuotes(id));
         }
-
+        
+        public new INode<T> GenerateFunctionFromId<T>(string id, FunctionCreator functionCreator) where T : IComparable
+        {
+            return Get<T>(AdfParser.GetValueFromQuotes(id[1..]));
+        }
 
         public INode<T> Get<T>() where T : IComparable
         {
@@ -75,10 +79,6 @@ namespace AutomaticallyDefinedFunctions.factories.valueNodes
         {
             return typeof(T) == typeof(string) || typeof(T) == typeof(bool) || typeof(T) == typeof(double);
         }
-
-        public override bool CanDispatchAux<T>()
-        {
-            return true;
-        }
+        
     }
 }

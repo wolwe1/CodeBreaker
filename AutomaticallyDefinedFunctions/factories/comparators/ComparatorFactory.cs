@@ -12,10 +12,5 @@ namespace AutomaticallyDefinedFunctions.factories.comparators
             return typeof(T) == typeof(bool);
         }
 
-        public override bool CanDispatchAux<T>()
-        {
-            return CanDispatch<T>();
-        }
-        
     }
 }
