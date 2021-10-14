@@ -6,7 +6,7 @@ using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 
-namespace AutomaticallyDefinedFunctions.factories.valueNodes
+namespace AutomaticallyDefinedFunctions.factories.valueNodes.standard
 {
     public class ValueNodeFactory : FunctionFactory, IValueNodeFactory
     {

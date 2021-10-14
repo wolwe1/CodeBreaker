@@ -1,7 +1,7 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.parsing;
 using AutomaticallyDefinedFunctions.structure.nodes;
-using AutomaticallyDefinedFunctions.structure.nodes.stateNodes;
+using AutomaticallyDefinedFunctions.structure.nodes.statenodes;
 
 namespace AutomaticallyDefinedFunctions.factories.valueNodes.state
 {

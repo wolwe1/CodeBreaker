@@ -39,16 +39,6 @@ namespace AutomaticallyDefinedFunctions.structure
             return _nodeTree.GetNodeCount();
         }
 
-        public MainProgram<T> ReplaceNode(int nodeIndexToReplace, FunctionCreator creator, int maxDepth)
-        {
-            var visitor = new BranchReplacementVisitor(creator,maxDepth);
-            var treeCopy = _nodeTree.GetCopy();
-            //Alters tree in place
-            treeCopy.Visit(visitor);
-            
-            return new MainProgram<T>(treeCopy);
-        }
-
         public void Visit(INodeVisitor visitor)
         {
             _nodeTree.Visit(visitor);

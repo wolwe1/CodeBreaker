@@ -1,7 +1,7 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.parsing;
 
-namespace AutomaticallyDefinedFunctions.structure.nodes.stateNodes
+namespace AutomaticallyDefinedFunctions.structure.nodes.statenodes
 {
     public class ProgramResponseStateNode<T> : StateNode<T> where T : IComparable
     {

@@ -1,7 +1,5 @@
 ﻿using System;
-using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
-using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.visitors;
 
 namespace AutomaticallyDefinedFunctions.structure.nodes

@@ -5,5 +5,6 @@ namespace AutomaticallyDefinedFunctions.structure.visitors
     public interface INodeVisitor
     {
         public void Accept(INode node);
+        bool WantsToVisit();
     }
 }

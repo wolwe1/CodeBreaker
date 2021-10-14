@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AutomaticallyDefinedFunctions.factories
+﻿namespace AutomaticallyDefinedFunctions.factories
 {
     public interface IDispatcher
     {

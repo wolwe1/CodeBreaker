@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFunction;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
 namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.divisionFunction

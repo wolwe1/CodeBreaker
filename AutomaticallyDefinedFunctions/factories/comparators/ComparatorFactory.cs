@@ -1,5 +1,4 @@
-﻿using System;
-using AutomaticallyDefinedFunctions.factories.functionFactories;
+﻿using AutomaticallyDefinedFunctions.factories.functionFactories;
 
 namespace AutomaticallyDefinedFunctions.factories.comparators
 {

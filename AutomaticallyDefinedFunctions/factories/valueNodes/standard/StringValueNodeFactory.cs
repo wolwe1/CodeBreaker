@@ -2,7 +2,7 @@
 using System.Linq;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 
-namespace AutomaticallyDefinedFunctions.factories.valueNodes
+namespace AutomaticallyDefinedFunctions.factories.valueNodes.standard
 {
     public static class StringValueNodeFactory
     {

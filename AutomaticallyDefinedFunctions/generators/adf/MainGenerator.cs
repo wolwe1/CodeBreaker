@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
-using AutomaticallyDefinedFunctions.factories.valueNodes;
 using AutomaticallyDefinedFunctions.structure;
 
 namespace AutomaticallyDefinedFunctions.generators.adf

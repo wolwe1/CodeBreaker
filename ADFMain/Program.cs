@@ -1,6 +1,5 @@
 ﻿using System;
-using AutomaticallyDefinedFunctions.factories;
-using AutomaticallyDefinedFunctions.factories.functionFactories.operators;
+using AutomaticallyDefinedFunctions.generators.adf;
 
 namespace ADFMain
 {
@@ -8,19 +7,21 @@ namespace ADFMain
     {
         static void Main(string[] args)
         {
-            RandomNumberFactory.SetSeed(0);
+            var settings = new StateAdfSettings<string,int>(2, 3, 1, 65);
+
+            var generator = new StateAdfGenerator<string,int>(1, settings);
+
+            var adf = generator.Generate();
+
+            var output = adf.GetValues();
             
-            var funcCreator = NodeBuilder.CreateStateFunctionCreator<string,string>();
-
-            var func = funcCreator.Choose<string>(3);
-
-            var id = func.GetId();
-
-            var funcCopy = funcCreator.GenerateFunctionFromId<string>(id);
+            Console.WriteLine(string.Join("",output));
             
-            Console.WriteLine(id);
-            Console.WriteLine(funcCopy.GetId().Equals(id));
-
+            adf.Update(output[0],0);
+            
+            output = adf.GetValues();
+            
+            Console.WriteLine(string.Join("",output));
         }
         
        

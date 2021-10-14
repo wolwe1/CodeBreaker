@@ -20,10 +20,8 @@ namespace AutomaticallyDefinedFunctions.structure.functions
         protected ChildManager(IEnumerable<INode> nodes): this()
         {
             foreach (var node in nodes)
-            {
-                node.Parent = this;
-                Children.Add(node);
-            }
+                AddChild(node);
+            
      
             _expectedChildrenAmount = Children.Count;
         }
@@ -45,6 +43,8 @@ namespace AutomaticallyDefinedFunctions.structure.functions
 
         public void AddChild(INode newNode)
         {
+            if(newNode is not null)
+                newNode.Parent = this;
             Children.Add(newNode);
         }
 
@@ -81,14 +81,20 @@ namespace AutomaticallyDefinedFunctions.structure.functions
 
         protected void RegisterChildren(IEnumerable<INode> nodes)
         {
-            Children.AddRange(nodes);
+            foreach (var node in nodes)
+                AddChild(node);
         }
         
         public void Visit(INodeVisitor visitor)
         {
             visitor.Accept(this);
 
-            Children.ForEach(child => child.Visit(visitor));
+            for (var i = 0; i < Children.Count; i++)
+            {
+                if(visitor.WantsToVisit())
+                    Children[i].Visit(visitor);
+            }
+            
         }
 
         public void SetChild(INode nodeToReplace, INode newNode)
@@ -99,6 +105,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions
                 if (child.Equals(nodeToReplace))
                 {
                     Children[index] = newNode;
+                    Children[index].Parent = this;
                     break;
                 }
             }

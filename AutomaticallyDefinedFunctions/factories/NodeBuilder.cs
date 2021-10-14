@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.generators.adf;
 using AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFunction;

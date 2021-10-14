@@ -36,12 +36,16 @@ namespace AutomaticallyDefinedFunctions.generators.adf
         {
             var newAdf = new Adf<T>();
 
-            for (var i = 0; i < _settings.NumberOfFunctions; i++)
+            return LoadAdf(newAdf);
+        }
+
+        protected Adf<T> LoadAdf(Adf<T> adf)
+        {for (var i = 0; i < _settings.NumberOfFunctions; i++)
             {
                 var function = _definitionGenerator.GenerateFunctionDefinition(i);
                 _definitionHolder.AddDefinition(function);
 
-                newAdf.UseDefinition(function);
+                adf.UseDefinition(function);
             }
             
             _mainGenerator.AddDefinitions(_definitionHolder);
@@ -50,11 +54,12 @@ namespace AutomaticallyDefinedFunctions.generators.adf
             {
                 var main = _mainGenerator.GenerateMainFunction();
                 
-                newAdf.UseMain(main);
+                adf.UseMain(main);
             }
 
             _mainGenerator.Reset();
-            return newAdf;
+            return adf;
+            
         }
 
         public INode<T> GenerateSubTree(int maxDepth)
@@ -72,7 +77,7 @@ namespace AutomaticallyDefinedFunctions.generators.adf
             return CreateAdfFrom(mainPrograms, definitions);
         }
 
-        private Adf<T> CreateAdfFrom(IEnumerable<MainProgram<T>> mainPrograms, IEnumerable<FunctionDefinition<T>> definitions)
+        protected virtual Adf<T> CreateAdfFrom(IEnumerable<MainProgram<T>> mainPrograms, IEnumerable<FunctionDefinition<T>> definitions)
         {
             var adf = new Adf<T>();
 

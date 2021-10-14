@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using AutomaticallyDefinedFunctions.generators;
-using AutomaticallyDefinedFunctions.structure.functions;
-using AutomaticallyDefinedFunctions.structure.functions.forLoop;
 
 namespace AutomaticallyDefinedFunctions.factories
 {

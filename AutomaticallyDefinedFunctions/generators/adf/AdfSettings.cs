@@ -4,6 +4,7 @@ using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.factories.functionFactories.arithmetic;
 using AutomaticallyDefinedFunctions.factories.functionFactories.operators;
 using AutomaticallyDefinedFunctions.factories.valueNodes;
+using AutomaticallyDefinedFunctions.factories.valueNodes.standard;
 
 namespace AutomaticallyDefinedFunctions.generators.adf
 {

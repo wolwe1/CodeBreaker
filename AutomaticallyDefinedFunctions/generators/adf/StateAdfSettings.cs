@@ -1,5 +1,4 @@
-﻿using AutomaticallyDefinedFunctions.factories.valueNodes;
-using AutomaticallyDefinedFunctions.factories.valueNodes.state;
+﻿using AutomaticallyDefinedFunctions.factories.valueNodes.state;
 
 namespace AutomaticallyDefinedFunctions.generators.adf
 {

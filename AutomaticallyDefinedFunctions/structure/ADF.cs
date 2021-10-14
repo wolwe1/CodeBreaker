@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutomaticallyDefinedFunctions.exceptions;
-using AutomaticallyDefinedFunctions.factories.functionFactories;
-using AutomaticallyDefinedFunctions.generators;
-using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.visitors;
 
 namespace AutomaticallyDefinedFunctions.structure
@@ -93,7 +90,7 @@ namespace AutomaticallyDefinedFunctions.structure
             return MainPrograms.ElementAt(mainIndex).GetNodeCount();
         }
 
-        public Adf<T> GetCopy()
+        public virtual Adf<T> GetCopy()
         {
             var mainProgramCopies = MainPrograms.Select(main => main.GetCopy());
             var functionDefinitionCopies = FunctionDefinitions.Select(func => (FunctionDefinition<T>)func.GetCopy());

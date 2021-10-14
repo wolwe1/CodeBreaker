@@ -1,7 +1,7 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 
-namespace AutomaticallyDefinedFunctions.structure.nodes.stateNodes
+namespace AutomaticallyDefinedFunctions.structure.nodes.statenodes
 {
     public interface IStateNode{}
     public abstract class StateNode<T> : ValueNode<T>, IStateNode where T : IComparable

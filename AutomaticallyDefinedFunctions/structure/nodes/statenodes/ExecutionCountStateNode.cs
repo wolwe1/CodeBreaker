@@ -1,7 +1,6 @@
-﻿using System;
-using AutomaticallyDefinedFunctions.parsing;
+﻿using AutomaticallyDefinedFunctions.parsing;
 
-namespace AutomaticallyDefinedFunctions.structure.nodes.stateNodes
+namespace AutomaticallyDefinedFunctions.structure.nodes.statenodes
 {
     //Uses double to behave with the rest of the type system
     public class ExecutionCountStateNode : StateNode<double>
