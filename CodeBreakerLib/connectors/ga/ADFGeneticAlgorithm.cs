@@ -1,11 +1,10 @@
 ﻿using System;
-using CodeBreakerLib.fitnessFunctions;
 using GeneticAlgorithmLib.source.controlModel;
 using GeneticAlgorithmLib.source.core;
 using GeneticAlgorithmLib.source.core.population;
 using GeneticAlgorithmLib.source.statistics.history;
 
-namespace CodeBreakerLib.connectors
+namespace CodeBreakerLib.connectors.ga
 {
     public class ADFGeneticAlgorithm<T> : GeneticAlgorithm<T> where T : IComparable
     {

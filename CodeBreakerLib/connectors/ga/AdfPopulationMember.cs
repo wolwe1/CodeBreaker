@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.structure;
 using GeneticAlgorithmLib.source.core.population;
 
-namespace CodeBreakerLib.connectors
+namespace CodeBreakerLib.connectors.ga
 {
     public class AdfPopulationMember<T> : IPopulationMember<T> where T : IComparable
     {

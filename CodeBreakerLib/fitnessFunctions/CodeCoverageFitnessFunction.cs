@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutomaticallyDefinedFunctions.exceptions;
 using CodeBreakerLib.connectors;
+using CodeBreakerLib.connectors.ga;
 using CodeBreakerLib.coverage.calculators;
 using CodeBreakerLib.exceptions;
 using GeneticAlgorithmLib.source.core.population;

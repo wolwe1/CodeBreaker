@@ -1,46 +1,42 @@
 ﻿using System;
-using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.generators;
-using AutomaticallyDefinedFunctions.structure.nodes;
+using AutomaticallyDefinedFunctions.generators.adf;
 using GeneticAlgorithmLib.source.core.population;
 
-namespace CodeBreakerLib.connectors
+namespace CodeBreakerLib.connectors.ga
 {
     public class AdfPopulationGenerator<T> : IPopulationGenerator<T> where T : IComparable
     {
-        private readonly AdfGenerator<T> _generator;
+        protected AdfGenerator<T> Generator;
 
         public AdfPopulationGenerator(int seed, AdfSettings settings)
         {
-            _generator = new AdfGenerator<T>(seed,settings);
+            Generator = new AdfGenerator<T>(seed,settings);
         }
+        
+        protected AdfPopulationGenerator() { }
 
         public IPopulationMember<T> GenerateNewMember()
         {
-            var newAdf = _generator.Generate();
+            var newAdf = Generator.Generate();
             return new AdfPopulationMember<T>(newAdf);
         }
 
         public IPopulationMember<T> GenerateFromId(string chromosome)
         {
-            var newAdf = _generator.GenerateFromId(chromosome);
+            var newAdf = Generator.GenerateFromId(chromosome);
 
             return new AdfPopulationMember<T>(newAdf);
         }
-
-        public INode<T> GenerateSubTree(int maxDepth)
-        {
-            return _generator.GenerateSubTree(maxDepth);
-        }
-
+        
         public AdfGenerator<T> GetGenerator()
         {
-            return _generator;
+            return Generator;
         }
 
-        public FunctionGenerator GetFunctionGenerator()
+        public FunctionCreator GetFunctionCreator()
         {
-            return _generator.GetFunctionGenerator();
+            return Generator.GetFunctionCreator();
         }
     }
 }

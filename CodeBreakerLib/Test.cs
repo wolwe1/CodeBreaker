@@ -80,5 +80,10 @@ namespace CodeBreakerLib
         {
             return _method.GetFullName();
         }
+
+        public Type GetReturnType()
+        {
+            return _method.GetReturnType();
+        }
     }
 }

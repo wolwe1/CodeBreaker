@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Linq;
+using AutomaticallyDefinedFunctions.factories.comparators;
+using AutomaticallyDefinedFunctions.factories.functionFactories.operators;
 using AutomaticallyDefinedFunctions.generators;
+using AutomaticallyDefinedFunctions.generators.adf;
 using CodeBreakerLib.connectors;
+using CodeBreakerLib.connectors.ga;
+using CodeBreakerLib.connectors.ga.state;
 using CodeBreakerLib.connectors.operators;
 using CodeBreakerLib.connectors.operators.implementation;
 using CodeBreakerLib.coverage.calculators;
@@ -37,7 +42,6 @@ namespace CodeBreakerLib.testHandler.integration
             _populationSize = populationSize;
         }
         
-        //public GeneticAlgorithmBuilder(): this(0,65,3,5,50,1000) { }
         public GeneticAlgorithmBuilder(): this(0,65,6,15,50,100) { }
 
         
@@ -60,11 +64,26 @@ namespace CodeBreakerLib.testHandler.integration
 
         public IPopulationGenerator<T> CreatePopulationGenerator<T>(Test<object> test) where T : IComparable
         {
-            //-1 for cancellation token
-            var settings = new AdfSettings( _maxFunctionDepth, _maxMainDepth,test.GetArguments().Count,_terminalChance);
-            
-            return 
-                new AdfPopulationGenerator<T>(_seed,settings);
+            var returnType = test.GetReturnType();
+
+            if (returnType == typeof(string))
+                return CreatePopulationGenerator<T, string>(test);
+
+            if (returnType == typeof(double))
+                return CreatePopulationGenerator<T, double>(test);
+
+            if (returnType == typeof(bool))
+                return CreatePopulationGenerator<T, bool>(test);
+
+            throw new Exception("Genetic algorithm builder could not dispatch for return type of function");
+
+        }
+        
+        public IPopulationGenerator<T> CreatePopulationGenerator<T,TU>(Test<object> test) where T : IComparable where TU : IComparable
+        {
+            var settings = new StateAdfSettings<T,TU>( _maxFunctionDepth, _maxMainDepth,test.GetArguments().Count,_terminalChance);
+
+            return new StateAdfPopulationGenerator<T,TU>(_seed,settings);
         }
         public static GeneticAlgorithm<T> CreateGa<T>(IPopulationGenerator<T> populationGenerator,
             IControlModel<T> controlModel) where T : IComparable
