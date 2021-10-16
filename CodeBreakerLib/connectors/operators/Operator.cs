@@ -40,7 +40,7 @@ namespace CodeBreakerLib.connectors.operators
             var chosenParentIndex = RandomNumberFactory.Next(parents.Count);
             return parents.ElementAt(chosenParentIndex);
         }
-        protected int GetNumberOfOffspringToProduce(ICollection parents)
+        protected virtual int GetNumberOfOffspringToProduce(ICollection parents)
         {
             var applicationPercentage = ApplicationPercentage / 100d;
 

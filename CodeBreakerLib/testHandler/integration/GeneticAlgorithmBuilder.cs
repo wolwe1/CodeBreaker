@@ -52,8 +52,9 @@ namespace CodeBreakerLib.testHandler.integration
             IPopulationMutator<T> populationMutator =
                 new AdfMutator<T>(populationGenerator)
                     .UseOperator(new ReproductiveOperator<T>(30))
-                    .UseOperator(new MutationOperator<T>(40,5))
-                    .UseOperator(new FunctionSwapOperator<T>(30));
+                    .UseOperator(new MutationOperator<T>(40, 5))
+                    .UseOperator(new CrossoverOperator<T>(30));
+                    //.UseOperator(new FunctionSwapOperator<T>(30));
 
             var fitnessFunction = CreateFitnessFunction(test);;
 

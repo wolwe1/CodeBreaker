@@ -25,7 +25,6 @@ namespace CodeBreakerLib.connectors.operators.implementation
 
             var mutator = CreateMutator(adf,mainToMutate,generator);
 
-            
             adf.VisitMain(mainToMutate, mutator);
 
             return new List<string>(){adf.GetId()};

@@ -34,14 +34,14 @@ namespace CodeBreaker
         
         public static void TestMutation()
         {
-            var adf = new StateBasedAdf<string,double>();
-            adf.UseMain(CreateMainWithStringNodes());
+            var adfGenerator = QuickBuild.CreateStatePopulationGenerator<string, double>();
 
-            var mutator = new MutationOperator<string>(100,3);
+            var adf = adfGenerator.GenerateNewMember();
+            var adf2 = adfGenerator.GenerateNewMember();
 
-            var adfPopGenerator = QuickBuild.CreateStatePopulationGenerator<string,double>();
-            
-            mutator.CreateModifiedChildren(new List<string>() {adf.GetId()},adfPopGenerator );
+            var crossoverOperator = new CrossoverOperator<string>(100);
+
+            crossoverOperator.CreateModifiedChildren(new List<string>() {adf.GetId(),adf2.GetId()},adfGenerator );
         }
 
         private static MainProgram<string> CreateMainWithStringNodes()
