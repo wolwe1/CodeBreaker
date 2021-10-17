@@ -20,7 +20,7 @@ namespace GeneticAlgorithmLib.source.mockImplementations
 
         public override MemberRecord<T> GetBest<T>(IEnumerable<MemberRecord<T>> chosenMembers)
         {
-            var bestFitness = chosenMembers.Min(GetRawFitness);
+            var bestFitness = chosenMembers.ToList().Min(GetRawFitness);
 
             return chosenMembers.FirstOrDefault(m => m.GetFitness().GetFitness() == bestFitness);
         }
@@ -39,7 +39,7 @@ namespace GeneticAlgorithmLib.source.mockImplementations
         }
         private double GetRawFitness<T>(IPopulationMember<T> member)
         {
-            var memberResult = (double) (object) member.GetResult().ElementAt(0);
+            var memberResult = (double) (object) member.GetResult().GetOutputValues().ElementAt(0);
 
             return Math.Abs(_goal - memberResult);
         }

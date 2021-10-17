@@ -13,6 +13,6 @@ namespace GeneticAlgorithmLib.source.core.population
         /// <returns>String value representing the members structure</returns>
         string GetId();
 
-        IEnumerable<T> GetResult();
+        IOutputContainer<T> GetResult();
     }
 }

@@ -23,9 +23,9 @@ namespace GeneticAlgorithmLib.source.mockImplementations
             return _value.ToString();
         }
 
-        public IEnumerable<double> GetResult()
+        public IOutputContainer<double> GetResult()
         {
-            return new List<double>(){_value};
+            return new OutputContainer<double>(_value);
         }
     }
 }
