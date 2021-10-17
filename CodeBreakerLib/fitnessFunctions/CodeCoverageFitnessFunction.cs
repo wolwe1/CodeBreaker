@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutomaticallyDefinedFunctions.exceptions;
-using CodeBreakerLib.connectors;
+using AutomaticallyDefinedFunctions.structure.adf;
+using AutomaticallyDefinedFunctions.structure.adf.helpers;
+using AutomaticallyDefinedFunctions.structure.state;
 using CodeBreakerLib.connectors.ga;
 using CodeBreakerLib.coverage.calculators;
 using CodeBreakerLib.exceptions;
@@ -15,27 +15,45 @@ using TestObjects.source.capture;
 
 namespace CodeBreakerLib.fitnessFunctions
 {
-    public class CodeCoverageFitnessFunction : ADFFitnessFunction
+    public class CodeCoverageFitnessFunction<TU> : AdfFitnessFunction where TU : IComparable
     {
         private readonly ICoverageCalculator _coverageCalculator;
-        public CodeCoverageFitnessFunction(Test<object> test, ICoverageCalculator coverageCalculator) : base(test)
+        private readonly int _numberOfAttemptsPerMember;
+
+        public CodeCoverageFitnessFunction(Test<object> test, ICoverageCalculator coverageCalculator, int numberOfAttemptsPerMember) : base(test)
         {
             _coverageCalculator = coverageCalculator;
+            _numberOfAttemptsPerMember = numberOfAttemptsPerMember;
         }
         
         public override Fitness Evaluate<T>(IPopulationMember<T> member)
         {
-            var inputValues = TryGetMemberResults(member);
+            var adf = (StateBasedAdf<T,TU>) ((AdfPopulationMember<T>) member).GetAdf(false);
             
-            var parameters = CreateParametersFromInputs(inputValues);
-            
-            var coverageInfo = TryRunTest<T>(parameters);
-            
-            return coverageInfo == null ? 
-                new Fitness(_coverageCalculator.GetType(), 0) : 
-                new Fitness(_coverageCalculator.GetType(), _coverageCalculator.Calculate(coverageInfo));
-        }
+            var coverageValues = new List<CoverageResults>();
 
+            for (int i = 0; i < _numberOfAttemptsPerMember; i++)
+            {
+                var inputValues = TryGetMemberResults(adf);
+
+                var parameters = CreateParametersFromInputs(inputValues.GetOutputValues());
+
+                var coverageInfo = TryRunTest<T>(parameters);
+
+                if (coverageInfo is not null)
+                    coverageValues.Add(coverageInfo);
+                else
+                    inputValues.FailOutputs(); //The outputs may have been valid, but the test was cancelled still
+                
+                adf.Update(inputValues,coverageInfo?.GetReturnValue());
+                
+            }
+
+            return coverageValues.Count == 0 ? 
+                new Fitness(_coverageCalculator.GetType(), 0) :
+                new Fitness(_coverageCalculator.GetType(), _coverageCalculator.Calculate(coverageValues));
+        }
+        
         public override MemberRecord<T> GetBest<T>(IEnumerable<MemberRecord<T>> chosenMembers)
         {
             var membersOrderedByCoverage = chosenMembers
@@ -60,11 +78,11 @@ namespace CodeBreakerLib.fitnessFunctions
             
         }
 
-        private static IEnumerable<T> TryGetMemberResults<T>(IPopulationMember<T> member) where T : IComparable
+        private static AdfOutput<T> TryGetMemberResults<T>(Adf<T> member) where T : IComparable
         {
             try
             {
-                return ((AdfPopulationMember<T>) member).GetResult();
+                return  member.GetValues();
             }
             catch (ProgramLoopException)
             {
@@ -74,16 +92,7 @@ namespace CodeBreakerLib.fitnessFunctions
 
         private static List<object> CreateParametersFromInputs<T>(IEnumerable<T> inputValues)
         {
-            if (inputValues == null)
-                return null;
-                
-            var parameters = new List<object>();
-            foreach (var inputParameter in inputValues)
-            {
-                parameters.Add(inputParameter);
-            }
-
-            return parameters;
+            return inputValues?.Cast<object>().ToList();
         }
         
     }

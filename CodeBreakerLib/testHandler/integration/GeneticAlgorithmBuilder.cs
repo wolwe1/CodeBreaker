@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
-using AutomaticallyDefinedFunctions.factories.comparators;
-using AutomaticallyDefinedFunctions.factories.functionFactories.operators;
-using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.generators.adf;
 using CodeBreakerLib.connectors;
-using CodeBreakerLib.connectors.ga;
 using CodeBreakerLib.connectors.ga.state;
 using CodeBreakerLib.connectors.operators;
 using CodeBreakerLib.connectors.operators.implementation;
@@ -17,7 +12,6 @@ using GeneticAlgorithmLib.source.controlModel.terminationCriteria;
 using GeneticAlgorithmLib.source.core;
 using GeneticAlgorithmLib.source.core.population;
 using GeneticAlgorithmLib.source.fitnessFunctions;
-using GeneticAlgorithmLib.source.mockImplementations;
 using GeneticAlgorithmLib.source.operators;
 using GeneticAlgorithmLib.source.statistics.history;
 
@@ -96,8 +90,23 @@ namespace CodeBreakerLib.testHandler.integration
 
         public IFitnessFunction CreateFitnessFunction(Test<object> test)
         {
-            return new CompositeFitnessFunction()
-                .AddEvaluation(new CodeCoverageFitnessFunction(test,new StatementCoverageCalculator()), 1);
+            var returnType = test.GetReturnType();
+
+            if (returnType == typeof(string))
+                return new CompositeFitnessFunction()
+                    .AddEvaluation(new CodeCoverageFitnessFunction<string>(test,new StatementCoverageCalculator(),5), 1);
+
+            if (returnType == typeof(double))
+                return new CompositeFitnessFunction()
+                    .AddEvaluation(new CodeCoverageFitnessFunction<double>(test,new StatementCoverageCalculator(),5), 1);
+
+            
+            if (returnType == typeof(bool))
+                return new CompositeFitnessFunction()
+                    .AddEvaluation(new CodeCoverageFitnessFunction<bool>(test,new StatementCoverageCalculator(),5), 1);
+
+
+            throw new Exception("Genetic algorithm builder could not dispatch for return type of function");
         }
 
         public IControlModel<T> CreateControlModel<T>(IFitnessFunction fitnessFunction,IPopulationMutator<T> populationMutator) where T : IComparable

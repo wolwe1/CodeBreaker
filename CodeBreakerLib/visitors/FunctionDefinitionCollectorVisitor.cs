@@ -1,5 +1,5 @@
 ﻿using System;
-using AutomaticallyDefinedFunctions.structure;
+using AutomaticallyDefinedFunctions.structure.adf;
 using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.visitors;
 

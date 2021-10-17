@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AutomaticallyDefinedFunctions.factories;
-using AutomaticallyDefinedFunctions.structure;
+using AutomaticallyDefinedFunctions.structure.adf;
 using CodeBreakerLib.connectors.ga;
 using GeneticAlgorithmLib.source.core.population;
 

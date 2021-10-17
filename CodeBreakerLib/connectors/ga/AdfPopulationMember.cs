@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using AutomaticallyDefinedFunctions.structure;
+using AutomaticallyDefinedFunctions.structure.adf;
 using GeneticAlgorithmLib.source.core.population;
 
 namespace CodeBreakerLib.connectors.ga
@@ -19,14 +18,14 @@ namespace CodeBreakerLib.connectors.ga
             return _adf.GetId();
         }
 
-        public IEnumerable<T> GetResult()
+        public IOutputContainer<T> GetResult()
         {
-            return _adf.GetValues();
+            return new AdfOutputContainer<T>(_adf.GetValues());
         }
 
-        public Adf<T> GetAdf()
+        public Adf<T> GetAdf(bool copy = true)
         {
-            return _adf.GetCopy();
+            return copy ? _adf.GetCopy() : _adf;
         }
     }
 }

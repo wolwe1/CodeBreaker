@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.factories;
-using AutomaticallyDefinedFunctions.structure;
-using CodeBreakerLib.connectors.ga;
+using AutomaticallyDefinedFunctions.structure.adf;
 using CodeBreakerLib.visitors;
 using GeneticAlgorithmLib.source.core.population;
 

@@ -6,9 +6,9 @@ using GeneticAlgorithmLib.source.statistics.history;
 
 namespace CodeBreakerLib.connectors.ga
 {
-    public class ADFGeneticAlgorithm<T> : GeneticAlgorithm<T> where T : IComparable
+    public class AdfGeneticAlgorithm<T> : GeneticAlgorithm<T> where T : IComparable
     {
-        public ADFGeneticAlgorithm(IPopulationGenerator<T> populationGenerator, IControlModel<T> controlModel, IExecutionHistory<T> history) : base(populationGenerator, controlModel, history)
+        public AdfGeneticAlgorithm(IPopulationGenerator<T> populationGenerator, IControlModel<T> controlModel, IExecutionHistory<T> history) : base(populationGenerator, controlModel, history)
         {
             
         }

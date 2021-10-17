@@ -10,13 +10,13 @@ namespace CodeBreakerLib.testHandler.setup
     {
         public List<Test<object>> Setup()
         {
-            List<Test<object>> _tests = new List<Test<object>>();
+            List<Test<object>> tests = new List<Test<object>>();
             while (UserExperience.Ask("Add test"))
             {
-                _tests.Add(AddTest());
+                tests.Add(AddTest());
             }
 
-            return _tests;
+            return tests;
         }
 
         public Test<object> AddTest()

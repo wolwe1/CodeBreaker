@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AutomaticallyDefinedFunctions.factories;
-using AutomaticallyDefinedFunctions.structure;
+using AutomaticallyDefinedFunctions.structure.adf;
 using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.functions.comparators;
 using AutomaticallyDefinedFunctions.structure.nodes;

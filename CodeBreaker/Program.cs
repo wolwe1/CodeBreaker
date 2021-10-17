@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutomaticallyDefinedFunctions.factories;
-using AutomaticallyDefinedFunctions.structure;
+﻿using System.Collections.Generic;
+using AutomaticallyDefinedFunctions.structure.adf;
 using AutomaticallyDefinedFunctions.structure.functions.comparators;
 using AutomaticallyDefinedFunctions.structure.functions.ifStatement;
 using AutomaticallyDefinedFunctions.structure.functions.other;
 using AutomaticallyDefinedFunctions.structure.nodes.statenodes;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
-using AutomaticallyDefinedFunctions.structure.state;
-using CodeBreakerLib;
-using CodeBreakerLib.connectors.ga;
-using CodeBreakerLib.connectors.ga.state;
 using CodeBreakerLib.connectors.operators.implementation;
 using CodeBreakerLib.quickBuild;
 using CodeBreakerLib.testHandler;
@@ -25,11 +18,11 @@ namespace CodeBreaker
         static void Main(string[] args)
         {
 
-            // var testHandler = new TestHandler(new TestFileDescriptorStrategy(),new GeneticAlgorithmBuilder());
-            // testHandler.Setup();
-            // testHandler.RunAllTests();
+            var testHandler = new TestHandler(new TestFileDescriptorStrategy(),new GeneticAlgorithmBuilder());
+            testHandler.Setup();
+            testHandler.RunAllTests();
             
-            TestMutation();
+           // TestMutation();
         }
         
         public static void TestMutation()

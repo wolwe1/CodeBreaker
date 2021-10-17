@@ -3,11 +3,11 @@ using GeneticAlgorithmLib.source.fitnessFunctions;
 
 namespace CodeBreakerLib.fitnessFunctions
 {
-    public abstract class ADFFitnessFunction : FitnessFunction
+    public abstract class AdfFitnessFunction : FitnessFunction
     {
         protected readonly Test<object> Test;
 
-        protected ADFFitnessFunction(Test<object> test)
+        protected AdfFitnessFunction(Test<object> test)
         {
             Test = test;
         }
