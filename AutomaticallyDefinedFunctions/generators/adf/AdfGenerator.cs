@@ -4,6 +4,7 @@ using AutomaticallyDefinedFunctions.factories;
 using AutomaticallyDefinedFunctions.factories.functionFactories;
 using AutomaticallyDefinedFunctions.parsing;
 using AutomaticallyDefinedFunctions.structure;
+using AutomaticallyDefinedFunctions.structure.adf;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
 namespace AutomaticallyDefinedFunctions.generators.adf

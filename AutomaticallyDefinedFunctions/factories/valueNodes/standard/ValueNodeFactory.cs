@@ -55,7 +55,7 @@ namespace AutomaticallyDefinedFunctions.factories.valueNodes.standard
             return Get<T>(AdfParser.GetValueFromQuotes(id[1..]));
         }
 
-        public INode<T> Get<T>() where T : IComparable
+        public static INode<T> GetT<T>() where T : IComparable
         {
             if (typeof(T) == typeof(string))
             {
@@ -73,6 +73,11 @@ namespace AutomaticallyDefinedFunctions.factories.valueNodes.standard
             }
 
             throw new Exception($"Value node factory could not dispatch for type {typeof(T)}");
+        }
+
+        public INode<T> Get<T>() where T : IComparable
+        {
+            return GetT<T>();
         }
 
         public override bool CanDispatch<T>()

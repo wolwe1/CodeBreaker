@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutomaticallyDefinedFunctions.exceptions;
+using AutomaticallyDefinedFunctions.structure.adf.helpers;
 using AutomaticallyDefinedFunctions.structure.visitors;
 
-namespace AutomaticallyDefinedFunctions.structure
+namespace AutomaticallyDefinedFunctions.structure.adf
 {
     public class Adf<T> where T : IComparable
     {
@@ -25,19 +26,19 @@ namespace AutomaticallyDefinedFunctions.structure
             FunctionDefinitions = functionDefinitions;
         }
         
-        public List<T> GetValues()
+        public AdfOutput<T> GetValues()
         {
-            return MainPrograms.Select(main =>
+            return new AdfOutput<T>(MainPrograms.Select(main =>
             {
                 try
                 {
-                    return main.GetValue();
+                    return new Output<T>(main.GetValue());
                 }
                 catch (ProgramLoopException)
                 {
-                    return default(T);
+                    return new Output<T>();
                 }
-            }).ToList();
+            }));
         }
 
         public Adf<T> UseDefinition(FunctionDefinition<T> definition)
@@ -118,12 +119,14 @@ namespace AutomaticallyDefinedFunctions.structure
             return (FunctionDefinition<T>) FunctionDefinitions[index].GetCopy();
         }
 
-        public Adf<T> SetFunctionDefinition(int definitionIndex, FunctionDefinition<T> newDefinition)
+        public void SetFunctionDefinition(int definitionIndex, FunctionDefinition<T> newDefinition)
         {
-            var copy = GetCopy();
-            copy.FunctionDefinitions[definitionIndex] = newDefinition;
-
-            return copy;
+            FunctionDefinitions[definitionIndex] = newDefinition;
+        }
+        
+        public void SetMain(int index, MainProgram<T> newMain)
+        {
+            MainPrograms[index] = newMain;
         }
     }
 }

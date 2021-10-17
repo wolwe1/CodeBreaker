@@ -5,7 +5,7 @@ using AutomaticallyDefinedFunctions.parsing;
 using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.nodes;
 
-namespace AutomaticallyDefinedFunctions.structure
+namespace AutomaticallyDefinedFunctions.structure.adf
 {
     public class FunctionDefinition<T> : FunctionNode<T> where T : IComparable
     {
@@ -47,6 +47,11 @@ namespace AutomaticallyDefinedFunctions.structure
         public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
             return new FunctionDefinition<T>(_name, _function.ReplaceNullNodes(maxDepth,creator));
+        }
+
+        public string GetName()
+        {
+            return _name;
         }
         
     }

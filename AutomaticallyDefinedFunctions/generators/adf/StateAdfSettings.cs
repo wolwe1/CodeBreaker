@@ -10,6 +10,8 @@ namespace AutomaticallyDefinedFunctions.generators.adf
             ValueNodeFactories.Add(new ProgramResponseStateFactory<TProgResponse>());
             ValueNodeFactories.Add(new ExecutionCountStateFactory());
             ValueNodeFactories.Add(new LastOutputStateFactory<TAdfResponse>());
+            ValueNodeFactories.Add(new OutputFailureStateFactory());
+            ValueNodeFactories.Add(new RandomStateFactory());
         }
     }
 }

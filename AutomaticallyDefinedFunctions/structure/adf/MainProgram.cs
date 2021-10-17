@@ -1,9 +1,8 @@
 ﻿using System;
-using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.visitors;
 
-namespace AutomaticallyDefinedFunctions.structure
+namespace AutomaticallyDefinedFunctions.structure.adf
 {
     public class MainProgram<T> where T : IComparable
     {
@@ -43,5 +42,6 @@ namespace AutomaticallyDefinedFunctions.structure
         {
             _nodeTree.Visit(visitor);
         }
+        
     }
 }

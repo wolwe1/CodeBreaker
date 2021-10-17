@@ -28,5 +28,7 @@
         public static string ExecutionCount => new NodeCategory("ExecCount").Value;
         public static string LastOutput => new NodeCategory("LastOut").Value;
         public static string ProgramResponse => new NodeCategory("ProgResp").Value;
+        public static string Random => new NodeCategory("Rand").Value;
+        public static string OutputFailed => new NodeCategory("Fail").Value;
     }
 }

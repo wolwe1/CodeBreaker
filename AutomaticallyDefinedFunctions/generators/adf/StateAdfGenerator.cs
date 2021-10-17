@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.structure;
+using AutomaticallyDefinedFunctions.structure.adf;
 using AutomaticallyDefinedFunctions.structure.state;
 
 namespace AutomaticallyDefinedFunctions.generators.adf

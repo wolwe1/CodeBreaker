@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AutomaticallyDefinedFunctions.structure
+namespace AutomaticallyDefinedFunctions.structure.adf.helpers
 {
     public class AdfValidator
     {
