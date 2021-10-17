@@ -10,7 +10,7 @@ namespace AutomaticallyDefinedFunctions.generators.adf
     {
         public StateAdfGenerator(int seed, StateAdfSettings<TAdfOutput,TProgResponse> settings) : base(seed, settings) {}
 
-        public new StateBasedAdf<TAdfOutput,TProgResponse> Generate()
+        public override Adf<TAdfOutput> Generate()
         {
             var newAdf = new StateBasedAdf<TAdfOutput, TProgResponse>();
             return (StateBasedAdf<TAdfOutput, TProgResponse>) LoadAdf(newAdf);

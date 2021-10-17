@@ -73,7 +73,7 @@ namespace AutomaticallyDefinedFunctions.structure.adf
             var mainIds = string.Join(";", GetMainProgramIds());
             var functionIds = string.Join(";", GetFunctionIds());
             
-            return $"ADF({mainIds}-{functionIds})";
+            return $"ADF({mainIds}*{functionIds})";
         }
         
         protected IEnumerable<string> GetMainProgramIds()

@@ -33,7 +33,7 @@ namespace AutomaticallyDefinedFunctions.generators.adf
             _functionCreator = _mainGenerator.GetGeneratorCopy();
         }
         
-        public Adf<T> Generate()
+        public virtual Adf<T> Generate()
         {
             var newAdf = new Adf<T>();
 

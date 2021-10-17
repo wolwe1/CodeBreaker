@@ -9,7 +9,7 @@ namespace AutomaticallyDefinedFunctions.parsing
         {
             var content = adfId["ADF(".Length..^1];
 
-            var contents = content.Split("-");
+            var contents = content.Split("*");
 
             var mainContent = contents[0].Length > 0 ? contents[0].Split(";") : Array.Empty<string>();
             var definitionContent = contents[1].Length > 0 ? contents[1].Split(";") : Array.Empty<string>();
@@ -62,58 +62,6 @@ namespace AutomaticallyDefinedFunctions.parsing
             //Strip quotes
             return currentId[1..^1];
         }
-
-        public static string GetChromosomeAfterFunctionAt(string chromosome, int pointOfFunctionStart)
-        {
-            var functionOnwards = chromosome[pointOfFunctionStart..];
-
-            if (!IsFunctionIdentifier(functionOnwards[0]))
-                throw new Exception("Cannot remove function from chromosome, the point chosen is not a function");
-
-            var functionEnd = GetFunctionEnd(functionOnwards);
-
-            return chromosome[functionEnd..];
-        }
-
-        public static string IsolateFirstNode(string chromosome)
-        {
-            var end = GetFunctionEnd(chromosome);
-
-            return chromosome[..end];
-        }
-
-        public static string PlaceChromosomeInNode(string node, string chromosome)
-        {
-            var searchIndex = node.IndexOf("[", StringComparison.Ordinal);
-
-            return $"{node[0..searchIndex]}{chromosome}]";
-        }
-
-        private static int GetFunctionEnd(string functionId)
-        {
-            var funcOpen = 1;
-            var searchIndex = functionId.IndexOf("[", StringComparison.Ordinal);
-
-            for (var i = searchIndex; i < functionId.Length; i++)
-            {
-                var currentChar = functionId[i];
-
-                switch (currentChar)
-                {
-                    case ']':
-                        funcOpen--;
-                        break;
-                    case '[':
-                        funcOpen++;
-                        break;
-                }
-
-                if (funcOpen == 0)
-                    return i;
-
-            }
-
-            throw new Exception($"Function was never closed, bad ID:  {functionId}");
-        }
+        
     }
 }

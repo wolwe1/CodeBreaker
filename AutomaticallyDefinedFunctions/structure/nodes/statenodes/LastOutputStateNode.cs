@@ -8,6 +8,11 @@ namespace AutomaticallyDefinedFunctions.structure.nodes.statenodes
         public LastOutputStateNode(T value): base(value,NodeCategory.LastOutput) { }
 
         public LastOutputStateNode() : base(NodeCategory.LastOutput) { }
+        
+        public override bool IsValid()
+        {
+            return true;
+        }
 
         public override INode<T> GetCopy()
         {

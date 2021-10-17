@@ -10,7 +10,7 @@ namespace AutomaticallyDefinedFunctions.structure.state
 {
     public class StateBasedAdf<T,TU> : Adf<T> where T : IComparable where TU : IComparable
     {
-        private AdfHistory<T,TU> _history;
+        private readonly AdfHistory<T,TU> _history;
 
         public StateBasedAdf()
         {
@@ -39,6 +39,49 @@ namespace AutomaticallyDefinedFunctions.structure.state
                 UpdateStateNodes(stateNodes, outputOfMain, programResponse);
             }
         }
+        
+        //When outputs fail
+        public void Update(AdfOutput<T> lastOutput)
+        {
+            _history.AddHistory(lastOutput);
+            for (var index = 0; index < MainPrograms.Count; index++)
+            {
+                var mainProgram = MainPrograms[index];
+                var outputOfMain = lastOutput.GetOutput(index);
+                var visitor = new StateNodeVisitor();
+
+                mainProgram.Visit(visitor);
+
+                var stateNodes = visitor.StateNodes;
+
+                UpdateStateNodes(stateNodes, outputOfMain);
+            }
+        }
+
+        //Last output failed, don't set program response
+        private void UpdateStateNodes(List<IStateNode> stateNodes, Output<T> lastOutput)
+        {
+            foreach (var stateNode in stateNodes)
+            {
+                switch (stateNode)
+                {
+                    case ExecutionCountStateNode exec:
+                        exec.UpdateState(exec.GetValue() + 1);
+                        break;
+                    case LastOutputStateNode<T> :
+                        break;
+                    case ProgramResponseStateNode<TU>:
+                        break;
+                    case IRandomStateNode: //No action needed
+                        break;
+                    case OutputFailedStateNode failedNode:
+                        failedNode.UpdateState(lastOutput.Failed);
+                        break;
+
+                    default: throw new Exception("Unknown state node");
+                }
+            }
+        }
 
         private void UpdateStateNodes(List<IStateNode> stateNodes, Output<T> lastOutput, TU programResponse)
         {
@@ -50,11 +93,9 @@ namespace AutomaticallyDefinedFunctions.structure.state
                         exec.UpdateState(exec.GetValue() + 1);
                         break;
                     case LastOutputStateNode<T> lastOutputNode:
-                        if(!lastOutput.Failed) //If the last output failed, the value would be undefined
                             lastOutputNode.UpdateState(lastOutput.Value);
                         break;
                     case ProgramResponseStateNode<TU> programOutputNode:
-                        if(!lastOutput.Failed) //If the last output failed, the program response would be null
                             programOutputNode.UpdateState(programResponse);
                         break;
                     case IRandomStateNode: //No action needed

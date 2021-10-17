@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutomaticallyDefinedFunctions.structure.adf.helpers;
 
 namespace AutomaticallyDefinedFunctions.structure.state
@@ -15,6 +16,11 @@ namespace AutomaticallyDefinedFunctions.structure.state
         public void AddHistory(AdfOutput<T> output, TU programResponse)
         {
             OutputsWithResponse.Add(output,programResponse);
+        }
+
+        public void AddHistory(AdfOutput<T> output)
+        {
+            OutputsWithResponse.Add(output,default);
         }
     }
 }

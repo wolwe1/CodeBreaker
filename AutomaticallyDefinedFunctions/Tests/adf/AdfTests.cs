@@ -34,20 +34,20 @@ namespace AutomaticallyDefinedFunctions.Tests.adf
         {
             yield return new object[]
             {
-                NodeBuilder.CreateAdfGenerator<string>()
+                NodeBuilder.CreateStateAdfGenerator<string,string>()
             };
             
             yield return new object[]
             {
-                NodeBuilder.CreateAdfGenerator<double>()
+                NodeBuilder.CreateStateAdfGenerator<double,string>()
             };
             
             yield return new object[]
             {
-                NodeBuilder.CreateAdfGenerator<bool>()
+                NodeBuilder.CreateStateAdfGenerator<bool,string>()
+
             };
         }
-
-
+        
     }
 }

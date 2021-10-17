@@ -57,6 +57,13 @@ namespace AutomaticallyDefinedFunctions.factories
 
             return new AdfGenerator<T>(1, settings);
         }
+        
+        public static AdfGenerator<T> CreateStateAdfGenerator<T,TU>() where T : IComparable where TU : IComparable
+        {
+            var settings = new StateAdfSettings<T,TU>(2, 3, 1, 65);
+
+            return new StateAdfGenerator<T,TU>(1, settings);
+        }
 
         public static FunctionCreator CreateFunctionCreator()
         {

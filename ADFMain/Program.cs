@@ -62,25 +62,6 @@ namespace ADFMain
             }
         }
 
-        private static void TestStateBasedAdf()
-        {
-            var settings = new StateAdfSettings<string,int>(2, 3, 1, 65);
 
-            var generator = new StateAdfGenerator<string,int>(1, settings);
-
-            var adf = generator.Generate();
-
-            for (int i = 0; i < 10; i++)
-            {
-                var output = adf.GetValues();
-            
-                Console.WriteLine(string.Join("",output));
-                adf.Update(output,i);
-
-            }
-
-        }
-        
-       
     }
 }
