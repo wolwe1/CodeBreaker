@@ -4,6 +4,7 @@ using CodeBreakerLib.connectors;
 using CodeBreakerLib.connectors.ga.state;
 using CodeBreakerLib.connectors.operators;
 using CodeBreakerLib.connectors.operators.implementation;
+using CodeBreakerLib.connectors.output;
 using CodeBreakerLib.coverage.calculators;
 using CodeBreakerLib.fitnessFunctions;
 using GeneticAlgorithmLib.source.controlModel;
@@ -36,44 +37,44 @@ namespace CodeBreakerLib.testHandler.integration
             _populationSize = populationSize;
         }
         
-        public GeneticAlgorithmBuilder(): this(0,65,6,15,50,100) { }
+        public GeneticAlgorithmBuilder(): this(0,65,4,10,50,100) { }
 
         
         public GeneticAlgorithm<T> Build<T>(Test<object> test) where T : IComparable
         {
-            IPopulationGenerator<T> populationGenerator = CreatePopulationGenerator<T>(test);
+            var returnType = test.GetUnderlyingReturnType();
 
-            IPopulationMutator<T> populationMutator =
-                new AdfMutator<T>(populationGenerator)
-                    .UseOperator(new ReproductiveOperator<T>(30))
-                    .UseOperator(new MutationOperator<T>(40, 5))
-                    .UseOperator(new CrossoverOperator<T>(30));
-                    //.UseOperator(new FunctionSwapOperator<T>(30));
+            if (returnType == typeof(string))
+                return BuildGa<T, string>(test);
 
-            var fitnessFunction = CreateFitnessFunction(test);;
+            if (returnType == typeof(double))
+                return BuildGa<T, double>(test);
 
+            if (returnType == typeof(bool))
+                return BuildGa<T, bool>(test);
+
+            throw new Exception("Could not create GA based on test response");
+
+        }
+
+        private GeneticAlgorithm<T> BuildGa<T,TU>(Test<object> test) where T : IComparable where TU : IComparable
+        {
+            var populationGenerator = CreatePopulationGenerator<T,TU>(test);
+            var populationMutator = CreatePopulationMutator<T, TU>(populationGenerator);
+            var fitnessFunction = CreateFitnessFunction<TU>(test);
             var controlModel = CreateControlModel(fitnessFunction,populationMutator);
 
             return CreateGa(populationGenerator, controlModel);
         }
 
-        public IPopulationGenerator<T> CreatePopulationGenerator<T>(Test<object> test) where T : IComparable
+        private IPopulationMutator<T> CreatePopulationMutator<T, TU>(IPopulationGenerator<T> populationGenerator) where T : IComparable where TU : IComparable
         {
-            var returnType = test.GetReturnType();
-
-            if (returnType == typeof(string))
-                return CreatePopulationGenerator<T, string>(test);
-
-            if (returnType == typeof(double))
-                return CreatePopulationGenerator<T, double>(test);
-
-            if (returnType == typeof(bool))
-                return CreatePopulationGenerator<T, bool>(test);
-
-            throw new Exception("Genetic algorithm builder could not dispatch for return type of function");
-
+            return new AdfMutator<T>(populationGenerator)
+                .UseOperator(new ReproductiveOperator<T>(30))
+                .UseOperator(new MutationOperator<T,TU>(40, 5))
+                .UseOperator(new CrossoverOperator<T,TU>(30));
         }
-        
+
         public IPopulationGenerator<T> CreatePopulationGenerator<T,TU>(Test<object> test) where T : IComparable where TU : IComparable
         {
             var settings = new StateAdfSettings<T,TU>( _maxFunctionDepth, _maxMainDepth,test.GetArguments().Count,_terminalChance);
@@ -88,25 +89,10 @@ namespace CodeBreakerLib.testHandler.integration
             return new GeneticAlgorithm<T>(populationGenerator,controlModel,history).Print();
         }
 
-        public IFitnessFunction CreateFitnessFunction(Test<object> test)
+        public IFitnessFunction CreateFitnessFunction<TU>(Test<object> test) where TU : IComparable
         {
-            var returnType = test.GetReturnType();
-
-            if (returnType == typeof(string))
-                return new CompositeFitnessFunction()
-                    .AddEvaluation(new CodeCoverageFitnessFunction<string>(test,new StatementCoverageCalculator(),5), 1);
-
-            if (returnType == typeof(double))
-                return new CompositeFitnessFunction()
-                    .AddEvaluation(new CodeCoverageFitnessFunction<double>(test,new StatementCoverageCalculator(),5), 1);
-
-            
-            if (returnType == typeof(bool))
-                return new CompositeFitnessFunction()
-                    .AddEvaluation(new CodeCoverageFitnessFunction<bool>(test,new StatementCoverageCalculator(),5), 1);
-
-
-            throw new Exception("Genetic algorithm builder could not dispatch for return type of function");
+            return new CompositeFitnessFunction()
+                .AddEvaluation(new CodeCoverageFitnessFunction<TU>(test,new StatementCoverageCalculator(),5), 1);
         }
 
         public IControlModel<T> CreateControlModel<T>(IFitnessFunction fitnessFunction,IPopulationMutator<T> populationMutator) where T : IComparable

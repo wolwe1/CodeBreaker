@@ -1,6 +1,7 @@
 ﻿using System;
 using AutomaticallyDefinedFunctions.generators;
 using AutomaticallyDefinedFunctions.structure.functions;
+using AutomaticallyDefinedFunctions.structure.functions.comparators;
 using AutomaticallyDefinedFunctions.structure.nodes;
 using AutomaticallyDefinedFunctions.structure.visitors;
 using CodeBreakerLib.connectors.ga;
@@ -50,30 +51,29 @@ namespace CodeBreakerLib.visitors
         {
             //Parent should always be a function node, since a value node cannot have children
             var parent = (ChildManager)node.Parent;
-            var newChild = CreateNewSubtree(node);
+            var newChild = CreateMatchingTypeSubtree(node);
             parent.SetChild(node, newChild);
 
         }
 
-        private INode CreateNewSubtree(INode node)
+        private INode CreateMatchingTypeSubtree(INode node)
         {
+            return node switch
+            {
+                INode<string> strNode => CreateNewSubtree(strNode),
+                INode<double> doubleNode => CreateNewSubtree(doubleNode),
+                INode<bool> boolNode => CreateNewSubtree(boolNode),
+                _ => throw new Exception($"Could not create mutated tree for type {node.GetType()}")
+            };
+        }
+        
+        private INode CreateNewSubtree<TX>(INode<TX> node) where TX : IComparable
+        {
+            //Edge case
+            if (node is NodeComparator<TX>)
+                return _funcCreator.ChooseComparator<TX>(_maxModificationDepth);
 
-            if (node is INode<string>)
-            {
-                return _funcCreator.Choose<string>(_maxModificationDepth);
-            }
-            
-            if (node is INode<double>)
-            {
-                return _funcCreator.Choose<double>(_maxModificationDepth);
-            }
-            
-            if (node is INode<bool>)
-            {
-                return _funcCreator.Choose<bool>(_maxModificationDepth);
-            }
-
-            throw new Exception($"Could not create mutated tree for type {node.GetType()}");
+            return _funcCreator.Choose<TX>(_maxModificationDepth);
         }
     }
 }

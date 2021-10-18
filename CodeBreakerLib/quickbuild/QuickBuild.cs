@@ -1,10 +1,9 @@
-﻿
-using System;
+﻿using System;
 using AutomaticallyDefinedFunctions.generators.adf;
 using CodeBreakerLib.connectors.ga.state;
 using GeneticAlgorithmLib.source.core.population;
 
-namespace CodeBreakerLib.quickBuild
+namespace CodeBreakerLib.quickbuild
 {
     public class QuickBuild
     {

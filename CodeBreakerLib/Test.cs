@@ -16,7 +16,7 @@ namespace CodeBreakerLib
             _method = method;
         }
 
-        public CoverageResults Run(List<object> parameters)
+        public CoverageResultWrapper Run(List<object> parameters)
         {
             if (!ValidParameters(parameters))
             {
@@ -33,7 +33,7 @@ namespace CodeBreakerLib
 
             var parms = parameters.Cast<object>().ToArray();
             
-            return (CoverageResults) _method.InvokeMethod(parms);
+            return (CoverageResultWrapper) _method.InvokeMethod(parms);
         }
 
         private bool ValidParameters(List<object> parameters)
@@ -82,6 +82,13 @@ namespace CodeBreakerLib
         public Type GetReturnType()
         {
             return _method.GetReturnType();
+        }
+
+        public Type GetUnderlyingReturnType()
+        {
+            var type = GetReturnType();
+
+            return type.GetGenericArguments()[0];
         }
     }
 }

@@ -6,6 +6,7 @@ using AutomaticallyDefinedFunctions.factories;
 using AutomaticallyDefinedFunctions.structure.adf;
 using CodeBreakerLib.connectors.ga;
 using GeneticAlgorithmLib.source.core.population;
+using GeneticAlgorithmLib.source.statistics;
 
 namespace CodeBreakerLib.connectors.operators
 {
@@ -33,9 +34,26 @@ namespace CodeBreakerLib.connectors.operators
             return offspring;
         }
 
+        public IEnumerable<IPopulationMember<T>> CreateModifiedChildren(List<MemberRecord<T>> parents, IPopulationGenerator<T> populationGenerator)
+        {
+            var numberOfOffspringToProduce = GetNumberOfOffspringToProduce(parents);
+
+            var offspring = new List<IPopulationMember<T>>();
+
+            while (offspring.Count < numberOfOffspringToProduce)
+            {
+                var mutatedOffspring = Operate(parents,populationGenerator);
+                offspring.AddRange(mutatedOffspring);
+            }
+
+            return offspring;
+        }
+
+        protected abstract IEnumerable<IPopulationMember<T>> Operate(List<MemberRecord<T>> parents, IPopulationGenerator<T> populationGenerator);
+
         protected abstract IEnumerable<string> Operate(List<string> parents, IPopulationGenerator<T> populationGenerator);
 
-        protected string PickParent(List<string> parents)
+        protected TU PickParent<TU>(List<TU> parents)
         {
             var chosenParentIndex = RandomNumberFactory.Next(parents.Count);
             return parents.ElementAt(chosenParentIndex);
@@ -57,5 +75,14 @@ namespace CodeBreakerLib.connectors.operators
             var pop = (AdfPopulationMember<T>)generator.GenerateFromId(parent);
             return pop.GetAdf();
         }
+        
+        protected Adf<T> GetAdfFromParents(List<MemberRecord<T>> parents)
+        {
+            var parent = PickParent(parents).Member;
+
+            var adf = ((AdfPopulationMember<T>) parent).GetAdf();
+            return adf;
+        }
+        
     }
 }

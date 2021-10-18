@@ -30,23 +30,36 @@ namespace CodeBreakerLib.fitnessFunctions
         {
             var adf = (StateBasedAdf<T,TU>) ((AdfPopulationMember<T>) member).GetAdf(false);
             
-            var coverageValues = new List<CoverageResults>();
+            var coverageValues = new List<CoverageResultWrapper>();
 
-            for (int i = 0; i < _numberOfAttemptsPerMember; i++)
+            for (var i = 0; i < _numberOfAttemptsPerMember; i++)
             {
-                var inputValues = TryGetMemberResults(adf);
+                var inputValues =  adf.GetValues();
 
-                var parameters = CreateParametersFromInputs(inputValues.GetOutputValues());
+                var inputFailed = inputValues.Failed();
 
-                var coverageInfo = TryRunTest<T>(parameters);
+                if (!inputFailed)
+                {
+                    var parameters = CreateParametersFromInputs(inputValues.GetOutputValues());
 
-                if (coverageInfo is not null)
-                    coverageValues.Add(coverageInfo);
+                    var coverageInfo = TryRunTest<T>(parameters);
+                    
+                    if (coverageInfo is not null)
+                    {
+                        coverageValues.Add(coverageInfo);
+                        adf.Update(inputValues,coverageInfo.GetReturnValue());
+                    }
+                    else
+                    {
+                        inputValues.FailOutputs(); //The outputs may have been valid, but the test was cancelled still
+                        adf.Update(inputValues);
+                    }
+                }
                 else
+                {
                     inputValues.FailOutputs(); //The outputs may have been valid, but the test was cancelled still
-                
-                adf.Update(inputValues,coverageInfo?.GetReturnValue());
-                
+                    adf.Update(inputValues);
+                }
             }
 
             return coverageValues.Count == 0 ? 
@@ -62,7 +75,7 @@ namespace CodeBreakerLib.fitnessFunctions
             return membersOrderedByCoverage.FirstOrDefault();
         }
 
-        private CoverageResults TryRunTest<T>(List<object> parameters)
+        private CoverageResultWrapper TryRunTest<T>(List<object> parameters)
         {
             if (parameters is null)
                 return null;
@@ -76,18 +89,6 @@ namespace CodeBreakerLib.fitnessFunctions
                 return null;
             }
             
-        }
-
-        private static AdfOutput<T> TryGetMemberResults<T>(Adf<T> member) where T : IComparable
-        {
-            try
-            {
-                return  member.GetValues();
-            }
-            catch (ProgramLoopException)
-            {
-                return null;
-            }
         }
 
         private static List<object> CreateParametersFromInputs<T>(IEnumerable<T> inputValues)

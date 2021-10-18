@@ -6,7 +6,7 @@ namespace CodeBreakerLib.coverage.calculators
 {
     public class StatementCoverageCalculator : ICoverageCalculator
     {
-        public double Calculate(CoverageResults coverageInfo)
+        public double Calculate(CoverageResultWrapper coverageInfo)
         {
             var totalNodes = coverageInfo.NumberOfNodes;
             var nodesHit = coverageInfo.Coverages.Select(c => c.NodeNumber);
@@ -15,7 +15,7 @@ namespace CodeBreakerLib.coverage.calculators
             return ((double) numberOfNodesHit / totalNodes) * 100;
         }
 
-        public double Calculate(List<CoverageResults> coverageValues)
+        public double Calculate(List<CoverageResultWrapper> coverageValues)
         {
             var firstResult = coverageValues[0];
 

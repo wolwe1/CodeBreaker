@@ -16,13 +16,13 @@ namespace CodeBreakerLib.connectors.ga
         
         protected AdfPopulationGenerator() { }
 
-        public IPopulationMember<T> GenerateNewMember()
+        public virtual IPopulationMember<T> GenerateNewMember()
         {
             var newAdf = Generator.Generate();
             return new AdfPopulationMember<T>(newAdf);
         }
 
-        public IPopulationMember<T> GenerateFromId(string chromosome)
+        public virtual IPopulationMember<T> GenerateFromId(string chromosome)
         {
             var newAdf = Generator.GenerateFromId(chromosome);
 

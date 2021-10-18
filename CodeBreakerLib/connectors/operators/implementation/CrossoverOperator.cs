@@ -7,14 +7,60 @@ using AutomaticallyDefinedFunctions.structure.adf;
 using AutomaticallyDefinedFunctions.structure.functions;
 using AutomaticallyDefinedFunctions.structure.functions.comparators;
 using AutomaticallyDefinedFunctions.structure.nodes;
+using CodeBreakerLib.connectors.ga;
 using CodeBreakerLib.visitors;
 using GeneticAlgorithmLib.source.core.population;
+using GeneticAlgorithmLib.source.statistics;
 
 namespace CodeBreakerLib.connectors.operators.implementation
 {
-    public class CrossoverOperator<T> : Operator<T> where T : IComparable
+    public class CrossoverOperator<T,TU> : Operator<T> where T : IComparable where TU : IComparable
     {
         public CrossoverOperator(int applicationPercentage) : base(applicationPercentage) { }
+
+        protected override IEnumerable<IPopulationMember<T>> Operate(List<MemberRecord<T>> parents, IPopulationGenerator<T> populationGenerator)
+        {
+            var parent = GetAdfFromParents(parents);
+            var parent2 = GetAdfFromParents(parents);
+            
+            var mainToMutate = RandomNumberFactory.Next(parent.GetNumberOfMainPrograms());
+            var main2ToMutate = RandomNumberFactory.Next(parent2.GetNumberOfMainPrograms());
+
+            var main = parent.GetMainPrograms().ElementAt(mainToMutate);
+            var main2 = parent2.GetMainPrograms().ElementAt(main2ToMutate);
+            
+            //Pick a type
+            var typeOfNodesToSwap = RandomNumberFactory.Next(3);
+
+            MainProgram<T> newMain1;
+            MainProgram<T> newMain2;
+            switch (typeOfNodesToSwap)
+            {
+                case 0: 
+                    (newMain1,newMain2) = PerformCrossover<string>(main, main2);
+                    parent.SetMain(mainToMutate, newMain1);
+                    parent2.SetMain(main2ToMutate, newMain2);
+                    break;
+                case 1: 
+                    (newMain1,newMain2) = PerformCrossover<double>(main, main2);
+                    parent.SetMain(mainToMutate, newMain1);
+                    parent2.SetMain(main2ToMutate, newMain2);
+                    break;
+                case 2: 
+                    (newMain1,newMain2) = PerformCrossover<bool>(main, main2);
+                    parent.SetMain(mainToMutate, newMain1);
+                    parent2.SetMain(main2ToMutate, newMain2);
+                    break;
+
+                default: throw new Exception("Crossover could not select type of node to replace");
+            }
+
+            return new List<IPopulationMember<T>>()
+            {
+                new StateAdfPopulationMember<T,TU>(parent),
+                new StateAdfPopulationMember<T,TU>(parent2)
+            };
+        }
 
         protected override List<string> Operate(List<string> parents, IPopulationGenerator<T> generator)
         {
@@ -58,32 +104,13 @@ namespace CodeBreakerLib.connectors.operators.implementation
         
         private (MainProgram<T> main, MainProgram<T> main2) PerformCrossover<TU>(MainProgram<T> main, MainProgram<T> main2) where TU : IComparable
         {
-            var (nodesOfTypeInMain, originalNodesOfTypeInMain2) = GetNodesFromMainsOfType<TU>(main,main2);
+            var (nodesOfTypeInMain, nodesOfTypeInMain2) = GetNodesFromMainsOfType<TU>(main,main2);
 
-            //Low chance that tree does not contain, no-op
-            if (nodesOfTypeInMain.Count == 0 || originalNodesOfTypeInMain2.Count == 0)
+            var (chosenNodeToSwap, chosenNodeToSwap2) = SelectNodes(nodesOfTypeInMain, nodesOfTypeInMain2);
+
+            if (chosenNodeToSwap is null || chosenNodeToSwap2 is null)
                 return (main, main2);
             
-            var chosenNodeToSwap = nodesOfTypeInMain[RandomNumberFactory.Next(nodesOfTypeInMain.Count - 1) + 1];
-           
-            //Check if it is a comparator, they need to be replaced with another comparator
-            List<INode<TU>> nodesOfTypeInMain2;
-            if (chosenNodeToSwap is NodeComparator<TU>)
-            {
-                nodesOfTypeInMain2 = originalNodesOfTypeInMain2
-                    .OfType<NodeComparator<TU>>()
-                    .Select(c => (INode<TU>)c).ToList();
-            }
-            else
-            {
-                nodesOfTypeInMain2 = originalNodesOfTypeInMain2.Where( n => n is not NodeComparator<TU>).ToList();
-            }
-
-            if (nodesOfTypeInMain2.Count == 0)
-                return (main, main2);
-            
-            var chosenNodeToSwap2 = nodesOfTypeInMain2[RandomNumberFactory.Next(nodesOfTypeInMain2.Count - 1) + 1];
-
             var copy = chosenNodeToSwap.GetCopy();
             var copy2 = chosenNodeToSwap2.GetCopy();
 
@@ -96,6 +123,40 @@ namespace CodeBreakerLib.connectors.operators.implementation
             return (main,main2);
 
         }
+
+        private (INode<TU>, INode<TU>) SelectNodes<TU>(List<INode<TU>> firstNodes, List<INode<TU>> secondNodes) where TU : IComparable
+        {
+            //Low chance that tree does not contain, no-op
+            if (firstNodes.Count == 0 || secondNodes.Count == 0)
+                return (null,null);
+
+            var chosenNodeToSwap = RandomNumberFactory.SelectFromList(firstNodes);
+                
+            //Root node can't be swapped
+            if (chosenNodeToSwap.Parent == null)
+                return (null,null);
+
+            //Check if it is a comparator, they need to be replaced with another comparator
+            List<INode<TU>> secondMatchingNodes;
+            if (chosenNodeToSwap is NodeComparator<TU>)
+            {
+                secondMatchingNodes = secondNodes
+                    .OfType<NodeComparator<TU>>()
+                    .Select(c => (INode<TU>)c).ToList();
+            }
+            else
+            {
+                secondMatchingNodes = secondNodes.Where( n => n is not NodeComparator<TU>).ToList();
+            }
+
+            if (secondMatchingNodes.Count == 0)
+                return (null,null);
+
+            var chosenNodeToSwap2 = RandomNumberFactory.SelectFromList(secondMatchingNodes);
+
+            return chosenNodeToSwap2?.Parent is null ? (null,null) : (chosenNodeToSwap, chosenNodeToSwap2);
+        }
+        
         private static (List<INode<TU>>, List<INode<TU>>) GetNodesFromMainsOfType<TU>(MainProgram<T> main, MainProgram<T> main2) where TU : IComparable
         {
             var nodeCollector1 = new NodeCollectorVisitor<TU>();

@@ -6,7 +6,7 @@ using AutomaticallyDefinedFunctions.structure.functions.other;
 using AutomaticallyDefinedFunctions.structure.nodes.statenodes;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 using CodeBreakerLib.connectors.operators.implementation;
-using CodeBreakerLib.quickBuild;
+using CodeBreakerLib.quickbuild;
 using CodeBreakerLib.testHandler;
 using CodeBreakerLib.testHandler.integration;
 using CodeBreakerLib.testHandler.setup;
@@ -32,7 +32,7 @@ namespace CodeBreaker
             var adf = adfGenerator.GenerateNewMember();
             var adf2 = adfGenerator.GenerateNewMember();
 
-            var crossoverOperator = new CrossoverOperator<string>(100);
+            var crossoverOperator = new CrossoverOperator<string,double>(100);
 
             crossoverOperator.CreateModifiedChildren(new List<string>() {adf.GetId(),adf2.GetId()},adfGenerator );
         }
