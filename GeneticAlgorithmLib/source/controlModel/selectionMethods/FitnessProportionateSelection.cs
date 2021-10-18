@@ -21,7 +21,7 @@ namespace GeneticAlgorithmLib.source.controlModel.selectionMethods
         /// <param name="maxParentsToProduce"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public override List<string> Select<T>(GenerationRecord<T> results,int maxParentsToProduce)
+        public override List<string> SelectReturningIds<T>(GenerationRecord<T> results, int maxParentsToProduce)
         {
             var numOccurrencesInNextPop = GetNumOccurrencesInNextPop(results);
 
@@ -37,6 +37,10 @@ namespace GeneticAlgorithmLib.source.controlModel.selectionMethods
                 );
             
             return selectedMembers;
+        }
+        public override List<MemberRecord<T>> Select<T>(GenerationRecord<T> results,int maxParentsToProduce)
+        {
+            throw new NotImplementedException();
         }
 
         private IEnumerable<string> FillSelectedMembers<T>(GenerationRecord<T> results, int numberOfClonesToMake)

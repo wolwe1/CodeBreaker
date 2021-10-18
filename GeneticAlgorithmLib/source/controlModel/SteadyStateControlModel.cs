@@ -12,7 +12,13 @@ namespace GeneticAlgorithmLib.source.controlModel
         {
         }
 
-        public override List<string> SelectParents(GenerationRecord<T> results)
+        public override List<string> SelectParentsReturningIds(GenerationRecord<T> results)
+        {
+            var populationSizeToMaintain = results.Size();
+            return SelectionMethod.SelectReturningIds(results, populationSizeToMaintain);
+        }
+
+        public override List<MemberRecord<T>> SelectParents(GenerationRecord<T> results)
         {
             var populationSizeToMaintain = results.Size();
             return SelectionMethod.Select(results, populationSizeToMaintain);

@@ -27,5 +27,10 @@ namespace GeneticAlgorithmLib.source.mockImplementations
         {
             return new OutputContainer<double>(_value);
         }
+
+        public IPopulationMember<double> GetCopy()
+        {
+            return new RandomNumberMember((int) _value);
+        }
     }
 }

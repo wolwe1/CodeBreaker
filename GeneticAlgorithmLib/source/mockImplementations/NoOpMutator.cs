@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GeneticAlgorithmLib.source.core.population;
 using GeneticAlgorithmLib.source.operators;
+using GeneticAlgorithmLib.source.statistics;
 
 namespace GeneticAlgorithmLib.source.mockImplementations
 {
@@ -25,6 +27,11 @@ namespace GeneticAlgorithmLib.source.mockImplementations
 
             Console.WriteLine("No OP mutator in use, returning unmodified members");
             return newMembers;
+        }
+
+        public List<IPopulationMember<T>> ApplyOperators(List<MemberRecord<T>> parents)
+        {
+            throw new NotImplementedException();
         }
     }
 }

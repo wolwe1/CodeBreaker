@@ -15,8 +15,8 @@ namespace GeneticAlgorithmLib.source.controlModel.selectionMethods
             _tournamentSize = tournamentSize;
             _numGen = new Random(seed);
         }
-        
-        public override List<string> Select<T>(GenerationRecord<T> results, int maxParentsToProduce)
+
+        public override List<string> SelectReturningIds<T>(GenerationRecord<T> results, int maxParentsToProduce)
         {
             var parents = new List<string>();
             
@@ -24,6 +24,19 @@ namespace GeneticAlgorithmLib.source.controlModel.selectionMethods
             {
                 var best = HoldTournament(results);
                 parents.Add(best.GetMemberId());
+            }
+
+            return parents;
+        }
+
+        public override List<MemberRecord<T>> Select<T>(GenerationRecord<T> results, int maxParentsToProduce)
+        {
+            var parents = new List<MemberRecord<T>>();
+            
+            while (parents.Count < maxParentsToProduce)
+            {
+                var best = HoldTournament(results);
+                parents.Add(best);
             }
 
             return parents;

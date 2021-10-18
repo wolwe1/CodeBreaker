@@ -21,5 +21,10 @@ namespace GeneticAlgorithmLib.source.mockImplementations
         {
             return _outputs;
         }
+
+        public string GetOutputString()
+        {
+            return string.Join(",", _outputs);
+        }
     }
 }

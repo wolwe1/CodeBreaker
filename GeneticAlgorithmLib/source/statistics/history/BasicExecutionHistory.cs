@@ -1,6 +1,5 @@
 ﻿using GeneticAlgorithmLib.source.statistics.output.implementations;
 using GeneticAlgorithmLib.source.statistics.runStatistics.implementations.measure;
-using GeneticAlgorithmLib.source.statistics.runStatistics.implementations.other;
 using GeneticAlgorithmLib.source.statistics.runStatistics.implementations.runtime;
 
 namespace GeneticAlgorithmLib.source.statistics.history
@@ -11,6 +10,7 @@ namespace GeneticAlgorithmLib.source.statistics.history
         {
             UseFitnessMeasure(new AverageMeasure());
             UseFitnessMeasure(new BestPerformerMeasure());
+            UseFitnessMeasure(new StandardDeviationMeasure());
             UseStatistic(new RunTimeStatistic(new AverageMeasure()));
         }
 

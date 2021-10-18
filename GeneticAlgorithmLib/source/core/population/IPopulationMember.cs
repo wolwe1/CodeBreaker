@@ -14,5 +14,7 @@ namespace GeneticAlgorithmLib.source.core.population
         string GetId();
 
         IOutputContainer<T> GetResult();
+
+        IPopulationMember<T> GetCopy();
     }
 }

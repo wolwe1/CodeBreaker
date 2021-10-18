@@ -38,7 +38,9 @@ namespace GeneticAlgorithmLib.source.controlModel
             return false;
         }
 
-        public abstract List<string> SelectParents(GenerationRecord<T> results);
+        public abstract List<string> SelectParentsReturningIds(GenerationRecord<T> results);
+
+        public abstract List<MemberRecord<T>> SelectParents(GenerationRecord<T> results);
 
         public List<IPopulationMember<T>> ApplyOperators(List<string> parents)
         {
@@ -57,7 +59,12 @@ namespace GeneticAlgorithmLib.source.controlModel
 
             return results;
         }
-        
+
+        public List<IPopulationMember<T>> ApplyOperators(List<MemberRecord<T>> parents)
+        {
+            return _populationMutator.ApplyOperators(parents);
+        }
+
         public ControlModel<T> UseSelection(ISelectionMethod newMethod)
         {
             SelectionMethod = newMethod;

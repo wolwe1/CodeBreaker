@@ -14,6 +14,7 @@ namespace GeneticAlgorithmLib.source.controlModel.selectionMethods
         /// <param name="results">The result set produced by evaluating the population</param>
         /// <param name="maxParentsToProduce">The number of parents the method should select</param>
         /// <returns>List of member ID's selected for the next population</returns>
-        List<string> Select<T>(GenerationRecord<T> results,int maxParentsToProduce);
+        List<string> SelectReturningIds<T>(GenerationRecord<T> results,int maxParentsToProduce);
+        List<MemberRecord<T>> Select<T>(GenerationRecord<T> results,int maxParentsToProduce);
     }
 }

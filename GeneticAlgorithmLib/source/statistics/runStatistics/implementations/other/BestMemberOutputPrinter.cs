@@ -16,7 +16,7 @@ namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations.ot
         {
             var bestMemberInRun = _bestMemberMeasure.GetBestPerformer(evaluationResults);
 
-            var memberOutput = bestMemberInRun.Member.GetResult();
+            var memberOutput = bestMemberInRun.Member.GetResult().GetOutputValues();
 
             var output = string.Join(" - ", memberOutput);
             

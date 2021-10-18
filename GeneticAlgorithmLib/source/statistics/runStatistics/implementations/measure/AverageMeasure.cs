@@ -23,7 +23,7 @@ namespace GeneticAlgorithmLib.source.statistics.runStatistics.implementations.me
             return "Avg";
         }
 
-        private double GetAverageOfSet(CalculationResultSet calculationResultSet)
+        public double GetAverageOfSet(CalculationResultSet calculationResultSet)
         {
             var total = calculationResultSet.Total();
 
