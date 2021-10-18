@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AutomaticallyDefinedFunctions.factories
 {
@@ -27,5 +30,20 @@ namespace AutomaticallyDefinedFunctions.factories
 
             return num > threshold;
         }
+
+        public static T SelectFromList<T>(IEnumerable<T> list)
+        {
+            var enumerable1 = list.ToList();
+            var enumerable = enumerable1.ToList();
+            var collectionSize = enumerable.Count;
+
+            return collectionSize switch
+            {
+                0 => throw new Exception("Cannot select random element from empty list"),
+                1 => enumerable.ElementAt(0),
+                _ => enumerable1.ElementAt(Next(collectionSize))
+            };
+        }
+        
     }
 }

@@ -39,5 +39,10 @@ namespace AutomaticallyDefinedFunctions.structure.adf.helpers
                 output.Fail();
             }
         }
+
+        public bool Failed()
+        {
+            return _outputs.Any(o => o.Failed);
+        }
     }
 }
