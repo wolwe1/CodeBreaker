@@ -5,9 +5,9 @@ namespace TestObjects.source.simple.numeric
     public class EuclideanAlgorithm
     {
 
-        public CoverageResults Get(int a, int b)
+        public CoverageResults<double> Get(int a, int b)
         {
-            var coverage = CoverageResults.SetupCoverage<double>("EuclideanAlgorithm","Get",5);
+            var coverage = CoverageResultWrapper.SetupCoverage<double>("EuclideanAlgorithm","Get",5);
             
             coverage.AddStartNode(NodeType.Loop);
             while (b != 0)
@@ -23,9 +23,9 @@ namespace TestObjects.source.simple.numeric
             return coverage.SetResult(a);
         }
 
-        public CoverageResults GetRecursive(int a, int b)
+        public CoverageResults<double> GetRecursive(int a, int b)
         {
-            var coverage = CoverageResults.SetupCoverage<double>("EuclideanAlgorithm","Get",3);
+            var coverage = CoverageResultWrapper.SetupCoverage<double>("EuclideanAlgorithm","Get",3);
             
             coverage.AddStartNode(NodeType.If);
             if (b == 0)

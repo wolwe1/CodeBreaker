@@ -5,9 +5,9 @@ namespace TestObjects.source.simple.strings
 {
     public class Anagram
     {
-        public CoverageResults Get(string stringOne, string stringTwo)
+        public CoverageResults<bool> Get(string stringOne, string stringTwo)
         {
-            var coverage = CoverageResults.SetupCoverage<bool>("Anagram","Get",16);
+            var coverage = CoverageResultWrapper.SetupCoverage<bool>("Anagram","Get",16);
             
             coverage.AddStartNode(NodeType.Statement);
             stringOne = stringOne.ToLower().Replace(" ","");
@@ -46,7 +46,7 @@ namespace TestObjects.source.simple.strings
             return coverage.SetResult(true);
         }
 
-        private static Dictionary<char, int> GetCharacterDictionary(string stringOne,CoverageResults coverage)
+        private static Dictionary<char, int> GetCharacterDictionary(string stringOne,CoverageResults<bool> coverage)
         {
             coverage.AddNode(5,NodeType.Statement);
             var firstStringCharacterSet = new Dictionary<char, int>();
@@ -71,9 +71,9 @@ namespace TestObjects.source.simple.strings
             return firstStringCharacterSet;
         }
 
-        public CoverageResults GetRecursive(string str, string strTwo)
+        public CoverageResults<bool> GetRecursive(string str, string strTwo)
         {
-            var coverage = CoverageResults.SetupCoverage<bool>("Anagram","GetRecursive",16);
+            var coverage = CoverageResultWrapper.SetupCoverage<bool>("Anagram","GetRecursive",16);
             
             coverage.AddStartNode(NodeType.If);
             if (str.Length == 0 && strTwo.Length == 0)

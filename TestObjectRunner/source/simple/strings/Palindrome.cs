@@ -5,9 +5,9 @@ namespace TestObjects.source.simple.strings
 {
     public class Palindrome
     {
-        public CoverageResults Get(string str)
+        public CoverageResults<string> Get(string str)
         {
-            var coverage = CoverageResults.SetupCoverage<string>("Palindrome","Get",4);
+            var coverage = CoverageResultWrapper.SetupCoverage<string>("Palindrome","Get",4);
             
             coverage.AddStartNode(NodeType.Statement);
             var palindrome = "";
@@ -23,9 +23,9 @@ namespace TestObjects.source.simple.strings
             return coverage.SetResult(palindrome);
         }
 
-        public CoverageResults GetRecursive(string str)
+        public CoverageResults<string> GetRecursive(string str)
         {
-            var coverage = CoverageResults.SetupCoverage<string>("Palindrome","GetRecursive",5);
+            var coverage = CoverageResultWrapper.SetupCoverage<string>("Palindrome","GetRecursive",5);
             
             coverage.AddStartNode(NodeType.If);
             if (str.Length == 0)

@@ -6,18 +6,18 @@ namespace TestObjects.source.simple.numeric
 {
     public class Fibonacci
     {
-        public CoverageResults Get(int n)
+        public CoverageResults<double> Get(int n)
         {
-            return FunctionWatcher.Execute(GetRecursive, n).Result;
+            return FunctionWatcher.Execute(GetRecursive, (double)n).Result;
         }
         
         // public CoverageResults GetIterative(int n)
         // {
         //     return FunctionWatcher.Execute(GetIter, n).Result;
         // }
-        public CoverageResults GetRecursive(int n, CancellationToken cancellationToken)
+        public CoverageResults<double> GetRecursive(double n, CancellationToken cancellationToken)
         {
-            var coverage = CoverageResults.SetupCoverage<double>("Fibonacci","Get",5);
+            var coverage = CoverageResultWrapper.SetupCoverage<double>("Fibonacci","Get",5);
             
             //Prevent blowing the stack
             if (cancellationToken.IsCancellationRequested)
@@ -47,9 +47,9 @@ namespace TestObjects.source.simple.numeric
             return coverage.SetResult(-1);
         }
 
-        public CoverageResults GetIterative(int n)
+        public CoverageResults<double> GetIterative(int n)
         {
-            var coverage = CoverageResults.SetupCoverage<double>("Fibonacci","GetIterative",8);
+            var coverage = CoverageResultWrapper.SetupCoverage<double>("Fibonacci","GetIterative",8);
 
             //Be a nice user
             if (n >= 1000)

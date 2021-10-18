@@ -8,7 +8,7 @@ namespace TestObjects.source
 {
     public class FunctionWatcher
     {
-        public static async Task<CoverageResults> Execute<T>(Func<T, CancellationToken, CoverageResults> func, T i)
+        public static async Task<CoverageResults<T>> Execute<T>(Func<T, CancellationToken, CoverageResults<T>> func, T i)
         {
             var tokenSource = new CancellationTokenSource();
             tokenSource.CancelAfter(1000);

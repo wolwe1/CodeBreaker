@@ -4,18 +4,18 @@ namespace TestObjects.source.simple.numeric
 {
     public class BinomialCoefficient
     {
-        public CoverageResults Get(int n, int k)
+        public CoverageResults<double> Get(int n, int k)
         {
             return GetSafe(n, k, 0);
         }
-        public CoverageResults GetSafe(int n, int k,int callCount)
+        public CoverageResults<double> GetSafe(int n, int k,int callCount)
         {
             //Prevent blowing the stack
             if(callCount >= 5)
-                return CoverageResults.SetupCoverage<double>("BinomialCoefficient","Get",6).SetResult(-1);
+                return CoverageResultWrapper.SetupCoverage<double>("BinomialCoefficient","Get",6).SetResult(-1);
 
             
-            var coverage = CoverageResults.SetupCoverage<double>("BinomialCoefficient","Get",6);
+            var coverage = CoverageResultWrapper.SetupCoverage<double>("BinomialCoefficient","Get",6);
             
             coverage.AddStartNode(NodeType.If);
             // Base Cases

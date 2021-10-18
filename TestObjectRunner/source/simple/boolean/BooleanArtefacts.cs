@@ -6,9 +6,9 @@ namespace TestObjects.source.simple.boolean
     public class BooleanArtefacts
     {
 
-        public CoverageResults TrueOrNothing(bool activate)
+        public CoverageResults<string> TrueOrNothing(bool activate)
         {
-            var coverage = CoverageResults.SetupCoverage<string>("BooleanArtefacts","TrueOrNothing",3);
+            var coverage = CoverageResultWrapper.SetupCoverage<string>("BooleanArtefacts","TrueOrNothing",3);
             
             coverage.AddStartNode(NodeType.Statement);
             const string message = "The statement was activated";
@@ -23,14 +23,14 @@ namespace TestObjects.source.simple.boolean
             return coverage.SetResult("");
         }
 
-        public CoverageResults EitherOr(bool activate)
+        public CoverageResults<string> EitherOr(bool activate)
         {
-            var coverage = CoverageResults.SetupCoverage<string>("BooleanArtefacts","EitherOr",7);
+            var coverage = CoverageResultWrapper.SetupCoverage<string>("BooleanArtefacts","EitherOr",7);
             
             coverage.AddStartNode(NodeType.Statement);
-            const string Message = "Either";
+            const string message = "Either";
             coverage.AddNode(1,NodeType.Statement);
-            const string MessageTwo = "Or";
+            const string messageTwo = "Or";
             coverage.AddNode(2,NodeType.Statement);
             string result;
 
@@ -38,39 +38,39 @@ namespace TestObjects.source.simple.boolean
             if (activate)
             {
                 coverage.AddNode(4,NodeType.Statement);
-                result = Message;
+                result = message;
             }
             else
             {
                 coverage.AddNode(5,NodeType.Statement);
-                result = MessageTwo;
+                result = messageTwo;
             }
             
             coverage.AddNode(6,NodeType.Return);
             return coverage.SetResult(result);
         }
         
-        public CoverageResults And(bool first, bool second)
+        public CoverageResults<string> And(bool first, bool second)
         {
-            var coverage = CoverageResults.SetupCoverage<string>("BooleanArtefacts","And",4);
+            var coverage = CoverageResultWrapper.SetupCoverage<string>("BooleanArtefacts","And",4);
             
             coverage.AddStartNode(NodeType.Statement);
-            const string Message = "The statement was activated";
+            const string message = "The statement was activated";
 
             coverage.AddNode(1,NodeType.If);
             if (first && second)
             {
                 coverage.AddNode(2,NodeType.Return);
-                return coverage.SetResult(Message);
+                return coverage.SetResult(message);
             }
 
             coverage.AddNode(3,NodeType.Return);
             return coverage.SetResult("");
         }
         
-        public CoverageResults Or(bool first, bool second)
+        public CoverageResults<string> Or(bool first, bool second)
         {
-            var coverage = CoverageResults.SetupCoverage<string>("BooleanArtefacts","Or",4);
+            var coverage = CoverageResultWrapper.SetupCoverage<string>("BooleanArtefacts","Or",4);
             
             coverage.AddStartNode(NodeType.Statement);
             const string Message = "The statement was activated";
@@ -85,9 +85,9 @@ namespace TestObjects.source.simple.boolean
             return coverage.SetResult("");
         }
         
-        public CoverageResults AndOr(bool first, bool second)
+        public CoverageResults<string> AndOr(bool first, bool second)
         {
-            var coverage = CoverageResults.SetupCoverage<string>("BooleanArtefacts","AndOr",9);
+            var coverage = CoverageResultWrapper.SetupCoverage<string>("BooleanArtefacts","AndOr",9);
             
             coverage.AddStartNode(NodeType.Statement);
             var result = "Neither value were true";

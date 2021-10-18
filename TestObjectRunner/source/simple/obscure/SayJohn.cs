@@ -4,9 +4,9 @@ namespace TestObjects.source.simple.obscure
 {
     public class SayJohn
     {
-        public CoverageResults Get(string name)
+        public CoverageResults<string> Get(string name)
         { 
-            var coverage = CoverageResults.SetupCoverage<double>("SayJohn","Get",7);
+            var coverage = CoverageResultWrapper.SetupCoverage<string>("SayJohn","Get",7);
             
             coverage.AddStartNode(NodeType.If);
             if (name.Length >= 1 && name[0] == 'j')
