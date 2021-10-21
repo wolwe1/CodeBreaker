@@ -7,7 +7,7 @@ using AutomaticallyDefinedFunctions.structure.visitors;
 
 namespace AutomaticallyDefinedFunctions.structure.adf
 {
-    public class Adf<T> where T : IComparable
+    public class Adf<T> : IAdf where T : IComparable
     {
         protected readonly List<MainProgram<T>> MainPrograms;
         protected readonly List<FunctionDefinition<T>> FunctionDefinitions;
@@ -76,12 +76,12 @@ namespace AutomaticallyDefinedFunctions.structure.adf
             return $"ADF({mainIds}*{functionIds})";
         }
         
-        protected IEnumerable<string> GetMainProgramIds()
+        public IEnumerable<string> GetMainProgramIds()
         {
             return MainPrograms.Select(main => main.GetId());
         }
 
-        protected IEnumerable<string> GetFunctionIds()
+        public IEnumerable<string> GetFunctionIds()
         {
             return FunctionDefinitions.Select(func => func.GetId());
         }
