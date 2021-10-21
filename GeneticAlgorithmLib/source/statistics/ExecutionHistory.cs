@@ -65,6 +65,18 @@ namespace GeneticAlgorithmLib.source.statistics
             }
         }
 
+        public List<string> GetBestPerformerIds()
+        {
+            var members = _runHistory
+                .SelectMany(run => run.GetGenerationRecords())
+                .SelectMany(generation => generation.GetMembers());
+
+            var orderedMembers = members
+                .OrderByDescending(m => m.GetFitnessValue()).Take(10);
+
+            return orderedMembers.Select(m => m.GetMemberId()).ToList();
+        }
+
         public ExecutionHistory<T> UseStatistic(IRunStatistic statistic)
         {
             _runStatistics.Add(statistic);
@@ -84,6 +96,11 @@ namespace GeneticAlgorithmLib.source.statistics
             _generationStopwatch.Reset();
 
             return elapsed;
+        }
+
+        public List<IRunRecord> GetRunRecords()
+        {
+            return _runHistory.Cast<IRunRecord>().ToList();
         }
     }
 }

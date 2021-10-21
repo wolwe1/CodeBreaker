@@ -1,4 +1,6 @@
-﻿namespace GeneticAlgorithmLib.source.statistics.history
+﻿using System.Collections.Generic;
+
+namespace GeneticAlgorithmLib.source.statistics.history
 {
     public interface ITypelessExecutionHistory
     {
@@ -12,6 +14,8 @@
         /// </summary>
         void NewGeneration();
         void Summarise();
+
+        List<string> GetBestPerformerIds();
     }
     public interface IExecutionHistory<T> : ITypelessExecutionHistory
     {

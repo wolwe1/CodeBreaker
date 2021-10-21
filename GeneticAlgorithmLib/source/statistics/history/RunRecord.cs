@@ -6,7 +6,7 @@ using GeneticAlgorithmLib.source.statistics.runStatistics;
 
 namespace GeneticAlgorithmLib.source.statistics.history
 {
-    public class RunRecord<T>
+    public class RunRecord<T> : IRunRecord
     {
         private readonly List<GenerationRecord<T>> _generationResults;
         private readonly int _runCount;
@@ -49,6 +49,11 @@ namespace GeneticAlgorithmLib.source.statistics.history
         public int GetRunNumber()
         {
             return _runCount;
+        }
+
+        public List<IGenerationRecord> GetGenerationRecords()
+        {
+            return _generationResults.Cast<IGenerationRecord>().ToList();
         }
     }
 }

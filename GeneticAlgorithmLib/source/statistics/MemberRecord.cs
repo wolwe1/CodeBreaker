@@ -4,7 +4,7 @@ using GeneticAlgorithmLib.source.fitnessFunctions;
 
 namespace GeneticAlgorithmLib.source.statistics
 {
-    public class MemberRecord<T>
+    public class MemberRecord<T> : IMemberRecord
     {
         private readonly Fitness _fitness;
         public readonly IPopulationMember<T> Member;

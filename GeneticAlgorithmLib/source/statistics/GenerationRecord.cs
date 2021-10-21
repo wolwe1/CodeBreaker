@@ -10,7 +10,7 @@ namespace GeneticAlgorithmLib.source.statistics
     /// <summary>
     ///     Holds a set of IPopulationMember ID and Result pairs
     /// </summary>
-    public class GenerationRecord<T>
+    public class GenerationRecord<T> : IGenerationRecord
     {
         private readonly List<MemberRecord<T>> _records;
 
@@ -53,6 +53,11 @@ namespace GeneticAlgorithmLib.source.statistics
         public List<MemberRecord<T>> GetMemberRecords()
         {
             return _records;
+        }
+        
+        public List<IMemberRecord> GetMembers()
+        {
+            return _records.Cast<IMemberRecord>().ToList();
         }
     }
 }
