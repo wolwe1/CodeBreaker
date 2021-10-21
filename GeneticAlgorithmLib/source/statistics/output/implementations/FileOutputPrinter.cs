@@ -21,12 +21,12 @@ namespace GeneticAlgorithmLib.source.statistics.output.implementations
             Console.WriteLine(builder.ToString());
         }
 
-        private string CreateFileName<T>(RunRecord<T> runRecord)
+        protected string CreateFileName<T>(RunRecord<T> runRecord)
         {
             var fileName = runRecord.AdditionalRunInfo == "" ? DateTime.Now.ToLongTimeString() : runRecord.AdditionalRunInfo;
             return fileName += $"- Run {runRecord.GetRunNumber()}.txt";
         }
-        private bool TryWriteOutputToFile(string data,string fileName)
+        protected bool TryWriteOutputToFile(string data,string fileName)
         {
             try
             {
