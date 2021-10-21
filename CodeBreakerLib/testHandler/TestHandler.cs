@@ -4,6 +4,7 @@ using System.Linq;
 using CodeBreakerLib.testHandler.integration;
 using CodeBreakerLib.testHandler.setup;
 using GeneticAlgorithmLib.source.statistics;
+using GeneticAlgorithmLib.source.statistics.history;
 
 namespace CodeBreakerLib.testHandler
 {
@@ -27,13 +28,15 @@ namespace CodeBreakerLib.testHandler
             _tests = _testStrategy.Setup();
         }
 
-        public void RunAllTests()
+        public List<TestHistory> RunAllTests()
         {
+            var testHistories = new List<TestHistory>();
             for (var i = 0; i < _tests.Count; i++)
             {
-                RunGaAgainstNextTest();
+                var testHistory = RunGaAgainstNextTest();
+                testHistories.Add(testHistory);
             }
-            
+            return testHistories;
         }
 
         public List<Test<object>> GetTests()
@@ -46,38 +49,41 @@ namespace CodeBreakerLib.testHandler
             return _currentTest >= _tests.Count ? null : _tests.ElementAt(_currentTest++);
         }
 
-        private void RunGaAgainstNextTest()
+        private TestHistory RunGaAgainstNextTest()
         {
             var test = GetNextTest();
             
             if(test == null)
-                return;
+                return null;
 
             Console.WriteLine($"Running GA against Test: {test?.GetName()}");
             var inputType = test?.GetArguments()?.ElementAt(0);
 
-            DispatchGaForTest(inputType, test);
+            return DispatchGaForTest(inputType, test);
             
         }
 
-        private void DispatchGaForTest(Type argumentsType, Test<object> test)
+        private TestHistory DispatchGaForTest(Type argumentsType, Test<object> test)
         {
             if (argumentsType == typeof(string))
-                RunGaAgainstTest<string>(test);
-            else if (argumentsType == typeof(double) || argumentsType == typeof(int))
-                RunGaAgainstTest<double>(test);
-            else if (argumentsType == typeof(bool))
-                RunGaAgainstTest<bool>(test);
-            else
-                throw new Exception($"Could not dispatch GA for test of type {argumentsType?.FullName}");
+                return RunGaAgainstTest<string>(test);
+            
+            if (argumentsType == typeof(double) || argumentsType == typeof(int))
+                return RunGaAgainstTest<double>(test);
+            
+            if (argumentsType == typeof(bool))
+                return RunGaAgainstTest<bool>(test);
+            
+            throw new Exception($"Could not dispatch GA for test of type {argumentsType?.FullName}");
         }
         
-        private void RunGaAgainstTest<T>(Test<object> test) where T : IComparable
+        private TestHistory RunGaAgainstTest<T>(Test<object> test) where T : IComparable
         {
             var geneticAlgorithm = _builder.Build<T>(test);
             var history = geneticAlgorithm.Run();
             ((ExecutionHistory<T>) history).AdditionalExecutionInfo = test.GetName();
             history.Summarise();
+            return new TestHistory(history,test);
         }
     }
 

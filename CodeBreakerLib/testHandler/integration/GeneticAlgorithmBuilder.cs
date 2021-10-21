@@ -37,8 +37,8 @@ namespace CodeBreakerLib.testHandler.integration
             _populationSize = populationSize;
         }
         
-        public GeneticAlgorithmBuilder(): this(0,65,4,10,50,100) { }
-
+        //public GeneticAlgorithmBuilder(): this(0,65,4,10,50,100) { }
+        public GeneticAlgorithmBuilder(): this(0,65,4,10,15,25) { }
         
         public GeneticAlgorithm<T> Build<T>(Test<object> test) where T : IComparable
         {
@@ -84,7 +84,7 @@ namespace CodeBreakerLib.testHandler.integration
         public static GeneticAlgorithm<T> CreateGa<T>(IPopulationGenerator<T> populationGenerator,
             IControlModel<T> controlModel) where T : IComparable
         {
-            IExecutionHistory<T> history = new ExecutionOutput<T>().OutputToFile();
+            IExecutionHistory<T> history = new ExecutionOutput<T>().OutputToFile(new CsvFileOutputPrinter());
             
             return new GeneticAlgorithm<T>(populationGenerator,controlModel,history).Print();
         }
