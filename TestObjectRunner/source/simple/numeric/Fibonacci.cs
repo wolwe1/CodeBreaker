@@ -11,10 +11,6 @@ namespace TestObjects.source.simple.numeric
             return FunctionWatcher.Execute(GetRecursive, (double)n).Result;
         }
         
-        // public CoverageResults GetIterative(int n)
-        // {
-        //     return FunctionWatcher.Execute(GetIter, n).Result;
-        // }
         public CoverageResults<double> GetRecursive(double n, CancellationToken cancellationToken)
         {
             var coverage = CoverageResultWrapper.SetupCoverage<double>("Fibonacci","Get",5);
