@@ -26,6 +26,7 @@ namespace CodeBreaker
             AdfLoader.SaveToFile(testHistories);
 
             //TODO: Read from file and begin generalisation test
+            AdfLoader.ReadFromFile("Mandelbrot - Get");
         }
         
         public static void TestMutation()

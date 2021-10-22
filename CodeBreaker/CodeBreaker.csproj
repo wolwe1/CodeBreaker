@@ -19,7 +19,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="output" />
+      <Folder Include="output\adf" />
+      <Folder Include="output\csv" />
     </ItemGroup>
 
 </Project>

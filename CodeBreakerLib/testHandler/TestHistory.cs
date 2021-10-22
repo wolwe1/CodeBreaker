@@ -40,5 +40,10 @@ namespace CodeBreakerLib.testHandler
         {
             return _test.GetArguments().Count;
         }
+
+        public int GetRunNumber()
+        {
+            return _history.RunNumber;
+        }
     }
 }

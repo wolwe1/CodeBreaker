@@ -7,6 +7,7 @@ using CodeBreakerLib.connectors.operators.implementation;
 using CodeBreakerLib.connectors.output;
 using CodeBreakerLib.coverage.calculators;
 using CodeBreakerLib.fitnessFunctions;
+using CodeBreakerLib.settings;
 using GeneticAlgorithmLib.source.controlModel;
 using GeneticAlgorithmLib.source.controlModel.selectionMethods;
 using GeneticAlgorithmLib.source.controlModel.terminationCriteria;
@@ -20,49 +21,45 @@ namespace CodeBreakerLib.testHandler.integration
 {
     public class GeneticAlgorithmBuilder
     {
-        private readonly int _seed;
         private readonly int _terminalChance;
         private readonly int _maxFunctionDepth;
         private readonly int _maxMainDepth;
         private readonly int _maxGenerations;
         private readonly int _populationSize;
 
-        public GeneticAlgorithmBuilder(int seed, int terminalChance, int maxFunctionDepth, int maxMainDepth, int maxGenerations, int populationSize)
+        public GeneticAlgorithmBuilder()
         {
-            _seed = seed;
-            _terminalChance = terminalChance;
-            _maxFunctionDepth = maxFunctionDepth;
-            _maxMainDepth = maxMainDepth;
-            _maxGenerations = maxGenerations;
-            _populationSize = populationSize;
+            _terminalChance = GlobalSettings.TerminalChance;
+            _maxFunctionDepth = GlobalSettings.MaxFunctionDepth;
+            _maxMainDepth = GlobalSettings.MaxMainDepth;
+            _maxGenerations = GlobalSettings.MaxGenerations;
+            _populationSize = GlobalSettings.PopulationSize;
         }
-        
-        //public GeneticAlgorithmBuilder(): this(0,65,4,10,50,100) { }
-        public GeneticAlgorithmBuilder(): this(0,65,4,10,15,25) { }
-        
-        public GeneticAlgorithm<T> Build<T>(Test<object> test) where T : IComparable
+
+        public GeneticAlgorithm<T> Build<T>(Test<object> test, int seed) where T : IComparable
         {
             var returnType = test.GetUnderlyingReturnType();
 
             if (returnType == typeof(string))
-                return BuildGa<T, string>(test);
+                return BuildGa<T, string>(test,seed);
 
             if (returnType == typeof(double))
-                return BuildGa<T, double>(test);
+                return BuildGa<T, double>(test,seed);
 
             if (returnType == typeof(bool))
-                return BuildGa<T, bool>(test);
+                return BuildGa<T, bool>(test,seed);
 
             throw new Exception("Could not create GA based on test response");
 
         }
 
-        private GeneticAlgorithm<T> BuildGa<T,TU>(Test<object> test) where T : IComparable where TU : IComparable
+        private GeneticAlgorithm<T> BuildGa<T, TU>(Test<object> test, int seed) where T : IComparable where TU : IComparable
         {
-            var populationGenerator = CreatePopulationGenerator<T,TU>(test);
+            var populationGenerator = CreatePopulationGenerator<T,TU>(test,seed
+            );
             var populationMutator = CreatePopulationMutator<T, TU>(populationGenerator);
             var fitnessFunction = CreateFitnessFunction<TU>(test);
-            var controlModel = CreateControlModel(fitnessFunction,populationMutator);
+            var controlModel = CreateControlModel(fitnessFunction,populationMutator,seed);
 
             return CreateGa(populationGenerator, controlModel);
         }
@@ -75,11 +72,11 @@ namespace CodeBreakerLib.testHandler.integration
                 .UseOperator(new CrossoverOperator<T,TU>(30));
         }
 
-        public IPopulationGenerator<T> CreatePopulationGenerator<T,TU>(Test<object> test) where T : IComparable where TU : IComparable
+        public IPopulationGenerator<T> CreatePopulationGenerator<T, TU>(Test<object> test, int seed) where T : IComparable where TU : IComparable
         {
             var settings = new StateAdfSettings<T,TU>( _maxFunctionDepth, _maxMainDepth,test.GetArguments().Count,_terminalChance);
 
-            return new StateAdfPopulationGenerator<T,TU>(_seed,settings);
+            return new StateAdfPopulationGenerator<T,TU>(seed,settings);
         }
         public static GeneticAlgorithm<T> CreateGa<T>(IPopulationGenerator<T> populationGenerator,
             IControlModel<T> controlModel) where T : IComparable
@@ -95,10 +92,11 @@ namespace CodeBreakerLib.testHandler.integration
                 .AddEvaluation(new CodeCoverageFitnessFunction<TU>(test,new StatementCoverageCalculator(),5), 1);
         }
 
-        public IControlModel<T> CreateControlModel<T>(IFitnessFunction fitnessFunction,IPopulationMutator<T> populationMutator) where T : IComparable
+        public IControlModel<T> CreateControlModel<T>(IFitnessFunction fitnessFunction,
+            IPopulationMutator<T> populationMutator, int seed) where T : IComparable
         {
             return new SteadyStateControlModel<T>(populationMutator,fitnessFunction)
-                .UseSelection(new TournamentSelection(fitnessFunction,_seed,3))
+                .UseSelection(new TournamentSelection(fitnessFunction,seed,3))
                 .UseTerminationCriteria(new GenerationCountCriteria(_maxGenerations))
                 .UseTerminationCriteria(new NoAverageImprovementCriteria(5))
                 .UseTerminationCriteria(new DesiredFitnessForFitnessFunctionCriteria(typeof(StatementCoverageCalculator),100))
