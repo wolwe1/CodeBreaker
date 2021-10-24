@@ -28,7 +28,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions.other
 
         public override INode<double> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
-            return new LengthOfNode<T>((INode<T>) ReplaceNullNodesForComponent(Argument,maxDepth,creator));
+            return new LengthOfNode<T>((INode<T>) ReplaceNullNodesForComponent(Argument,maxDepth - 1,creator));
         }
 
         public override double GetValue()

@@ -13,6 +13,10 @@ namespace AutomaticallyDefinedFunctions.structure.functions.arithmetic.addFuncti
             foreach (var child in children)
             {
                 builder.Append(((INode<string>)child).GetValue());
+                
+                //Safety break
+                if (builder.Length >= 500)
+                    return builder.ToString();
             }
 
             return builder.ToString();

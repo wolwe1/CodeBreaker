@@ -56,9 +56,9 @@ namespace AutomaticallyDefinedFunctions.structure.functions.ifStatement
 
         public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
-            var newTrueBlock = ReplaceNullNodesForComponent(TrueBlock,maxDepth,creator);
-            var newFalseBlock = ReplaceNullNodesForComponent(FalseBlock,maxDepth,creator);
-            var newComparator = ReplaceNullNodesForComponent(Comparator,maxDepth,creator);
+            var newTrueBlock = ReplaceNullNodesForComponent(TrueBlock,maxDepth - 1,creator);
+            var newFalseBlock = ReplaceNullNodesForComponent(FalseBlock,maxDepth - 1,creator);
+            var newComparator = ReplaceNullNodesForComponent(Comparator,maxDepth - 1,creator);
 
             return new IfNode<T, TU>((NodeComparator<TU>) newComparator, (INode<T>) newTrueBlock,(INode<T>) newFalseBlock);
         }

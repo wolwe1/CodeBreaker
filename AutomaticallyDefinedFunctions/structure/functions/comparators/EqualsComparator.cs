@@ -42,8 +42,8 @@ namespace AutomaticallyDefinedFunctions.structure.functions.comparators
 
         public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
-            var leftWithoutNulls = (INode<T>) ReplaceNullNodesForComponent(LeftPredicate, maxDepth, creator);
-            var rightWithoutNulls = (INode<T>) ReplaceNullNodesForComponent(RightPredicate, maxDepth, creator);
+            var leftWithoutNulls = (INode<T>) ReplaceNullNodesForComponent(LeftPredicate, maxDepth - 1, creator);
+            var rightWithoutNulls = (INode<T>) ReplaceNullNodesForComponent(RightPredicate, maxDepth - 1, creator);
 
             return new EqualsComparator<T>(leftWithoutNulls, rightWithoutNulls);
         }

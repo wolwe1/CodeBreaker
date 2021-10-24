@@ -36,9 +36,9 @@ namespace AutomaticallyDefinedFunctions.structure.functions.boolean
         public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
             if (Argument.IsNullNode())
-                return SetArgument(creator.CreateFunction<T>(maxDepth));
+                return SetArgument(creator.CreateFunction<T>(maxDepth - 1));
             
-            return SetArgument(Argument.ReplaceNullNodes(maxDepth, creator));
+            return SetArgument(Argument.ReplaceNullNodes(maxDepth - 1, creator));
         }
 
         public NotNullComparator<T> SetArgument(INode<T> node)

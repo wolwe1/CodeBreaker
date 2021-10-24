@@ -8,7 +8,8 @@ using AutomaticallyDefinedFunctions.visitors;
 
 namespace AutomaticallyDefinedFunctions.structure.state
 {
-    public class StateBasedAdf<T,TU> : Adf<T> where T : IComparable where TU : IComparable
+    public interface IStateBasedAdf {}
+    public class StateBasedAdf<T,TU> : Adf<T>, IStateBasedAdf where T : IComparable where TU : IComparable
     {
         private readonly AdfHistory<T,TU> _history;
 

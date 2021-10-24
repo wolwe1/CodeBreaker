@@ -80,9 +80,9 @@ namespace AutomaticallyDefinedFunctions.structure.functions.forLoop
 
         public override INode<T> ReplaceNullNodes(int maxDepth, FunctionCreator creator)
         {
-            var newIncremental = ReplaceNullNodesForComponent(Increment,maxDepth,creator);
-            var newBlock = ReplaceNullNodesForComponent(CodeBlock,maxDepth,creator);
-            var newComparator = ReplaceNullNodesForComponent(Comparator,maxDepth,creator);
+            var newIncremental = ReplaceNullNodesForComponent(Increment,maxDepth - 1,creator);
+            var newBlock = ReplaceNullNodesForComponent(CodeBlock,maxDepth - 1,creator);
+            var newComparator = ReplaceNullNodesForComponent(Comparator,maxDepth - 1,creator);
 
             return new ForLoopNode<T, TU>((INode<TU>) newIncremental, (NodeComparator<TU>) newComparator,(INode<T>) newBlock);
         }
