@@ -18,7 +18,8 @@ namespace TestObjects.source.simple.numeric
             //Prevent blowing the stack
             if (cancellationToken.IsCancellationRequested)
                  cancellationToken.ThrowIfCancellationRequested();  //Unwind the stack
-            
+            if (n >= 38)
+                return coverage.SetResult(-1);
 
             coverage.AddStartNode(NodeType.If);
             if (n <= 1)

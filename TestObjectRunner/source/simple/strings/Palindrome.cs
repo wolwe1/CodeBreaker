@@ -9,6 +9,10 @@ namespace TestObjects.source.simple.strings
         {
             var coverage = CoverageResultWrapper.SetupCoverage<string>("Palindrome","Get",4);
             
+            //Be a nice user
+            if (str.Length >= 500)
+                return coverage.SetResult("");
+            
             coverage.AddStartNode(NodeType.Statement);
             var palindrome = "";
 
@@ -26,6 +30,10 @@ namespace TestObjects.source.simple.strings
         public CoverageResults<string> GetRecursive(string str)
         {
             var coverage = CoverageResultWrapper.SetupCoverage<string>("Palindrome","GetRecursive",5);
+            
+            //Be a nice user
+            if (str.Length >= 500)
+                return coverage.SetResult("");
             
             coverage.AddStartNode(NodeType.If);
             if (str.Length == 0)
