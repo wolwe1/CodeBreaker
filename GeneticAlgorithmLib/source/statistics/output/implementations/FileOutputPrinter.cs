@@ -33,8 +33,28 @@ namespace GeneticAlgorithmLib.source.statistics.output.implementations
                 var projectDir = AppDomain.CurrentDomain.BaseDirectory.Split("bin")[0];
                 projectDir = Path.Combine(projectDir, "output");
                 
-                string destPath = Path.Combine(projectDir, fileName);
+                var destPath = Path.Combine(projectDir, fileName);
                 File.WriteAllText(destPath, data);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unable to write output to file");
+                return false;
+            }
+            
+        }
+        
+        protected bool TryAppendOutputToFile(string data,string fileName)
+        {
+            try
+            {
+                var projectDir = AppDomain.CurrentDomain.BaseDirectory.Split("bin")[0];
+                projectDir = Path.Combine(projectDir, "output");
+                
+                var destPath = Path.Combine(projectDir, fileName);
+                File.AppendAllText(destPath, data);
 
                 return true;
             }

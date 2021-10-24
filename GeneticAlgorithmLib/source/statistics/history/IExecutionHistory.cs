@@ -16,6 +16,8 @@ namespace GeneticAlgorithmLib.source.statistics.history
         void Summarise();
 
         List<string> GetBestPerformerIds();
+
+        int RunNumber { get; set; }
     }
     public interface IExecutionHistory<T> : ITypelessExecutionHistory
     {

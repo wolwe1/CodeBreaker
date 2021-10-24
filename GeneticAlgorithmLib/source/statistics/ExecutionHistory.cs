@@ -19,7 +19,9 @@ namespace GeneticAlgorithmLib.source.statistics
         protected IOutputPrinter OutputPrinter;
 
         public string AdditionalExecutionInfo;
-        
+        public int RunNumber { get; set; }
+
+
         protected ExecutionHistory(IOutputPrinter printer)
         {
             _runStatistics = new List<IRunStatistic>();
@@ -76,7 +78,7 @@ namespace GeneticAlgorithmLib.source.statistics
 
             return orderedMembers.Select(m => m.GetMemberId()).ToList();
         }
-
+        
         public ExecutionHistory<T> UseStatistic(IRunStatistic statistic)
         {
             _runStatistics.Add(statistic);
