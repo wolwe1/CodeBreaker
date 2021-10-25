@@ -38,7 +38,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions.forLoop
         
         public override T GetValue()
         {
-            if (!IsValid()) throw new InvalidStructureException("For loop function is invalid");
+            //if (!IsValid()) throw new InvalidStructureException("For loop function is invalid");
             
             var comparator = (NodeComparator<TU>)Comparator.GetCopy();
 

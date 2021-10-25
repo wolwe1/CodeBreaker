@@ -42,7 +42,7 @@ namespace AutomaticallyDefinedFunctions.structure.functions.ifStatement
 
         public override T GetValue()
         {
-            if (!IsValid()) throw new InvalidStructureException("If statement is invalid");
+            //if (!IsValid()) throw new InvalidStructureException("If statement is invalid");
             
             return Comparator.PassesCheck() ? 
                 TrueBlock.GetValue() :
