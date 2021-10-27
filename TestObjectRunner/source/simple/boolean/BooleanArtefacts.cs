@@ -118,5 +118,27 @@ namespace TestObjects.source.simple.boolean
             coverage.AddEndNode(8,NodeType.Return);
             return coverage.SetResult(result);
         }
+        
+        public CoverageResults<string> Xor(bool first, bool second)
+        {
+            var coverage = CoverageResultWrapper.SetupCoverage<string>("BooleanArtefacts","Xor",5);
+            
+            coverage.AddStartNode(NodeType.If);
+            if (first == false && second == false)
+            {
+                coverage.AddNode(1,NodeType.Return);
+                return coverage.SetResult("True");
+            }
+            
+            coverage.AddNode(2,NodeType.If);
+            if (first && second)
+            {
+                coverage.AddNode(3,NodeType.Return);
+                return coverage.SetResult("False");
+            }
+                 
+            coverage.AddNode(4,NodeType.Return);
+            return coverage.SetResult("True");
+        }
     }
 }
