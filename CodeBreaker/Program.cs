@@ -6,6 +6,7 @@ using AutomaticallyDefinedFunctions.structure.functions.other;
 using AutomaticallyDefinedFunctions.structure.nodes.statenodes;
 using AutomaticallyDefinedFunctions.structure.nodes.valueNodes;
 using CodeBreakerLib.connectors.operators.implementation;
+using CodeBreakerLib.dynamicLoading;
 using CodeBreakerLib.quickbuild;
 using CodeBreakerLib.testHandler;
 using CodeBreakerLib.testHandler.integration;
@@ -20,9 +21,12 @@ namespace CodeBreaker
 
             var testHandler = new TestHandler(new TestFileDescriptorStrategy(),new GeneticAlgorithmBuilder());
             testHandler.Setup();
-            testHandler.RunAllTests();
             
-           // TestMutation();
+            var testHistories = testHandler.RunAllTests();
+            AdfLoader.SaveToFile(testHistories);
+
+            //TODO: Read from file and begin generalisation test
+            AdfLoader.ReadFromFile("Mandelbrot - Get");
         }
         
         public static void TestMutation()

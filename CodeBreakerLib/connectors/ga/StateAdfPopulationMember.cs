@@ -15,6 +15,11 @@ namespace CodeBreakerLib.connectors.ga
             var stateAdf = (StateBasedAdf<T,TU>) Adf;
             return new StateAdfOutputContainer<T,TU>(stateAdf.GetHistory());
         }
+        
+        public override IPopulationMember<T> GetCopy()
+        {
+            return new StateAdfPopulationMember<T,TU>(Adf.GetCopy());
+        }
     }
     
     

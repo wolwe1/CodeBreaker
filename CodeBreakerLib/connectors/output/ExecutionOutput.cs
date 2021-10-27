@@ -8,7 +8,6 @@ namespace CodeBreakerLib.connectors.output
         public ExecutionOutput() : base()
         {
             UseStatistic(new BestAdfOutputPrinter());
-            UseFitnessMeasure(new StandardDeviationMeasure());
         }
 
     }

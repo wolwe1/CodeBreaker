@@ -23,7 +23,7 @@ namespace CodeBreakerLib.connectors.ga
             return new AdfOutputContainer<T>(Adf.GetValues());
         }
 
-        public IPopulationMember<T> GetCopy()
+        public virtual IPopulationMember<T> GetCopy()
         {
             return new AdfPopulationMember<T>(Adf.GetCopy());
         }
