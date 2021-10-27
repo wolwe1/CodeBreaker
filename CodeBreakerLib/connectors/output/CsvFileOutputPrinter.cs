@@ -54,7 +54,7 @@ namespace CodeBreakerLib.connectors.output
             var data = header + "\n" + csvValues;
 
 
-            TryWriteOutputToFile(data, fileName);
+            TryAppendOutputToFile(data, fileName);
 
         }
     }

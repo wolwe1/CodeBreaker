@@ -98,8 +98,8 @@ namespace CodeBreakerLib.testHandler.integration
             return new SteadyStateControlModel<T>(populationMutator,fitnessFunction)
                 .UseSelection(new TournamentSelection(fitnessFunction,seed,3))
                 .UseTerminationCriteria(new GenerationCountCriteria(_maxGenerations))
-                .UseTerminationCriteria(new NoAverageImprovementCriteria(5))
-                .UseTerminationCriteria(new DesiredFitnessForFitnessFunctionCriteria(typeof(StatementCoverageCalculator),100))
+                .UseTerminationCriteria(new NoAverageImprovementCriteria(25))
+                //.UseTerminationCriteria(new DesiredFitnessForFitnessFunctionCriteria(typeof(StatementCoverageCalculator),100))
                 .SetPopulationSize(_populationSize);
         }
     }

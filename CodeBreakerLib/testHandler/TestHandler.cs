@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeBreakerLib.dynamicLoading;
 using CodeBreakerLib.settings;
 using CodeBreakerLib.testHandler.integration;
 using CodeBreakerLib.testHandler.setup;
@@ -28,41 +29,25 @@ namespace CodeBreakerLib.testHandler
         {
             _tests = _testStrategy.Setup();
         }
-        
-        public List<TestHistory> RunAllTestsMultiple()
-        {
-            List<TestHistory> testHistories = new List<TestHistory>();
-            
-            for (int i = 0; i < GlobalSettings.NumberOfRuns; i++)
-            {
-                testHistories.AddRange(RunAllTests(i));
-            }
 
-            return testHistories;
-        }
-        
-        public List<TestHistory> RunAllTests(int seed = 0)
+        public List<TestHistory> RunAllTests()
         {
-            var testHistories = new List<TestHistory>();
+            //var testHistories = new List<TestHistory>();
             for (var i = 0; i < _tests.Count; i++)
             {
-                var testHistory = RunGaAgainstNextTest(seed);
-                testHistories.Add(testHistory);
+                var testHistory = RunGaAgainstNextTest();
+                //testHistories.AddRange(testHistory);
             }
-            return testHistories;
+
+            return null; //testHistories;
         }
 
-        public List<Test<object>> GetTests()
-        {
-            return _tests;
-        }
-        
         private Test<object> GetNextTest()
         {
             return _currentTest >= _tests.Count ? null : _tests.ElementAt(_currentTest++);
         }
 
-        private TestHistory RunGaAgainstNextTest(int seed)
+        private List<TestHistory> RunGaAgainstNextTest()
         {
             var test = GetNextTest();
             
@@ -72,8 +57,15 @@ namespace CodeBreakerLib.testHandler
             Console.WriteLine($"Running GA against Test: {test?.GetName()}");
             var inputType = test?.GetArguments()?.ElementAt(0);
 
-            return DispatchGaForTest(inputType, test,seed);
-            
+            //var histories = new List<TestHistory>();
+            for (var i = 0; i < GlobalSettings.NumberOfRuns; i++)
+            {
+                var history = DispatchGaForTest(inputType, test,i);
+                AdfLoader.SaveToFile(history);
+                //histories.Add(history);
+            }
+
+            return null; //histories;
         }
 
         private TestHistory DispatchGaForTest(Type argumentsType, Test<object> test, int seed)

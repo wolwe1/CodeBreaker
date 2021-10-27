@@ -32,6 +32,8 @@ namespace CodeBreakerLib
             }
 
             var parms = parameters.Cast<object>().ToArray();
+            //select only the correct amount of parameters, allows bigger adfs to work on smaller tests
+            parms = parms.Take(_method.GetArguments().Count).ToArray();
             
             return (CoverageResultWrapper) _method.InvokeMethod(parms);
         }

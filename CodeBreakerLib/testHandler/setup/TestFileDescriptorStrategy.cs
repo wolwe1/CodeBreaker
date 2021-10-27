@@ -8,24 +8,19 @@ namespace CodeBreakerLib.testHandler.setup
     {
         private readonly TestLookupStrategy _helperStrategy;
         private readonly string _projectDirectory;
-        public TestFileDescriptorStrategy()
+        private readonly string _fileName;
+
+        public TestFileDescriptorStrategy(string filename)
         {
             _helperStrategy = new TestLookupStrategy();
-            // string workingDirectory = Environment.CurrentDirectory;
-            //
-            // var parentDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
-            // var pathSegments = parentDirectory.Split("\\");
-            // pathSegments = pathSegments.Take(pathSegments.Length - 1).ToArray();
-            // projectDirectory = string.Join("\\", pathSegments) + "\\CodeBreakerLib\\";
             _projectDirectory =
                 "D:\\Honours\\second year\\COS700\\Research project\\code\\Implementation\\CodeBreaker\\CodeBreakerLib\\";
-
+            _fileName = filename;
         }
 
         public List<Test<object>> Setup()
         {
-            const string fileName = "sample.txt";
-            var target = _projectDirectory + fileName;
+            var target = _projectDirectory + _fileName;
 
             if (!File.Exists(target)) throw new Exception($"Test sample file: {target} does not exist");
             

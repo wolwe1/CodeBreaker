@@ -30,6 +30,9 @@ namespace CodeBreakerLib.dynamicLoading
             var data = runNumber + "$" + numberOfInputs + "$" + inputType.FullName + "$" + responseType.FullName + "$";
             data += string.Join("$", bestAdfs);
 
+            //Delimit a run
+            data += "~";
+            
             TryWriteOutputToFile(data, testName);
         }
 
@@ -38,7 +41,7 @@ namespace CodeBreakerLib.dynamicLoading
             try
             {
                 var filePath = GetFilePath(fileName);
-                File.WriteAllText(filePath, data);
+                File.AppendAllText(filePath, data);
 
                 return true;
             }
@@ -59,9 +62,29 @@ namespace CodeBreakerLib.dynamicLoading
             return Path.Combine(projectDir, fileName);
         }
 
-        public static List<IStateBasedAdf> ReadFromFile(string mandelbrotGet)
+        public static Dictionary<string, List<IStateBasedAdf>> ReadFromDirectory()
         {
-            var filePath = GetFilePath(mandelbrotGet);
+            var adfsFromFiles = new Dictionary<string, List<IStateBasedAdf>>();
+            
+            foreach (var file in Directory.EnumerateFiles(GetFilePath(""), "*"))
+            {
+                var adfs = ReadFromPath(file);
+                var fileNameWithoutPath = file[ (file.IndexOf("\\adf\\") + 5 )..];
+                adfsFromFiles.Add(fileNameWithoutPath,adfs);
+            }
+
+            return adfsFromFiles;
+        }
+        
+        public static List<IStateBasedAdf> ReadFromPath(string filePath)
+        {
+            var data = File.ReadAllText(filePath);
+
+            return ParseFileData(data);
+        }
+        public static List<IStateBasedAdf> ReadFromFile(string fileName)
+        {
+            var filePath = GetFilePath(fileName);
 
             var data = File.ReadAllText(filePath);
 
@@ -70,7 +93,19 @@ namespace CodeBreakerLib.dynamicLoading
 
         private static List<IStateBasedAdf> ParseFileData(string data)
         {
+            var runs = data[..^1].Split("~");
 
+            var adfsForRun = new List<IStateBasedAdf>();
+            foreach (var runData in runs)
+            {
+                adfsForRun.AddRange(ParseRunData(runData));
+            }
+
+            return adfsForRun;
+        }
+        
+        private static List<IStateBasedAdf> ParseRunData(string data)
+        {
             var items = data.Split("$");
 
             var runNumber = int.Parse(items[0]);
@@ -81,7 +116,6 @@ namespace CodeBreakerLib.dynamicLoading
             var adfIds = items.Skip(4);
             
             return GenerateAdfs(runNumber,numberOfInputs,inputType,responseType,adfIds);
-
         }
 
         private static List<IStateBasedAdf> GenerateAdfs(int runNumber, int numberOfInputs, Type inputType, Type responseType,
@@ -92,7 +126,7 @@ namespace CodeBreakerLib.dynamicLoading
                 return GenerateAdfs<string>(runNumber,numberOfInputs,responseType,adfIds);
             }
             
-            if (inputType == typeof(double))
+            if (inputType == typeof(double) || inputType == typeof(int))
             {
                 return GenerateAdfs<double>(runNumber,numberOfInputs,responseType,adfIds);
             }
@@ -101,6 +135,8 @@ namespace CodeBreakerLib.dynamicLoading
             {
                 return GenerateAdfs<bool>(runNumber,numberOfInputs,responseType,adfIds);
             }
+
+            throw new Exception("Could not find input type of test");
         }
         
         private static List<IStateBasedAdf> GenerateAdfs<T>(int runNumber, int numberOfInputs, Type responseType,
@@ -120,6 +156,8 @@ namespace CodeBreakerLib.dynamicLoading
             {
                 return GenerateAdfs<T,bool>(runNumber,numberOfInputs,adfIds);
             }
+            
+            throw new Exception("Could not find response type of test");
         }
         
         private static List<IStateBasedAdf> GenerateAdfs<T, TU>(int runNumber, int numberOfInputs, IEnumerable<string> adfIds) where TU : IComparable where T : IComparable
@@ -134,6 +172,11 @@ namespace CodeBreakerLib.dynamicLoading
             var generator = new StateAdfGenerator<T, TU>(runNumber, settings);
 
             return adfIds.Select(id => (IStateBasedAdf) generator.GenerateFromId(id)).ToList();
+        }
+
+        public static void SaveToFile(TestHistory history)
+        {
+            WriteBestPerformingAdfsToFile(history);
         }
     }
 }
