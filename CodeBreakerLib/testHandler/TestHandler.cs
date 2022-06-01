@@ -25,9 +25,10 @@ namespace CodeBreakerLib.testHandler
             _builder = builder;
         }
 
-        public void Setup()
+        public TestHandler LoadTests()
         {
-            _tests = _testStrategy.Setup();
+            _tests = _testStrategy.LoadTests();
+            return this;
         }
 
         public List<TestHistory> RunAllTests()
@@ -86,7 +87,7 @@ namespace CodeBreakerLib.testHandler
         {
             var geneticAlgorithm = _builder.Build<T>(test,seed);
             var history = geneticAlgorithm.Run();
-            ((ExecutionHistory<T>) history).AdditionalExecutionInfo = test.GetName();
+            
             history.Summarise();
             history.RunNumber = seed;
             return new TestHistory(history,test);

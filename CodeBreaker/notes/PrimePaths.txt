@@ -1,0 +1,61 @@
+Remainder
+===============================
+Get -> 5 pp, 2 inputs
+
+Vowels
+===============================
+Get -> 4 pp, 2 inputs
+
+IsPrime
+===============================
+Get -> 5 pp, 2 inputs
+
+Substring
+===============================
+Get -> 3 pp, 2 inputs
+
+Anagram
+===============================
+Get -> 5pp, 2 inputs
+GetRecursive -> 4 pp, 2 inputs
+
+Palindrome
+===============================
+Get -> 1pp, 1 input
+GetRecursive -> 2 pp, 1 input
+
+Fibonacci
+===============================
+Get -> 2 pp, 1 input
+GetIterative -> 2 pp, 1 input
+
+EuclideanAlgorithm
+===============================
+Get -> 2 pp, 2 input
+GetRecursive -> 2 pp, 2 input
+
+BinomialCoefficient
+===============================
+Get -> 3 pp, 2 input
+
+Mandelbrot
+===============================
+Get -> 2 pp, 2 input
+
+BooleanArtefacts
+================================
+TrueOrNothing -> 2 pp, 1 input
+EitherOr -> 2 pp, 1 input
+And -> 2 pp, 2 input
+Or -> 2 pp, 2 input
+AndOr -> 3 pp, 2 input
+XOR -> 3 pp, 2 inputs
+
+Summary:
+
+Prime paths -
+1 x 1
+2 x 10
+3 x 4
+4 x 2
+5 x 3

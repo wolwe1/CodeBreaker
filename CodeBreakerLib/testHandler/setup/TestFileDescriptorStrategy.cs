@@ -18,7 +18,7 @@ namespace CodeBreakerLib.testHandler.setup
             _fileName = filename;
         }
 
-        public List<Test<object>> Setup()
+        public List<Test<object>> LoadTests()
         {
             var target = _projectDirectory + _fileName;
 

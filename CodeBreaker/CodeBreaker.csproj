@@ -19,8 +19,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="output\adf" />
-      <Folder Include="output\csv" />
+      <Folder Include="output\calculated\avgExecutionTime" />
+      <Folder Include="output\calculated\stdDeviation\2pp" />
+      <Folder Include="output\calculated\stdDeviation\3pp" />
+      <Folder Include="output\calculated\stdDeviation\4-5pp" />
     </ItemGroup>
 
 </Project>
