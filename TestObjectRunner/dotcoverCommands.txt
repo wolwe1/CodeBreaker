@@ -1,0 +1,5 @@
+dotcover cover --TargetExecutable="D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.exe" --Output="D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\source\coverOutput.html" --reportType="HTML" --startInstance="1"
+
+dotcover send --Instance="1" --Command="Cover"
+
+dotcover send --Instance="1" --Command="GetSnapshotAndKillChildren"
