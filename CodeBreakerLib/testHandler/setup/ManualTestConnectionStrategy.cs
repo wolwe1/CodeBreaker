@@ -4,7 +4,7 @@ namespace CodeBreakerLib.testHandler.setup
 {
     public class ManualTestConnectionStrategy : ITestStrategy
     {
-        public List<Test<object>> Setup()
+        public List<Test<object>> LoadTests()
         {
             throw new System.NotImplementedException();
         }

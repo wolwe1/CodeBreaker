@@ -18,7 +18,7 @@ namespace CodeBreakerLib.testHandler.Generalisation
 
         public GeneralisationTestHandler(ITestStrategy testStrategy)
         {
-            _tests = testStrategy.Setup();
+            _tests = testStrategy.LoadTests();
             _testSets = GenerateTestSets();
         }
 

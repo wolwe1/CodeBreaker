@@ -7,12 +7,12 @@ namespace CodeBreakerLib.testHandler
 {
     public class TestHistory
     {
-        private ITypelessExecutionHistory _history;
+        private ITypelessExecutionHistory _executionHistory;
         private readonly Test<object> _test;
 
-        public TestHistory(ITypelessExecutionHistory history,Test<object> test)
+        public TestHistory(ITypelessExecutionHistory executionHistory,Test<object> test)
         {
-            _history = history;
+            _executionHistory = executionHistory;
             _test = test;
         }
 
@@ -23,7 +23,7 @@ namespace CodeBreakerLib.testHandler
 
         public List<string> GetBestAdfs()
         {
-            return _history.GetBestPerformerIds();
+            return _executionHistory.GetBestPerformerIds();
         }
 
         public Type GetInputType()
@@ -43,7 +43,7 @@ namespace CodeBreakerLib.testHandler
 
         public int GetRunNumber()
         {
-            return _history.RunNumber;
+            return _executionHistory.RunNumber;
         }
     }
 }

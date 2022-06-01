@@ -1,0 +1,60 @@
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+Remainder
+Get
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+Vowels
+Get
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+BooleanArtefacts
+Xor
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+IsPrime
+Get
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+Substring
+Get
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+Anagram
+Get
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+Anagram
+GetRecursive
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+Palindrome
+Get
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+Palindrome
+GetRecursive
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+Fibonacci
+Get
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+Fibonacci
+GetIterative
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+EuclideanAlgorithm
+Get
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+EuclideanAlgorithm
+GetRecursive
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+BinomialCoefficient
+Get
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+Mandelbrot
+Get
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+BooleanArtefacts
+TrueOrNothing
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+BooleanArtefacts
+EitherOr
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+BooleanArtefacts
+And
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+BooleanArtefacts
+Or
+D:\Honours\second year\COS700\Research project\code\test objects\TestObjects\TestObjectRunner\bin\Debug\net5.0\TestObjectRunner.dll
+BooleanArtefacts
+AndOr

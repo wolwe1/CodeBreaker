@@ -8,7 +8,7 @@ namespace CodeBreakerLib.testHandler.setup
 {
     public class TestLookupStrategy : ITestStrategy
     {
-        public List<Test<object>> Setup()
+        public List<Test<object>> LoadTests()
         {
             List<Test<object>> tests = new List<Test<object>>();
             while (UserExperience.Ask("Add test"))

@@ -99,7 +99,7 @@ namespace CodeBreakerLib.testHandler.integration
                 .UseSelection(new TournamentSelection(fitnessFunction,seed,3))
                 .UseTerminationCriteria(new GenerationCountCriteria(_maxGenerations))
                 .UseTerminationCriteria(new NoAverageImprovementCriteria(25))
-                //.UseTerminationCriteria(new DesiredFitnessForFitnessFunctionCriteria(typeof(StatementCoverageCalculator),100))
+                .UseTerminationCriteria(new DesiredFitnessForFitnessFunctionCriteria(typeof(StatementCoverageCalculator),100))
                 .SetPopulationSize(_populationSize);
         }
     }
